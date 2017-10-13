@@ -158,12 +158,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pacman.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pacmanframe\Pacmanframe.vcxproj">
       <Project>{2ec42d4e-5f55-459f-9208-e441de2237f2}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="define.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Pacman.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
