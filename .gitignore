@@ -2,3 +2,8 @@ DxLib/
 Pacmanframe/
 *.txt
 pacman/x64/
+Solution/Debug/
+*.db
+Solution/Common/Debug/
+Solution/Editor/Debug/
+Solution/Pacman/Debug/
