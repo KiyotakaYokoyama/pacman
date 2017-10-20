@@ -4,7 +4,6 @@
 
 PTR( Game );
 PTR( Pacman );
-PTR( Map );
 
 class Game : public Task {
 public:
@@ -18,6 +17,5 @@ public:
 	void update( );
 private:
 	PacmanPtr _pacman;
-	MapPtr _map;
 };
 

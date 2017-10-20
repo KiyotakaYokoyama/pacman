@@ -5,8 +5,11 @@
 #include "define.h"
 
 const int SPRITE_SIZE = 64;
+const int DRAW_SIZE = CHIP_SIZE;
 const int MOVE_SPEED = 3;
 const int MAX_SPEED = 10;
+const int WAIT_ANIM_TIME = 5;
+const int ANIM_NUM = 3;
 
 Pacman::Pacman( Vector pos ) :
 Character( pos ) {
@@ -19,7 +22,6 @@ Pacman::~Pacman( ) {
 
 void Pacman::act( ) {
 	actOnMove( );
-	adjustPos( );
 	draw( );
 }
 
@@ -58,28 +60,11 @@ void Pacman::actOnMove( ) {
 	setVec( vec );
 }
 
-void Pacman::adjustPos( ) {
-	Vector vec = getVec( );
-	Vector pos = getPos( );
-	Vector f_pos = pos + vec;
-	if ( f_pos.x < 0 + SPRITE_SIZE / 2 ) {
-		vec.x = 0 - pos.x + SPRITE_SIZE / 2;
-	}
-	if ( f_pos.x > WIDTH - SPRITE_SIZE / 2 ) {
-		vec.x = WIDTH - pos.x - SPRITE_SIZE / 2;
-	}
-	if ( f_pos.y < 0 + SPRITE_SIZE ) {
-		vec.y = 0 - pos.y + SPRITE_SIZE;
-	}
-	if ( f_pos.y > HEIGHT ) {
-		vec.y = HEIGHT - pos.y;
-	}
-	setVec( vec );
-}
-
 void Pacman::draw( ) const {
 	Vector pos = getPos( );
-	_sprite->setRect( 0, 0, SPRITE_SIZE, SPRITE_SIZE );
-	_sprite->setPos( ( int )( pos.x - SPRITE_SIZE / 2 ), ( int )( pos.y - SPRITE_SIZE ) );
+	_sprite->setRect( ( ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ) * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE );
+	int sx = ( int )( pos.x - DRAW_SIZE / 2 );
+	int sy = ( int )( pos.y - DRAW_SIZE );
+	_sprite->setPos( sx, sy, sx + DRAW_SIZE / 2, sy + DRAW_SIZE );
 	_sprite->draw( );
 }

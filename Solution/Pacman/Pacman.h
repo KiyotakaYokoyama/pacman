@@ -11,7 +11,6 @@ public:
 private:
 	void act( );
 	void actOnMove( );
-	void adjustPos( );
 	void draw( ) const;
 private:
 	ImagePtr _sprite;

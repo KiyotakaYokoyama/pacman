@@ -3,6 +3,7 @@
 #include "Keyboard.h"
 
 #include "Game.h"
+#include "Map.h"
 #include "define.h"
 
 void main( ) {
@@ -14,8 +15,10 @@ void main( ) {
 	TaskPtr keyboard = KeyboardPtr( new Keyboard );
 
 	TaskPtr game = GamePtr( new Game );
+	TaskPtr map  = MapPtr ( new Map  );
 
 	app->addTask( Drawer::getTag( )  , drawer   );
 	app->addTask( Keyboard::getTag( ), keyboard );
-	app->addTask( Game::getTag( ),     game );
+	app->addTask( Game::getTag( )    , game     );
+	app->addTask( Map::getTag( )     , map      );
 }
