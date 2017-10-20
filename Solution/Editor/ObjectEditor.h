@@ -3,6 +3,7 @@
 #include "mathmatics.h"
 
 PTR( Object );
+PTR( Image );
 
 class ObjectEditor {
 public:
@@ -17,6 +18,7 @@ public:
 	};
 public:
 	void update( );
+	void drawCursor( ) const;
 	MODE getMode( ) const;
 	Vector getCursor( ) const;
 private:
@@ -27,5 +29,6 @@ private:
 	MODE _mode;
 	Vector _cursor;
 	ObjectPtr _object;
+	ImagePtr _cursor_sprite;
 };
 

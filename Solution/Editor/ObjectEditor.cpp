@@ -1,8 +1,10 @@
 #include "ObjectEditor.h"
 #include "Object.h"
+#include "define.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "define.h"
+#include "Drawer.h"
+#include "Image.h"
 
 const Vector IGNORE_MOUSE_POS = Vector( -1, -1 );
 
@@ -10,6 +12,8 @@ ObjectEditor::ObjectEditor( ObjectPtr object ) :
 _object( object ),
 _mode( MODE_NONE ),
 _cursor( IGNORE_MOUSE_POS ) {
+	_cursor_sprite = Drawer::getTask( )->createImage( "cursor.png" );
+	_cursor_sprite->setRect( 0, 0, 64, 64 );
 }
 
 ObjectEditor::~ObjectEditor( ) {
@@ -39,7 +43,7 @@ void ObjectEditor::updateMode( ) {
 
 void ObjectEditor::updateCursor( ) {
 	_cursor = Mouse::getTask( )->getPos( ) * ( 1.0 / CHIP_SIZE );
-	_cursor.x -= DRAW_X / CHIP_SIZE + 1;
+	_cursor.x -= DRAW_X / CHIP_SIZE + 0.5;
 	_cursor.y -= DRAW_Y / CHIP_SIZE;
 
 	if ( _cursor.x < 0 || _cursor.x >= MAP_WIDTH_CHIP_NUM ||
@@ -79,4 +83,13 @@ ObjectEditor::MODE ObjectEditor::getMode( ) const {
 
 Vector ObjectEditor::getCursor( ) const {
 	return _cursor;
+}
+
+void ObjectEditor::drawCursor( ) const {
+	if ( _cursor != IGNORE_MOUSE_POS ) {
+		int sx = DRAW_X + ( int )_cursor.x * CHIP_SIZE;
+		int sy = DRAW_Y + ( int )_cursor.y * CHIP_SIZE;
+		_cursor_sprite->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
+		_cursor_sprite->draw( );
+	}
 }

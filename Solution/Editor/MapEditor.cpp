@@ -89,6 +89,7 @@ void MapEditor::updateMode( ) {
 void MapEditor::modeEditing( ) {
 	_editor->update( );
 	_viewer->draw( );
+	_editor->drawCursor( );
 }
 
 void MapEditor::modeSaveing( ) {
