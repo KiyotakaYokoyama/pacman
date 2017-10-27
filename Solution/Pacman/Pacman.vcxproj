@@ -167,6 +167,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Military.cpp" />
     <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="Player1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Military.h" />
     <ClInclude Include="Pacman.h" />
+    <ClInclude Include="Player1.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Pacmanframe\Pacmanframe.vcxproj">
