@@ -101,8 +101,8 @@ void ObjectViewer::setWallImageRect( int ox, int oy ) const {
 
 ImageTargetPtr ObjectViewer::getStageSprite( ) {
 	ImageTargetPtr result = ImageTargetPtr( new ImageTarget );
-	int ix = CHIP_SIZE * MAP_WIDTH_CHIP_NUM;
-	int iy = CHIP_SIZE * MAP_HEIGHT_CHIP_NUM;
+	int ix = SPRITE_SIZE * MAP_WIDTH_CHIP_NUM;
+	int iy = SPRITE_SIZE * MAP_HEIGHT_CHIP_NUM;
 	result->create( ix, iy );
 
 	DrawerPtr drawer = Drawer::getTask( );
@@ -112,9 +112,9 @@ ImageTargetPtr ObjectViewer::getStageSprite( ) {
 		for ( int j = 0; j < MAP_WIDTH_CHIP_NUM; j++ ) {
 			if ( _object->getChip( j, i ) == OBJECT_WALL ) {
 				setWallImageRect( j, i );
-				int sx = j * CHIP_SIZE;
-				int sy = i * CHIP_SIZE;
-				_wall->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
+				int sx = j * SPRITE_SIZE;
+				int sy = i * SPRITE_SIZE;
+				_wall->setPos( sx, sy, sx + SPRITE_SIZE, sy + SPRITE_SIZE );
 				_wall->draw( );
 			}
 		}

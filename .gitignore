@@ -12,3 +12,4 @@ Solution/Common/x64/
 Solution/Editor/x64/
 Solution/Pacman/x64/
 Solution/x64/
+*.opendb

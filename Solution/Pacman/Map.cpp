@@ -38,8 +38,8 @@ void Map::update( ) {
 }
 
 void Map::draw( ) const {
-	//_stage->setRect( 0, 0, 1200, 480 );
-	_stage->setPos( 0, 0, WIDTH, HEIGHT );
+	_stage->setRect( 0, 0, 4800, 1920 );
+	_stage->setPos( 0, 0, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	_stage->draw( );
 }
 
