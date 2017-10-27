@@ -18,10 +18,14 @@ public:
 	void initialize( );
 	void update( );
 	void draw( ) const;
+	void drawFeed( ) const;
+	void eatFeed( const Vector& pos );
+	void eatFeed( int ox, int oy );
 	unsigned char getObject( const Vector& pos ) const;
 	unsigned char getObject( int ox, int oy ) const;
 private:
 	std::vector< unsigned char > _objects;
 	ImagePtr _stage;
+	ImagePtr _feeds;
 };
 

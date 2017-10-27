@@ -1,8 +1,9 @@
 #include "Pacman.h"
+#include "define.h"
+#include "Map.h"
 #include "Drawer.h"
 #include "Image.h"
 #include "Keyboard.h"
-#include "define.h"
 
 const int SPRITE_SIZE = 64;
 const int DRAW_SIZE = CHIP_SIZE;
@@ -12,7 +13,8 @@ const int WAIT_ANIM_TIME = 5;
 const int ANIM_NUM = 3;
 
 Pacman::Pacman( Vector pos ) :
-Character( pos ) {
+Character( pos ),
+_turnaround( false ) {
 	_sprite = Drawer::getTask( )->createImage( "player1.png" );
 }
 
@@ -22,6 +24,7 @@ Pacman::~Pacman( ) {
 
 void Pacman::act( ) {
 	actOnMove( );
+	actOnEat( );
 	draw( );
 }
 
@@ -58,6 +61,18 @@ void Pacman::actOnMove( ) {
 		vec = vec.normalize( ) * MAX_SPEED;
 	}
 	setVec( vec );
+}
+
+void Pacman::actOnEat( ) {
+	MapPtr map = Map::getTask( );
+	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
+	unsigned char obj = map->getObject( check );
+	if ( obj == OBJECT_ENHANCE_FEED || obj == OBJECT_FEED ) {
+		map->eatFeed( check );
+	}
+	if ( obj == OBJECT_ENHANCE_FEED ) {
+		_turnaround = true;
+	}
 }
 
 void Pacman::draw( ) const {
