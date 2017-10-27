@@ -7,6 +7,9 @@
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyShadow.cpp" />
+    <ClCompile Include="Military.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -14,5 +17,8 @@
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyShadow.h" />
+    <ClInclude Include="Military.h" />
   </ItemGroup>
 </Project>

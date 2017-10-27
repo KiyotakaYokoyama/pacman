@@ -3,7 +3,6 @@
 #include "define.h"
 
 static const int MAX_ACT_TIME = 0xfffffff;
-static const int CHAR_SIZE = CHIP_SIZE - 3;
 
 Character::Character( Vector pos ) :
 _pos( pos ),
@@ -24,19 +23,19 @@ void Character::update( ) {
 
 void Character::updateColl( ) {
 	MapPtr map = Map::getTask( );
-	const int HARF_CHAR_SIZE = CHAR_SIZE / 2;
+	const int HARF_CHARA_SIZE = CHARA_SIZE / 2;
 	//上
 	if ( _vec.y < 0 ) {
-		if ( ( _pos.y + _vec.y ) - CHAR_SIZE < 0 ) {
+		if ( ( _pos.y + _vec.y ) - CHARA_SIZE < 0 ) {
 			_pos.y = CHIP_SIZE;
 			_vec.y = 0;
 		} else {
 			//左上
-			unsigned char left_obj = map->getObject( _pos + Vector( -HARF_CHAR_SIZE, _vec.y - CHAR_SIZE ) );
+			unsigned char left_obj = map->getObject( _pos + Vector( -HARF_CHARA_SIZE, _vec.y - CHARA_SIZE ) );
 			//右上
-			unsigned char light_obj = map->getObject( _pos + Vector( HARF_CHAR_SIZE, _vec.y - CHAR_SIZE ) );
+			unsigned char light_obj = map->getObject( _pos + Vector( HARF_CHARA_SIZE, _vec.y - CHARA_SIZE ) );
 			if ( left_obj == OBJECT_WALL || light_obj == OBJECT_WALL ) {
-				_pos.y = ( ( int )( _pos.y + _vec.y - CHAR_SIZE ) / CHIP_SIZE + 1 ) * CHIP_SIZE + CHAR_SIZE;
+				_pos.y = ( ( int )( _pos.y + _vec.y - CHARA_SIZE ) / CHIP_SIZE + 1 ) * CHIP_SIZE + CHARA_SIZE;
 				_vec.y = 0;
 			}
 		}
@@ -44,9 +43,9 @@ void Character::updateColl( ) {
 	//下
 	if ( _vec.y > 0 ) {
 		//左下
-		unsigned char left_obj = map->getObject( _pos + Vector( -HARF_CHAR_SIZE, _vec.y ) );
+		unsigned char left_obj = map->getObject( _pos + Vector( -HARF_CHARA_SIZE, _vec.y ) );
 		//右下
-		unsigned char light_obj = map->getObject( _pos + Vector( HARF_CHAR_SIZE, _vec.y ) );
+		unsigned char light_obj = map->getObject( _pos + Vector( HARF_CHARA_SIZE, _vec.y ) );
 		if ( left_obj == OBJECT_WALL || light_obj == OBJECT_WALL ) {
 			_pos.y = ( ( int )( _pos.y + _vec.y ) / CHIP_SIZE ) * CHIP_SIZE - 1;
 			_vec.y = 0;
@@ -54,30 +53,30 @@ void Character::updateColl( ) {
 	}
 	//左側
 	if ( _vec.x < 0 ) {
-		Vector f_pos = _pos + Vector( _vec.x - HARF_CHAR_SIZE, 0 );
+		Vector f_pos = _pos + Vector( _vec.x - HARF_CHARA_SIZE, 0 );
 		if ( f_pos.x < 0 ) {
-			_pos.x = HARF_CHAR_SIZE;
+			_pos.x = HARF_CHARA_SIZE;
 			_vec.x = 0;
 		} else {
 			//左上
-			unsigned char up_obj = map->getObject( f_pos + Vector( 0, -CHAR_SIZE ) );
+			unsigned char up_obj = map->getObject( f_pos + Vector( 0, -CHARA_SIZE ) );
 			//左下
 			unsigned char down_obj = map->getObject( f_pos + Vector( 0, 0 ) );
 			if ( up_obj == OBJECT_WALL || down_obj == OBJECT_WALL ) {
-				_pos.x = ( ( ( int )f_pos.x / CHIP_SIZE ) + 1 ) * CHIP_SIZE + HARF_CHAR_SIZE;
+				_pos.x = ( ( ( int )f_pos.x / CHIP_SIZE ) + 1 ) * CHIP_SIZE + HARF_CHARA_SIZE;
 				_vec.x = 0;
 			}
 		}
 	}
 	//右側
 	if ( _vec.x > 0 ) {
-		Vector f_pos = _pos + Vector( _vec.x + HARF_CHAR_SIZE, 0 );
+		Vector f_pos = _pos + Vector( _vec.x + HARF_CHARA_SIZE, 0 );
 		//右上
-		unsigned char up_obj = map->getObject( f_pos + Vector( 0, -CHAR_SIZE ) );
+		unsigned char up_obj = map->getObject( f_pos + Vector( 0, -CHARA_SIZE ) );
 		//右下
 		unsigned char down_obj = map->getObject( f_pos + Vector( 0, 0 ) );
 		if ( up_obj == OBJECT_WALL || down_obj == OBJECT_WALL ) {
-			_pos.x = ( ( int )f_pos.x / CHIP_SIZE ) * CHIP_SIZE - HARF_CHAR_SIZE - 1;
+			_pos.x = ( ( int )f_pos.x / CHIP_SIZE ) * CHIP_SIZE - HARF_CHARA_SIZE - 1;
 			_vec.x = 0;
 		}
 	}

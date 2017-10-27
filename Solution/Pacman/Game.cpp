@@ -4,6 +4,8 @@
 
 #include "Map.h"
 #include "Pacman.h"
+#include "Military.h"
+#include "EnemyShadow.h"
 #include "Debug.h"
 
 GamePtr Game::getTask( ) {
@@ -18,6 +20,8 @@ Game::~Game( ) {
 
 void Game::initialize( ) {
 	_pacman = PacmanPtr( new Pacman( Vector( 48, 48 ) ) );
+	_military = MilitaryPtr( new Military );
+	_military->addEnemy( EnemyPtr( new EnemyShadow( Vector( 480, 480 - 64 ) ) ) );
 }
 
 void Game::update( ) {
@@ -27,9 +31,17 @@ void Game::update( ) {
 
 	Map::getTask( )->draw( );
 	_pacman->update( );
+	_military->update( );
+
+	_pacman->draw( );
+	_military->draw( );
 	
 	DebugPtr debug = Debug::getTask( );
 	if ( debug->isActive( ) ) {
 		debug->draw( );
 	}
+}
+
+PacmanConstPtr Game::getPacman( ) {
+	return _pacman;
 }

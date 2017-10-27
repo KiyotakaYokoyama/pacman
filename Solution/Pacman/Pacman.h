@@ -8,11 +8,12 @@ class Pacman : public Character {
 public:
 	Pacman( Vector pos );
 	virtual ~Pacman( );
+public:
+	void draw( ) const;
 private:
 	void act( );
 	void actOnMove( );
 	void actOnEat( );
-	void draw( ) const;
 private:
 	bool _turnaround;
 	ImagePtr _sprite;

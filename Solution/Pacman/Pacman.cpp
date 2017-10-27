@@ -25,7 +25,6 @@ Pacman::~Pacman( ) {
 void Pacman::act( ) {
 	actOnMove( );
 	actOnEat( );
-	draw( );
 }
 
 void Pacman::actOnMove( ) {

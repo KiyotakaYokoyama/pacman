@@ -7,10 +7,10 @@ public:
 	virtual ~Character( );
 public:
 	void update( );
+	Vector getPos( ) const;
 protected:
 	void setVec( const Vector& vec );
 	int getActTime( ) const;
-	Vector getPos( ) const;
 	Vector getVec( ) const;
 private:
 	virtual void act( ) = 0;

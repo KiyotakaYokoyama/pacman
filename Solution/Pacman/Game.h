@@ -4,6 +4,7 @@
 
 PTR( Game );
 PTR( Pacman );
+PTR( Military );
 
 class Game : public Task {
 public:
@@ -15,7 +16,9 @@ public:
 public:
 	void initialize( );
 	void update( );
+	PacmanConstPtr getPacman( );
 private:
 	PacmanPtr _pacman;
+	MilitaryPtr _military;
 };
 
