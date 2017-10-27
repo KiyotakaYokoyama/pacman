@@ -23,6 +23,5 @@ public:
 private:
 	std::vector< unsigned char > _objects;
 	ImagePtr _stage;
-	ImagePtr _chip;
 };
 

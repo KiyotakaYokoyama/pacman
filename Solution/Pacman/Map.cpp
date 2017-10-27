@@ -20,8 +20,6 @@ Map::~Map( ) {
 
 void Map::initialize( ) {
 	_stage = Drawer::getTask( )->createImage( "MapData/test_stage.png" );
-	_chip = Drawer::getTask( )->createImage( "chip.png" );
-	_chip->setRect( 0, 0, 64, 64 );
 
 	ApplicationPtr app = Application::getInstance( );
 	BinaryPtr binary = BinaryPtr( new Binary );
@@ -40,28 +38,9 @@ void Map::update( ) {
 }
 
 void Map::draw( ) const {
-	
-	DrawerPtr drawer = Drawer::getTask( );
-	for ( int i = 0; i <= MAP_HEIGHT_CHIP_NUM; i++ ) {
-		drawer->drawLine( 0, i * CHIP_SIZE, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, i * CHIP_SIZE );
-	}
-	for ( int i = 0; i <= MAP_WIDTH_CHIP_NUM; i++ ) {
-		drawer->drawLine( i * CHIP_SIZE, 0, i * CHIP_SIZE, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
-	}
-
 	//_stage->setRect( 0, 0, 1200, 480 );
 	_stage->setPos( 0, 0, WIDTH, HEIGHT );
 	_stage->draw( );
-		
-	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
-		if ( _objects[ i ] == OBJECT_WALL ) {
-			int sx = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
-			int sy = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
-
-			_chip->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
-			_chip->draw( );
-		}
-	}
 }
 
 unsigned char Map::getObject( const Vector& pos ) const {

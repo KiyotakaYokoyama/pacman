@@ -65,6 +65,6 @@ void Pacman::draw( ) const {
 	_sprite->setRect( ( ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ) * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE );
 	int sx = ( int )( pos.x - DRAW_SIZE / 2 );
 	int sy = ( int )( pos.y - DRAW_SIZE );
-	_sprite->setPos( sx, sy, sx + DRAW_SIZE / 2, sy + DRAW_SIZE );
+	_sprite->setPos( sx, sy, sx + DRAW_SIZE, sy + DRAW_SIZE );
 	_sprite->draw( );
 }

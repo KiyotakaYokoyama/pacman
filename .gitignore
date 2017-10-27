@@ -7,3 +7,8 @@ Solution/Debug/
 Solution/Common/Debug/
 Solution/Editor/Debug/
 Solution/Pacman/Debug/
+*.suo
+Solution/Common/x64/
+Solution/Editor/x64/
+Solution/Pacman/x64/
+Solution/x64/

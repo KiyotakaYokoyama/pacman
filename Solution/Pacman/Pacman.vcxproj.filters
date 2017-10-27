@@ -6,11 +6,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Debug.h" />
   </ItemGroup>
 </Project>
