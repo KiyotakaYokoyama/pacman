@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "Game.h"
 #include "Map.h"
 #include "define.h"
 
@@ -22,7 +23,7 @@ void Character::update( ) {
 }
 
 void Character::updateColl( ) {
-	MapPtr map = Map::getTask( );
+	MapPtr map = Game::getTask( )->getMap( );
 	const int HARF_CHARA_SIZE = CHARA_SIZE / 2;
 	//è„
 	if ( _vec.y < 0 ) {

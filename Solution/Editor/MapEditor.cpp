@@ -101,7 +101,7 @@ void MapEditor::modeSaveing( ) {
 	_object->save( DIRECTORY, filename );
 	ImageTargetPtr stage = _viewer->getStageSprite( );
 	std::string image_name = filename;
-	int pos = image_name.find( "." );
+	int pos = ( int )image_name.find( "." );
 	if ( pos != std::string::npos ) {
 		image_name.erase( pos );
 	}

@@ -16,7 +16,7 @@ EnemyShadow::~EnemyShadow( ) {
 }
 
 void EnemyShadow::act( ) {
-	MapPtr map = Map::getTask( );
+	MapPtr map = Game::getTask( )->getMap( );
 	PacmanConstPtr pacman = Game::getTask( )->getPacman( );
 	Vector pacman_pos = pacman->getPos( );
 	Vector self_pos = getPos( );

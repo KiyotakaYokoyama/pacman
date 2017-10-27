@@ -1,4 +1,5 @@
 #include "Debug.h"
+#include "Game.h"
 #include "Map.h"
 #include "define.h"
 #include "Application.h"
@@ -37,7 +38,7 @@ void Debug::draw( ) const {
 		drawer->drawLine( i * CHIP_SIZE, 0, i * CHIP_SIZE, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	}
 
-	MapPtr map = Map::getTask( );
+	MapPtr map = Game::getTask( )->getMap( );
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		int ox = i % MAP_WIDTH_CHIP_NUM;
 		int oy = i / MAP_WIDTH_CHIP_NUM;

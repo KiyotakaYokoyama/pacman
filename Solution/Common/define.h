@@ -2,6 +2,7 @@
 
 const int WIDTH = 1280;
 const int HEIGHT = 720;
+const int PLAYER_NUM = 2;
 const int CHIP_SIZE = 16;
 const int CHARA_SIZE = CHIP_SIZE - 3;
 
@@ -37,3 +38,5 @@ const unsigned char OBJECT_NONE         = 0x00;
 const unsigned char OBJECT_WALL         = 0x01;
 const unsigned char OBJECT_FEED         = 0x02;
 const unsigned char OBJECT_ENHANCE_FEED = 0x03;
+const unsigned char OBJECT_PLAYER1      = 0x04;
+const unsigned char OBJECT_PLAYER2      = 0x05;

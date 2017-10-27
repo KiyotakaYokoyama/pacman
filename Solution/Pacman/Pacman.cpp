@@ -1,9 +1,11 @@
 #include "Pacman.h"
 #include "define.h"
+#include "Game.h"
 #include "Map.h"
 #include "Drawer.h"
 #include "Image.h"
 #include "Keyboard.h"
+#include <assert.h>
 
 const int SPRITE_SIZE = 64;
 const int DRAW_SIZE = CHIP_SIZE;
@@ -12,10 +14,17 @@ const int MAX_SPEED = 8;
 const int WAIT_ANIM_TIME = 5;
 const int ANIM_NUM = 3;
 
-Pacman::Pacman( Vector pos ) :
+Pacman::Pacman( int id, const Vector& pos  ) :
+_id( id ),
 Character( pos ),
 _turnaround( false ) {
-	_sprite = Drawer::getTask( )->createImage( "player1.png" );
+	if ( id == 0 ) {
+		_sprite = Drawer::getTask( )->createImage( "player1.png" );
+	}
+	if ( id == 1 ) {
+		_sprite = Drawer::getTask( )->createImage( "player2.png" );
+	}
+	assert( id == 0 || id == 1 );
 }
 
 
@@ -31,19 +40,19 @@ void Pacman::actOnMove( ) {
 	Vector vec = getVec( );
 	KeyboardPtr key = Keyboard::getTask( );
 	bool brake = true;
-	if ( key->isHoldKey( "ARROW_LEFT" ) ) {
+	if ( key->isHoldKey( _id == 0 ? "A" : "ARROW_LEFT" ) ) {
 		vec.x -= MOVE_SPEED;
 		brake = false;
 	}
-	if ( key->isHoldKey( "ARROW_RIGHT" ) ) {
+	if ( key->isHoldKey( _id == 0 ? "D" : "ARROW_RIGHT" ) ) {
 		vec.x += MOVE_SPEED;
 		brake = false;
 	}
-	if ( key->isHoldKey( "ARROW_UP" ) ) {
+	if ( key->isHoldKey( _id == 0 ? "W" : "ARROW_UP" ) ) {
 		vec.y -= MOVE_SPEED;
 		brake = false;
 	}
-	if ( key->isHoldKey( "ARROW_DOWN" ) ) {
+	if ( key->isHoldKey( _id == 0 ? "S" : "ARROW_DOWN" ) ) {
 		vec.y += MOVE_SPEED;
 		brake = false;
 	}
@@ -63,7 +72,7 @@ void Pacman::actOnMove( ) {
 }
 
 void Pacman::actOnEat( ) {
-	MapPtr map = Map::getTask( );
+	MapPtr map = Game::getTask( )->getMap( );
 	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
 	unsigned char obj = map->getObject( check );
 	if ( obj == OBJECT_ENHANCE_FEED || obj == OBJECT_FEED ) {

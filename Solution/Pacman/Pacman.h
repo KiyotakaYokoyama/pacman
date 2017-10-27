@@ -6,7 +6,7 @@ PTR( Image );
 
 class Pacman : public Character {
 public:
-	Pacman( Vector pos );
+	Pacman( int id, const Vector& pos );
 	virtual ~Pacman( );
 public:
 	void draw( ) const;
@@ -15,6 +15,7 @@ private:
 	void actOnMove( );
 	void actOnEat( );
 private:
+	int _id;
 	bool _turnaround;
 	ImagePtr _sprite;
 };

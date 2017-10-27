@@ -1,8 +1,11 @@
 #pragma once
 #include "Task.h"
 #include <string>
+#include <array>
+#include "define.h"
 
 PTR( Game );
+PTR( Map );
 PTR( Pacman );
 PTR( Military );
 
@@ -16,9 +19,11 @@ public:
 public:
 	void initialize( );
 	void update( );
+	MapPtr getMap( );
 	PacmanConstPtr getPacman( );
 private:
-	PacmanPtr _pacman;
+	MapPtr _map;
+	std::array< PacmanPtr, PLAYER_NUM > _player;
 	MilitaryPtr _military;
 };
 

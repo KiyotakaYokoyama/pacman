@@ -8,17 +8,7 @@
 
 const std::string FILE_PATH = "Resource/MapData/test.objs";
 
-MapPtr Map::getTask( ) {
-	return std::dynamic_pointer_cast< Map >( Application::getInstance( )->getTask( getTag( ) ) );
-}
-
 Map::Map( ) {
-}
-
-Map::~Map( ) {
-}
-
-void Map::initialize( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_stage = drawer->createImage( "MapData/test_stage.png" );
 	_feeds = drawer->createImage( "feeds.png" );
@@ -29,11 +19,28 @@ void Map::initialize( ) {
 
 	_objects.resize( MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM );
 
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		_player_pos[ i ] = Vector( 32 + i * 868, 32 + i * 268 );
+	}
+
 	unsigned char object;
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		binary->read( (void*)&object, sizeof( unsigned char ) );
 		_objects[ i ] = object;
+		if ( object == OBJECT_PLAYER1 ) {
+			_player_pos[ 0 ].x = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
+			_player_pos[ 0 ].y = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
+			_objects[ i ] = OBJECT_NONE;
+		}
+		if ( object == OBJECT_PLAYER2 ) {
+			_player_pos[ 1 ].x = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
+			_player_pos[ 1 ].y = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
+			_objects[ i ] = OBJECT_NONE;
+		}
 	}
+}
+
+Map::~Map( ) {
 }
 
 void Map::update( ) {
@@ -96,4 +103,8 @@ void Map::eatFeed( int ox, int oy ) {
 #endif
 	int idx = ox + oy * MAP_WIDTH_CHIP_NUM;
 	_objects[ idx ] = OBJECT_NONE;
+}
+
+Vector Map::getPlayerPos( int  id ) {
+	return _player_pos[ id ];
 }

@@ -19,7 +19,10 @@ Game::~Game( ) {
 }
 
 void Game::initialize( ) {
-	_pacman = PacmanPtr( new Pacman( Vector( 48, 48 ) ) );
+	_map = MapPtr( new Map );
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		_player[ i ] = PacmanPtr( new Pacman( i, _map->getPlayerPos( i ) ) );
+	}
 	_military = MilitaryPtr( new Military );
 	_military->addEnemy( EnemyPtr( new EnemyShadow( Vector( 480, 480 - 64 ) ) ) );
 }
@@ -29,11 +32,16 @@ void Game::update( ) {
 	drawer->waitForSync( );
 	drawer->flip( );
 
-	Map::getTask( )->draw( );
-	_pacman->update( );
+	Game::getTask( )->getMap( )->draw( );
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		_player[ i ]->update( );
+	}
 	_military->update( );
 
-	_pacman->draw( );
+	
+	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+		_player[ i ]->draw( );
+	}
 	_military->draw( );
 	
 	DebugPtr debug = Debug::getTask( );
@@ -42,6 +50,10 @@ void Game::update( ) {
 	}
 }
 
+MapPtr Game::getMap( ) {
+	return _map;
+}
+
 PacmanConstPtr Game::getPacman( ) {
-	return _pacman;
+	return _player[ 0 ];
 }
