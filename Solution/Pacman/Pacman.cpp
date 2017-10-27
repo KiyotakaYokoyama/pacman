@@ -23,7 +23,6 @@ Pacman::~Pacman( ) {
 }
 
 void Pacman::act( ) {
-	updateKey( );
 	actOnMove( );
 	actOnEat( );
 }
@@ -32,19 +31,19 @@ void Pacman::actOnMove( ) {
 	Vector vec = getVec( );
 	KeyboardPtr key = Keyboard::getTask( );
 	bool brake = true;
-	if ( _key[ KEY_LEFT ] ) {
+	if ( key->isHoldKey( "ARROW_LEFT" ) ) {
 		vec.x -= MOVE_SPEED;
 		brake = false;
 	}
-	if ( _key[ KEY_RIGHT ] ) {
+	if ( key->isHoldKey( "ARROW_RIGHT" ) ) {
 		vec.x += MOVE_SPEED;
 		brake = false;
 	}
-	if ( _key[ KEY_UP ] ) {
+	if ( key->isHoldKey( "ARROW_UP" ) ) {
 		vec.y -= MOVE_SPEED;
 		brake = false;
 	}
-	if ( _key[ KEY_DOWN ] ) {
+	if ( key->isHoldKey( "ARROW_DOWN" ) ) {
 		vec.y += MOVE_SPEED;
 		brake = false;
 	}
@@ -82,8 +81,4 @@ void Pacman::draw( ) const {
 	int sy = ( int )( pos.y - DRAW_SIZE );
 	_sprite->setPos( sx, sy, sx + DRAW_SIZE, sy + DRAW_SIZE );
 	_sprite->draw( );
-}
-
-void Pacman::setKey( KEY key ) {
-	_key[ key ] = true;
 }
