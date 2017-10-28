@@ -20,5 +20,6 @@ private:
 	ObjectConstPtr _object;
 	ImagePtr _image;
 	ImagePtr _wall;
+	ImagePtr _guide;
 };
 

@@ -11,24 +11,20 @@ ObjectViewer::ObjectViewer( ObjectConstPtr object ) :
 _object( object ) {
 	_image = Drawer::getTask( )->createImage( "object.png" );
 	_wall = Drawer::getTask( )->createImage( "stage_chip.png" );
+	_guide = Drawer::getTask( )->createImage( "guide_stage.png" );
+	int tw = 0;
+	int th = 0;
+	_guide->getImageSize( tw, th );
+	_guide->setRect( 0, 0, tw, th );
+	_guide->setPos( DRAW_X, DRAW_Y, DRAW_X + CHIP_SIZE * MAP_WIDTH_CHIP_NUM, DRAW_Y + CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 }
 
 ObjectViewer::~ObjectViewer( ) {
 }
 
 void ObjectViewer::draw( ) const {
-	drawBoxTable( );
+	_guide->draw( );
 	drawObjects( );
-}
-
-void ObjectViewer::drawBoxTable( ) const {
-	DrawerPtr drawer = Drawer::getTask( );
-	for ( int i = 0; i <= MAP_HEIGHT_CHIP_NUM; i++ ) {
-		drawer->drawLine( DRAW_X, DRAW_Y + i * CHIP_SIZE, DRAW_X + CHIP_SIZE * MAP_WIDTH_CHIP_NUM, DRAW_Y + i * CHIP_SIZE );
-	}
-	for ( int i = 0; i <= MAP_WIDTH_CHIP_NUM; i++ ) {
-		drawer->drawLine( DRAW_X + i * CHIP_SIZE, DRAW_Y, DRAW_X + i * CHIP_SIZE, DRAW_Y + CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
-	}
 }
 
 void ObjectViewer::drawObjects( ) const {
