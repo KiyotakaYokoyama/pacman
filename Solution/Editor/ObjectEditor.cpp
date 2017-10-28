@@ -39,6 +39,12 @@ void ObjectEditor::updateMode( ) {
 	if ( key->isPushKey( "4" ) ) {
 		_mode = MODE_ENHANCE_FEET;
 	}
+	if ( key->isPushKey( "5" ) ) {
+		_mode = MODE_PLAYER1;
+	}
+	if ( key->isPushKey( "6" ) ) {
+		_mode = MODE_PLAYER2;
+	}
 }
 
 void ObjectEditor::updateCursor( ) {
@@ -71,8 +77,17 @@ void ObjectEditor::edit( ) {
 	case MODE_ENHANCE_FEET:
 		chip = OBJECT_ENHANCE_FEED;
 		break;
+	case MODE_PLAYER1:
+		chip = OBJECT_PLAYER1;
+		break;
+	case MODE_PLAYER2:
+		chip = OBJECT_PLAYER2;
+		break;
 	}
 	if ( Mouse::getTask( )->isHoldLeftButton( ) ) {
+		if ( chip == OBJECT_PLAYER1 || chip == OBJECT_PLAYER2 ) {
+			checkAndEditChip( chip );
+		}
 		_object->setChip( ( int )_cursor.x, ( int )_cursor.y, chip );
 	}
 }
@@ -91,5 +106,16 @@ void ObjectEditor::drawCursor( ) const {
 		int sy = DRAW_Y + ( int )_cursor.y * CHIP_SIZE;
 		_cursor_sprite->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
 		_cursor_sprite->draw( );
+	}
+}
+
+void ObjectEditor::checkAndEditChip( unsigned int chip ) {
+	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM;i++ ) {
+		for ( int j = 0; j < MAP_HEIGHT_CHIP_NUM; j++ ) {
+			if ( _object->getChip( i, j ) == chip ) {
+				_object->setChip( i, j, OBJECT_NONE );
+				break;
+			}
+		}
 	}
 }

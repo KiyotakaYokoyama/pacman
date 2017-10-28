@@ -12,6 +12,8 @@ public:
 public:
 	enum MODE {
 		MODE_NONE,
+		MODE_PLAYER1,
+		MODE_PLAYER2,
 		MODE_WALL,
 		MODE_FEED,
 		MODE_ENHANCE_FEET
@@ -25,6 +27,7 @@ private:
 	void updateMode( );
 	void updateCursor( );
 	void edit( );
+	void checkAndEditChip( unsigned int chip );
 private:
 	MODE _mode;
 	Vector _cursor;

@@ -37,6 +37,12 @@ void ObjectViewer::drawObjects( ) const {
 			switch ( _object->getChip( j, i ) ) {
 			case OBJECT_NONE:
 				continue;
+			case OBJECT_PLAYER1:
+				_image->setRect( 0 * SPRITE_SIZE, 1 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
+			case OBJECT_PLAYER2:
+				_image->setRect( 1 * SPRITE_SIZE, 1 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
 			case OBJECT_WALL:
 				setWallImageRect( j, i );
 				{
@@ -52,8 +58,8 @@ void ObjectViewer::drawObjects( ) const {
 			case OBJECT_ENHANCE_FEED:
 				_image->setRect( 0 * SPRITE_SIZE, 0 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
 				break;
-				default:;
-				//continue;
+				default:
+				continue;
 			}
 			int sx = DRAW_X + j * CHIP_SIZE;
 			int sy = DRAW_Y + i * CHIP_SIZE;
@@ -80,6 +86,17 @@ void ObjectViewer::setWallImageRect( int ox, int oy ) const {
 	//左
 	if ( _object->getChip( ox - 1, oy ) == OBJECT_WALL ) {
 		flag |= 1 << 3;
+	}
+	//マップ端
+	if ( ox % MAP_WIDTH_CHIP_NUM == 0 ) {
+		if ( flag & 0b1000 ) {
+			flag &= 0b0111;
+		}
+	}
+	if ( ox % MAP_WIDTH_CHIP_NUM == MAP_WIDTH_CHIP_NUM - 1 ) {
+		if ( flag & 0b0010 ) {
+			flag &= 0b1101;
+		}
 	}
 
 	int tx = 0;
