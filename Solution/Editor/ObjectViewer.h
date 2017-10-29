@@ -13,7 +13,6 @@ public:
 	void draw( ) const;
 	ImageTargetPtr getStageSprite( );
 private:
-	void drawBoxTable( ) const;
 	void drawObjects( ) const;
 	void setWallImageRect( int ox, int oy ) const;
 private:

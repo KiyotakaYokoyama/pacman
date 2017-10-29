@@ -59,15 +59,25 @@ void MapEditor::drawInfo( ) const {
 			case ObjectEditor::MODE_WALL:		  str += "壁\n"; break;
 			case ObjectEditor::MODE_FEED:		  str += "餌\n"; break;
 			case ObjectEditor::MODE_ENHANCE_FEET: str += "パワーエサ\n"; break;
-			case ObjectEditor::MODE_PLAYER1:		  str += "プレイヤー1\n"; break;
-			case ObjectEditor::MODE_PLAYER2:		  str += "プレイヤー2\n"; break;
+			case ObjectEditor::MODE_PLAYER1:	  str += "プレイヤー1\n"; break;
+			case ObjectEditor::MODE_PLAYER2:	  str += "プレイヤー2\n"; break;
+			case ObjectEditor::MODE_SAHDOW:	      str += "アカベエ\n"; break;
+			case ObjectEditor::MODE_SPEEDY:       str += "ピンキー\n"; break;
+			case ObjectEditor::MODE_BASHFUL:	  str += "アオスケ\n"; break;
+			case ObjectEditor::MODE_POKEY:        str += "グズタ\n"; break;
+			case ObjectEditor::MODE_STAGE_WARP:	  str += "ワープブロック\n"; break;
 			}
 			str += "1:削除\n";
 			str += "2:壁\n";
 			str += "3:餌\n";
 			str += "4:パワーエサ\n";
-			str += "5:プレイヤー１\n";
-			str += "6:プレイヤー２";
+			str += "5:ワープ\n";
+			str += "Q:プレイヤー１\n";
+			str += "W:プレイヤー２\n";
+			str += "E:アカベエ\n";
+			str += "R:ピンキー\n";
+			str += "T:アオスケ\n";
+			str += "Y:グズタ\n";
 			drawer->drawString( 0, 10, str.c_str( ) );
 		}
 		break;

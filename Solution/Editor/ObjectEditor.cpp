@@ -40,10 +40,25 @@ void ObjectEditor::updateMode( ) {
 		_mode = MODE_ENHANCE_FEET;
 	}
 	if ( key->isPushKey( "5" ) ) {
+		_mode = MODE_STAGE_WARP;
+	}
+	if ( key->isPushKey( "Q" ) ) {
 		_mode = MODE_PLAYER1;
 	}
-	if ( key->isPushKey( "6" ) ) {
+	if ( key->isPushKey( "W" ) ) {
 		_mode = MODE_PLAYER2;
+	}
+	if ( key->isPushKey( "E" ) ) {
+		_mode = MODE_SAHDOW;
+	}
+	if ( key->isPushKey( "R" ) ) {
+		_mode = MODE_SPEEDY;
+	}
+	if ( key->isPushKey( "T" ) ) {
+		_mode = MODE_BASHFUL;
+	}
+	if ( key->isPushKey( "Y" ) ) {
+		_mode = MODE_POKEY;
 	}
 }
 
@@ -82,6 +97,21 @@ void ObjectEditor::edit( ) {
 		break;
 	case MODE_PLAYER2:
 		chip = OBJECT_PLAYER2;
+		break;
+	case MODE_SAHDOW:
+		chip = OBJECT_SAHDOW;
+		break;
+	case MODE_SPEEDY:
+		chip = OBJECT_SPEEDY;
+		break;
+	case MODE_BASHFUL:
+		chip = OBJECT_BASHFUL;
+		break;
+	case MODE_POKEY:
+		chip = OBJECT_POKEY;
+		break;
+	case MODE_STAGE_WARP:
+		chip = OBJECT_STAGE_WARP;
 		break;
 	}
 	if ( Mouse::getTask( )->isHoldLeftButton( ) ) {

@@ -54,7 +54,10 @@ void ObjectViewer::drawObjects( ) const {
 			case OBJECT_ENHANCE_FEED:
 				_image->setRect( 0 * SPRITE_SIZE, 0 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
 				break;
-				default:
+			case OBJECT_STAGE_WARP:
+				_image->setRect( 2 * SPRITE_SIZE, 0 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
+			default:
 				continue;
 			}
 			int sx = DRAW_X + j * CHIP_SIZE;
