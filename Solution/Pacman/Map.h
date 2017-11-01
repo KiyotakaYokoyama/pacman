@@ -22,6 +22,9 @@ public:
 	unsigned char getObject( int ox, int oy ) const;
 	Vector getPlayerPos( int id );
 private:
+	void loadStage( std::string stage_name );
+private:
+	std::vector< std::string > _stages;
 	std::vector< unsigned char > _objects;
 	std::array< Vector, PLAYER_NUM > _player_pos;
 	ImagePtr _stage;

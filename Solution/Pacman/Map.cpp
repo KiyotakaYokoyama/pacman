@@ -4,18 +4,43 @@
 #include "Image.h"
 #include "Application.h"
 #include "Binary.h"
+#include "LoadCSV.h"
 #include <assert.h>
 
-const std::string FILE_PATH = "Resource/MapData/test.objs";
+const std::string FILE_DIRECTORY = "Resource/MapData/";
+const int STAGE_NUM = 10;
 
 Map::Map( ) {
 	DrawerPtr drawer = Drawer::getTask( );
-	_stage = drawer->createImage( "MapData/test_stage.png" );
 	_feeds = drawer->createImage( "feeds.png" );
+
+	std::string filename = FILE_DIRECTORY + "stage";
+	LoadCSV csv = LoadCSV( filename.c_str( ), STAGE_NUM );
+
+	int size = csv.getSize( );
+	for ( int i = 0; i < size; i++ ) {
+		std::string str = csv.getData( i );
+		_stages.push_back( str );
+	}
+
+	loadStage( _stages[ 1 ] );
+}
+
+Map::~Map( ) {
+}
+
+void Map::loadStage( std::string stage_name ) {
+	{
+		DrawerPtr drawer = Drawer::getTask( );
+		std::string file_path = "MapData/" + stage_name + "_stage.png";
+		_stage = drawer->createImage( file_path.c_str( ) );
+	}
 
 	ApplicationPtr app = Application::getInstance( );
 	BinaryPtr binary = BinaryPtr( new Binary );
-	app->loadBinary( FILE_PATH, binary );
+	std::string file_path = FILE_DIRECTORY + stage_name;
+	file_path += ".objs";
+	app->loadBinary( file_path, binary );
 
 	_objects.resize( MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM );
 
@@ -38,9 +63,6 @@ Map::Map( ) {
 			_objects[ i ] = OBJECT_NONE;
 		}
 	}
-}
-
-Map::~Map( ) {
 }
 
 void Map::update( ) {
