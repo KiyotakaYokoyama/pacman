@@ -5,8 +5,9 @@
 
 static const int MAX_ACT_TIME = 0xfffffff;
 
-Character::Character( Vector pos ) :
+Character::Character( Vector pos, bool coll ) :
 _pos( pos ),
+_coll( coll ),
 _act_time( 0 ) {
 }
 
@@ -17,7 +18,9 @@ void Character::update( ) {
 	act( );
 	_act_time = ( _act_time++ ) % MAX_ACT_TIME;
 
-	updateColl( );
+	if( _coll ) {
+		updateColl( );
+	}
 
 	_pos += _vec;
 }
@@ -95,6 +98,14 @@ Vector Character::getVec( ) const {
 	return _vec;
 }
 
+void Character::setPos( const Vector& pos ) {
+	_pos = pos;
+}
+
 void Character::setVec( const Vector& vec ) {
 	_vec = vec;
+}
+
+void Character::setColl( bool coll ) {
+	_coll = coll;
 }

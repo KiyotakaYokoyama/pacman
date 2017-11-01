@@ -14,9 +14,13 @@ private:
 	void act( );
 	void actOnMove( );
 	void actOnEat( );
+	void actOnWarp( );
+	void actOnAutoMove( );
 private:
 	int _id;
 	bool _turnaround;
+	bool _auto_move;
+	Vector _auto_vec;
 	ImagePtr _sprite;
 };
 

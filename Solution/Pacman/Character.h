@@ -3,13 +3,15 @@
 
 class Character {
 public:
-	Character( Vector pos );
+	Character( Vector pos, bool coll = true );
 	virtual ~Character( );
 public:
 	void update( );
 	Vector getPos( ) const;
 protected:
+	void setPos( const Vector& pos );
 	void setVec( const Vector& vec );
+	void setColl( bool coll );
 	int getActTime( ) const;
 	Vector getVec( ) const;
 private:
@@ -17,6 +19,7 @@ private:
 	void updateColl( );
 private:
 	int _act_time;
+	bool _coll;
 	Vector _pos;
 	Vector _vec;
 };

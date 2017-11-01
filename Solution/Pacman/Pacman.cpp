@@ -15,8 +15,9 @@ const int WAIT_ANIM_TIME = 5;
 const int ANIM_NUM = 3;
 
 Pacman::Pacman( int id, const Vector& pos  ) :
-_id( id ),
 Character( pos ),
+_id( id ),
+_auto_move( false ),
 _turnaround( false ) {
 	if ( id == 0 ) {
 		_sprite = Drawer::getTask( )->createImage( "player1.png" );
@@ -32,8 +33,13 @@ Pacman::~Pacman( ) {
 }
 
 void Pacman::act( ) {
-	actOnMove( );
-	actOnEat( );
+	if ( !_auto_move ) {
+		actOnMove( );
+		actOnEat( );
+		actOnWarp( );
+	} else {
+		actOnAutoMove( );
+	}
 }
 
 void Pacman::actOnMove( ) {
@@ -81,6 +87,57 @@ void Pacman::actOnEat( ) {
 	if ( obj == OBJECT_ENHANCE_FEED ) {
 		_turnaround = true;
 	}
+}
+
+void Pacman::actOnWarp( ) {
+	MapPtr map = Game::getTask( )->getMap( );
+	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
+	unsigned char obj = map->getObject( check );
+	if ( obj == OBJECT_STAGE_WARP ) {
+		_auto_move = true;
+		setColl( false );
+			
+		if ( getPos( ).x < CHIP_SIZE * MAP_WIDTH_CHIP_NUM / 2 ) {
+			_auto_vec = Vector( -MAX_SPEED * 0.8, 0 );
+		} else {
+			_auto_vec = Vector( MAX_SPEED * 0.8, 0 );
+		}
+		setVec( _auto_vec );
+	}
+}
+
+void Pacman::actOnAutoMove( ) {
+	const int MAP_WIDTH = CHIP_SIZE * MAP_WIDTH_CHIP_NUM;
+	bool automatic = true;
+	Vector pos = getPos( );
+
+	if ( _auto_vec.x < 0 ) {
+		if ( pos.x < 0 ) {
+			pos.x += MAP_WIDTH;
+			setPos( pos );
+		}
+		if ( pos.x > MAP_WIDTH / 2 &&
+			 pos.x < MAP_WIDTH - ( CHIP_SIZE * 3 ) / 2 ) {
+			automatic = false;
+		}
+	} else {
+		if ( pos.x > MAP_WIDTH ) {
+			pos.x -= MAP_WIDTH;
+			setPos( pos );
+		}
+		if ( pos.x < MAP_WIDTH / 2 &&
+			 pos.x > CHIP_SIZE * 3 / 2 ) {
+			automatic = false;
+		}
+	}
+
+	if ( !automatic ) {
+		_auto_move = false;
+		setColl( true );
+		_auto_vec = Vector( );
+	}
+
+	setVec( _auto_vec );
 }
 
 void Pacman::draw( ) const {
