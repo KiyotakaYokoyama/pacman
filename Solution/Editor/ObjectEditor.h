@@ -26,6 +26,7 @@ public:
 public:
 	void update( );
 	void drawCursor( ) const;
+	void initData( ) const;
 	MODE getMode( ) const;
 	Vector getCursor( ) const;
 private:

@@ -149,3 +149,11 @@ void ObjectEditor::checkAndEditChip( unsigned int chip ) {
 		}
 	}
 }
+
+void ObjectEditor::initData( ) const {
+	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM;i++ ) {
+		for ( int j = 0; j < MAP_HEIGHT_CHIP_NUM; j++ ) {
+			_object->setChip( i, j, OBJECT_NONE );
+		}
+	}
+}

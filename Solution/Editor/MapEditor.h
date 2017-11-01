@@ -21,15 +21,18 @@ private:
 	enum MODE {
 		MODE_EDIT,
 		MODE_SAVE,
-		MODE_LOAD
+		MODE_LOAD,
+		MODE_INIT
 	};
 private:
 	void updateMode( );
 	void modeEditing( );
 	void modeSaveing( );
 	void modeLoading( );
+	void modeInitialize( );
 	void drawInfo( ) const;
 private:
+	bool _init;
 	MODE _mode;
 	ObjectPtr _object;
 	ObjectEditorPtr _editor;

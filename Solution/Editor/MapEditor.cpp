@@ -17,7 +17,8 @@ MapEditorPtr MapEditor::getTask( ) {
 }
 
 MapEditor::MapEditor( ) :
-_mode( MODE_EDIT ) {
+_mode( MODE_EDIT ),
+_init( false ) {
 }
 
 MapEditor::~MapEditor( ) {
@@ -45,6 +46,9 @@ void MapEditor::update( ) {
 		modeLoading( );
 		_mode = MODE_EDIT;
 		break;
+	case MODE_INIT:
+		modeInitialize( );
+		break;
 	}
 }
 
@@ -71,32 +75,53 @@ void MapEditor::drawInfo( ) const {
 			str += "2:壁\n";
 			str += "3:餌\n";
 			str += "4:パワーエサ\n";
-			str += "5:ワープ\n";
+			str += "5:ワープブロック\n";
 			str += "Q:プレイヤー１\n";
 			str += "W:プレイヤー２\n";
-			str += "E:アカベエ\n";
-			str += "R:ピンキー\n";
-			str += "T:アオスケ\n";
-			str += "Y:グズタ\n";
+			//str += "E:アカベエ\n";
+			//str += "R:ピンキー\n";
+			//str += "T:アオスケ\n";
+			//str += "Y:グズタ\n";
 			drawer->drawString( 0, 10, str.c_str( ) );
 		}
 		break;
 	case MODE_SAVE:
-		drawer->drawString( 0, 10, "セーブ  キャンセル：何も入力せずEnter\nfilename" );
+		drawer->drawString( 0, 10, "セーブ\nキャンセル：何も入力せずEnter\nfilename" );
 		break;
 	case MODE_LOAD:
-		drawer->drawString( 0, 10, "ロード  キャンセル：何も入力せずEnter\nfilename" );
+		drawer->drawString( 0, 10, "ロード\nキャンセル：何も入力せずEnter\nfilename" );
 		break;
+	case MODE_INIT:
+		{
+			std::string message = "初期化\n本当に初期化しますか\n";
+			if ( _init ) {
+				message += "→ yes    no";
+			} else {
+				message += "   yes → no";
+			}
+			drawer->drawString( 0, 10, message.c_str( ) );
+		}
+		break;
+	}
+
+	{
+		std::string message = "F1：セーブ\n";
+		message += "F2：ロード\n";
+		message += "F9：初期化";
+		drawer->drawString( 1150, 10, message.c_str( ) );
 	}
 }
 
 void MapEditor::updateMode( ) {
 	KeyboardPtr key = Keyboard::getTask( );
-	if ( key->isPushKey( "F2" ) ) {
+	if ( key->isPushKey( "F1" ) ) {
 		_mode = MODE_SAVE;
 	}
-	if ( key->isPushKey( "F3" ) ) {
+	if ( key->isPushKey( "F2" ) ) {
 		_mode = MODE_LOAD;
+	}
+	if ( key->isPushKey( "F9" ) ) {
+		_mode = MODE_INIT;
 	}
 }
 
@@ -107,7 +132,7 @@ void MapEditor::modeEditing( ) {
 }
 
 void MapEditor::modeSaveing( ) {
-	std::string filename = Application::getInstance( )->inputString( 80, 30 );
+	std::string filename = Application::getInstance( )->inputString( 80, 47 );
 	if ( filename.size( ) == 0 ) {
 		return;
 	}
@@ -124,10 +149,27 @@ void MapEditor::modeSaveing( ) {
 }
 
 void MapEditor::modeLoading( ) {
-	std::string filename = Application::getInstance( )->inputString( 80, 30 );
+	std::string filename = Application::getInstance( )->inputString( 80, 47 );
 	if ( filename.size( ) == 0 ) {
 		return;
 	}
 
 	_object->load( DIRECTORY, filename );
+}
+
+void MapEditor::modeInitialize( ) {
+	KeyboardPtr key = Keyboard::getTask( );
+	if ( key->isPushKey( "ARROW_LEFT" ) ) {
+		_init = true;
+	}
+	if ( key->isPushKey( "ARROW_RIGHT" ) ) {
+		_init = false;
+	}
+	if ( key->isPushKey( "ENTER" ) ) {
+		if ( _init ) {
+			_editor->initData( );
+		}
+		_init = false;
+		_mode = MODE_EDIT;
+	}
 }

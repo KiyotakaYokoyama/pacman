@@ -18,7 +18,8 @@ Pacman::Pacman( int id, const Vector& pos  ) :
 Character( pos ),
 _id( id ),
 _auto_move( false ),
-_turnaround( false ) {
+_turnaround( false ),
+_auto_vec( Vector( ) ) {
 	if ( id == 0 ) {
 		_sprite = Drawer::getTask( )->createImage( "player1.png" );
 	}
