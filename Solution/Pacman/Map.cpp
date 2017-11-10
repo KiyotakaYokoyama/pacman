@@ -23,10 +23,20 @@ Map::Map( ) {
 		_stages.push_back( str );
 	}
 
-	loadStage( _stages[ 1 ] );
+	loadStage( _stages[ 0 ] );
 }
 
 Map::~Map( ) {
+}
+
+bool Map::loadStage( int idx ) {
+	bool result = false;
+	assert( idx < STAGE_NUM );
+	if ( idx < _stages.size( ) ) {
+		loadStage( _stages[ idx ] );
+		result = true;
+	}
+	return result;
 }
 
 void Map::loadStage( std::string stage_name ) {
@@ -127,6 +137,6 @@ void Map::eatFeed( int ox, int oy ) {
 	_objects[ idx ] = OBJECT_NONE;
 }
 
-Vector Map::getPlayerPos( int  id ) {
+Vector Map::getPlayerPos( int id ) {
 	return _player_pos[ id ];
 }

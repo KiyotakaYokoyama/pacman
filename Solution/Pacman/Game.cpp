@@ -46,6 +46,11 @@ void Game::update( ) {
 	
 	DebugPtr debug = Debug::getTask( );
 	if ( debug->isActive( ) ) {
+		if ( debug->isNewStage( ) ) {
+			for ( int i = 0; i < PLAYER_NUM; i++ ) {
+				_player[ i ]->entryStage( _map->getPlayerPos( i ) );
+			}
+		}
 		debug->draw( );
 	}
 }

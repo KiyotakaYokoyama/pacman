@@ -1,9 +1,12 @@
 #pragma once
 #include "Task.h"
 #include <string>
+#include <array>
+#include "define.h"
 
 PTR( Debug );
 PTR( Image );
+PTR( Pacman );
 
 class Debug : public Task {
 public:
@@ -17,8 +20,10 @@ public:
 	void update( );
 	void draw( ) const;
 	bool isActive( ) const;
+	bool isNewStage( ) const;
 private:
 	bool _active;
+	bool _new_stage;
 	ImagePtr _block_chip;
 };
 

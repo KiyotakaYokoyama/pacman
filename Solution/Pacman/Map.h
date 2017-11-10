@@ -18,6 +18,7 @@ public:
 	void drawFeed( ) const;
 	void eatFeed( const Vector& pos );
 	void eatFeed( int ox, int oy );
+	bool loadStage( int idx );
 	unsigned char getObject( const Vector& pos ) const;
 	unsigned char getObject( int ox, int oy ) const;
 	Vector getPlayerPos( int id );

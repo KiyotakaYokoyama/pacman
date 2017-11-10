@@ -14,7 +14,7 @@ const int MAX_SPEED = 8;
 const int WAIT_ANIM_TIME = 5;
 const int ANIM_NUM = 3;
 
-Pacman::Pacman( int id, const Vector& pos  ) :
+Pacman::Pacman( int id, const Vector& pos ) :
 Character( pos ),
 _id( id ),
 _auto_move( false ),
@@ -148,4 +148,8 @@ void Pacman::draw( ) const {
 	int sy = ( int )( pos.y - DRAW_SIZE );
 	_sprite->setPos( sx, sy, sx + DRAW_SIZE, sy + DRAW_SIZE );
 	_sprite->draw( );
+}
+
+void Pacman::entryStage( const Vector& pos ) {
+	setPos( pos );
 }

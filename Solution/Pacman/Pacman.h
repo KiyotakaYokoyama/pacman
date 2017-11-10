@@ -10,6 +10,7 @@ public:
 	virtual ~Pacman( );
 public:
 	void draw( ) const;
+	void entryStage( const Vector& pos );
 private:
 	void act( );
 	void actOnMove( );
