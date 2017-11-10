@@ -5,7 +5,10 @@
 #include "Map.h"
 #include "Pacman.h"
 #include "Military.h"
+#include "EnemyBashful.h"
+#include "EnemyPokey.h"
 #include "EnemyShadow.h"
+#include "EnemySpeedy.h"
 #include "Debug.h"
 
 GamePtr Game::getTask( ) {
@@ -25,6 +28,9 @@ void Game::initialize( ) {
 	}
 	_military = MilitaryPtr( new Military );
 	_military->addEnemy( EnemyPtr( new EnemyShadow( Vector( 480, 480 - 64 ) ) ) );
+	_military->addEnemy( EnemyPtr( new EnemyBashful( Vector( 960, 480 - 64 ) ) ) );
+	_military->addEnemy( EnemyPtr( new EnemySpeedy( Vector( 480, 120 - 64 ) ) ) );
+	_military->addEnemy( EnemyPtr( new EnemyPokey( Vector( 960, 120 - 64 ) ) ) );
 }
 
 void Game::update( ) {
@@ -32,13 +38,13 @@ void Game::update( ) {
 	drawer->waitForSync( );
 	drawer->flip( );
 
-	Game::getTask( )->getMap( )->draw( );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		_player[ i ]->update( );
 	}
 	_military->update( );
 
 	
+	_map->draw( );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		_player[ i ]->draw( );
 	}

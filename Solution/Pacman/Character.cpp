@@ -22,6 +22,8 @@ void Character::update( ) {
 		updateColl( );
 	}
 
+	updateDir( );
+
 	_pos += _vec;
 }
 
@@ -86,6 +88,23 @@ void Character::updateColl( ) {
 	}
 }
 
+void Character::updateDir( ) {
+	double abs_vec_x = fabs( _vec.x );
+	double abs_vec_y = fabs( _vec.y );
+	if ( abs_vec_x < abs_vec_y && _vec.y < 0 ) {
+		_dir = DIR_UP;
+	}
+	if ( abs_vec_x < abs_vec_y && _vec.y > 0 ) {
+		_dir = DIR_DOWN;
+	}
+	if ( abs_vec_x > abs_vec_y && _vec.x < 0 ) {
+		_dir = DIR_LEFT;
+	}
+	if ( abs_vec_x > abs_vec_y && _vec.x > 0 ) {
+		_dir = DIR_RIGHT;
+	}
+}
+
 int Character::getActTime( ) const {
 	return _act_time;
 }
@@ -108,4 +127,8 @@ void Character::setVec( const Vector& vec ) {
 
 void Character::setColl( bool coll ) {
 	_coll = coll;
+}
+
+Character::DIR Character::getDir( ) const {
+	return _dir;
 }
