@@ -99,7 +99,7 @@ void ObjectEditor::edit( ) {
 		chip = OBJECT_PLAYER2;
 		break;
 	case MODE_SAHDOW:
-		chip = OBJECT_SAHDOW;
+		chip = OBJECT_SHADOW;
 		break;
 	case MODE_SPEEDY:
 		chip = OBJECT_SPEEDY;

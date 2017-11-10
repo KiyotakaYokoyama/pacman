@@ -52,6 +52,7 @@ void Map::loadStage( std::string stage_name ) {
 	file_path += ".objs";
 	app->loadBinary( file_path, binary );
 
+	_objects.clear( );
 	_objects.resize( MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM );
 
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
@@ -71,6 +72,18 @@ void Map::loadStage( std::string stage_name ) {
 			_player_pos[ 1 ].x = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
 			_player_pos[ 1 ].y = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
 			_objects[ i ] = OBJECT_NONE;
+		}
+
+		if ( object == OBJECT_ENHANCE_FEED ) {
+			Vector pos( i % MAP_WIDTH_CHIP_NUM, i / MAP_WIDTH_CHIP_NUM );
+			_feed_pos.push_back( pos );
+		}
+		if ( object == OBJECT_SHADOW || object == OBJECT_BASHFUL ||
+			 OBJECT_POKEY || OBJECT_SPEEDY ) {
+			ENEMY enemy;
+			enemy.index = object;
+			enemy.pos = Vector( );
+			_enemy_pos.push_back( enemy );
 		}
 	}
 }

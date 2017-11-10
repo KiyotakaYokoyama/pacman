@@ -54,7 +54,7 @@ void ObjectViewer::drawObjects( ) const {
 			case OBJECT_ENHANCE_FEED:
 				_image->setRect( 0 * SPRITE_SIZE, 0 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
 				break;
-			case OBJECT_SAHDOW:
+			case OBJECT_SHADOW:
 				_image->setRect( 0 * SPRITE_SIZE, 2 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
 				break;
 			case OBJECT_SPEEDY:
