@@ -18,6 +18,8 @@ public:
 	void drawFeed( ) const;
 	void eatFeed( const Vector& pos );
 	void eatFeed( int ox, int oy );
+	int getMapX( const Vector& pos ) const;
+	int getMapY( const Vector& pos ) const;
 	bool loadStage( int idx );
 	unsigned char getObject( const Vector& pos ) const;
 	unsigned char getObject( int ox, int oy ) const;

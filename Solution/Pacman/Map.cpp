@@ -155,3 +155,11 @@ void Map::eatFeed( int ox, int oy ) {
 Vector Map::getPlayerPos( int id ) {
 	return _player_pos[ id ];
 }
+
+int Map::getMapX( const Vector& pos ) const {
+	return ( int )( pos.x / CHIP_SIZE );
+}
+
+int Map::getMapY( const Vector& pos ) const {
+	return ( int )( pos.y / CHIP_SIZE );
+}
