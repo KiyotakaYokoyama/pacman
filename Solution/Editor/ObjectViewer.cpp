@@ -54,6 +54,18 @@ void ObjectViewer::drawObjects( ) const {
 			case OBJECT_ENHANCE_FEED:
 				_image->setRect( 0 * SPRITE_SIZE, 0 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
 				break;
+			case OBJECT_SAHDOW:
+				_image->setRect( 0 * SPRITE_SIZE, 2 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
+			case OBJECT_SPEEDY:
+				_image->setRect( 2 * SPRITE_SIZE, 2 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
+			case OBJECT_BASHFUL:
+				_image->setRect( 3 * SPRITE_SIZE, 2 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
+			case OBJECT_POKEY:
+				_image->setRect( 1 * SPRITE_SIZE, 2 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
 			case OBJECT_STAGE_WARP:
 				_image->setRect( 2 * SPRITE_SIZE, 0 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
 				break;

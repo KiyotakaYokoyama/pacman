@@ -78,10 +78,10 @@ void MapEditor::drawInfo( ) const {
 			str += "5:ワープブロック\n";
 			str += "Q:プレイヤー１\n";
 			str += "W:プレイヤー２\n";
-			//str += "E:アカベエ\n";
-			//str += "R:ピンキー\n";
-			//str += "T:アオスケ\n";
-			//str += "Y:グズタ\n";
+			str += "E:アカベエ\n";
+			str += "R:ピンキー\n";
+			str += "T:アオスケ\n";
+			str += "Y:グズタ\n";
 			drawer->drawString( 0, 10, str.c_str( ) );
 		}
 		break;

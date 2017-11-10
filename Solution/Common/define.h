@@ -44,4 +44,4 @@ const unsigned char OBJECT_SAHDOW       = 0x06;
 const unsigned char OBJECT_SPEEDY       = 0x07;
 const unsigned char OBJECT_BASHFUL      = 0x08;
 const unsigned char OBJECT_POKEY        = 0x09;
-const unsigned char OBJECT_STAGE_WARP   = 0x09;
+const unsigned char OBJECT_STAGE_WARP   = 0x0A;
