@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "define.h"
+#include <vector>
 
 class Enemy : public Character {
 public:
@@ -23,16 +24,21 @@ private:
 		bool down;
 		bool left;
 		bool right;
-		DIRECTION dir;
+		DIRECTION before_dir;
 		Vector pos;
 		PROCEED( ) :
 		up( true ),
 		down( true ),
 		left( true ),
 		right( true ),
-		dir( DIRECTION_UP ),
+		before_dir( DIRECTION_START ),
 		pos( Vector( ) ) {
 		};
 	};
+private:
+	bool moveUp   ( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back );
+	bool moveDown ( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back );
+	bool moveLeft ( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back );
+	bool moveRight( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back );
 };
 

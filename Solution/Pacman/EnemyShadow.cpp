@@ -19,9 +19,10 @@ void EnemyShadow::act( ) {
 	MapPtr map = Game::getTask( )->getMap( );
 	PacmanConstPtr pacman = Game::getTask( )->getPacman( );
 	Vector pacman_pos = pacman->getPos( );
-	Vector self_pos = getPos( );
+	Vector self_pos = getPos( );// + Vector( 0, -CHARA_SIZE / 2 );
 
-	Vector distance = pacman_pos - self_pos;
+	setVec( getVecToGoal( self_pos, pacman_pos ).normalize( ) * MOVE_SPEED );
+	/*Vector distance = pacman_pos - self_pos;
 	Vector dir = distance.normalize( );
 	if ( fabs( distance.y ) > fabs( distance.x ) ) {
 		Vector vec = getVec( );
@@ -45,7 +46,7 @@ void EnemyShadow::act( ) {
 		if ( vec.getLength2( ) > MAX_SPEED * MAX_SPEED ) {
 			setVec( vec.normalize( ) * MAX_SPEED );
 		}
-	}
+	}*/
 }
 
 IMGAE_DATA EnemyShadow::getImageData( ) const {
