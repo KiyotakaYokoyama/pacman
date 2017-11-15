@@ -16,7 +16,7 @@ _object( object ) {
 	int th = 0;
 	_guide->getImageSize( tw, th );
 	_guide->setRect( 0, 0, tw, th );
-	_guide->setPos( DRAW_X, DRAW_Y, DRAW_X + CHIP_SIZE * MAP_WIDTH_CHIP_NUM, DRAW_Y + CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
+	_guide->setPos( DRAW_X, DRAW_Y, DRAW_X + EDITOR_CHIP_SIZE * MAP_WIDTH_CHIP_NUM, DRAW_Y + EDITOR_CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 }
 
 ObjectViewer::~ObjectViewer( ) {
@@ -42,9 +42,9 @@ void ObjectViewer::drawObjects( ) const {
 			case OBJECT_WALL:
 				setWallImageRect( j, i );
 				{
-					int sx = DRAW_X + j * CHIP_SIZE;
-					int sy = DRAW_Y + i * CHIP_SIZE;
-					_wall->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
+					int sx = DRAW_X + j * EDITOR_CHIP_SIZE;
+					int sy = DRAW_Y + i * EDITOR_CHIP_SIZE;
+					_wall->setPos( sx, sy, sx + EDITOR_CHIP_SIZE, sy + EDITOR_CHIP_SIZE );
 					_wall->draw( );
 				}
 				continue;
@@ -72,9 +72,9 @@ void ObjectViewer::drawObjects( ) const {
 			default:
 				continue;
 			}
-			int sx = DRAW_X + j * CHIP_SIZE;
-			int sy = DRAW_Y + i * CHIP_SIZE;
-			_image->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
+			int sx = DRAW_X + j * EDITOR_CHIP_SIZE;
+			int sy = DRAW_Y + i * EDITOR_CHIP_SIZE;
+			_image->setPos( sx, sy, sx + EDITOR_CHIP_SIZE, sy + EDITOR_CHIP_SIZE );
 			_image->draw( );
 		}
 	}

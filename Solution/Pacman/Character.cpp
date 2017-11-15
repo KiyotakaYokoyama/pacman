@@ -29,6 +29,8 @@ void Character::update( ) {
 
 void Character::updateColl( ) {
 	MapPtr map = Game::getTask( )->getMap( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
 	const int HARF_CHARA_SIZE = CHARA_SIZE / 2;
 	//è„
 	if ( _vec.y < 0 ) {

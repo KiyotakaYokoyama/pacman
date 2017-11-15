@@ -63,9 +63,9 @@ void ObjectEditor::updateMode( ) {
 }
 
 void ObjectEditor::updateCursor( ) {
-	_cursor = Mouse::getTask( )->getPos( ) * ( 1.0 / CHIP_SIZE );
-	_cursor.x -= DRAW_X / CHIP_SIZE + 0.5;
-	_cursor.y -= DRAW_Y / CHIP_SIZE;
+	_cursor = Mouse::getTask( )->getPos( ) * ( 1.0 / EDITOR_CHIP_SIZE );
+	_cursor.x -= DRAW_X / EDITOR_CHIP_SIZE + 0.5;
+	_cursor.y -= DRAW_Y / EDITOR_CHIP_SIZE;
 
 	if ( _cursor.x < 0 || _cursor.x >= MAP_WIDTH_CHIP_NUM ||
 		 _cursor.y < 0 || _cursor.y >= MAP_HEIGHT_CHIP_NUM ) {
@@ -132,9 +132,9 @@ Vector ObjectEditor::getCursor( ) const {
 
 void ObjectEditor::drawCursor( ) const {
 	if ( _cursor != IGNORE_MOUSE_POS ) {
-		int sx = DRAW_X + ( int )_cursor.x * CHIP_SIZE;
-		int sy = DRAW_Y + ( int )_cursor.y * CHIP_SIZE;
-		_cursor_sprite->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
+		int sx = DRAW_X + ( int )_cursor.x * EDITOR_CHIP_SIZE;
+		int sy = DRAW_Y + ( int )_cursor.y * EDITOR_CHIP_SIZE;
+		_cursor_sprite->setPos( sx, sy, sx + EDITOR_CHIP_SIZE, sy + EDITOR_CHIP_SIZE );
 		_cursor_sprite->draw( );
 	}
 }

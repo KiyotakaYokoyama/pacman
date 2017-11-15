@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "define.h"
+#include "Game.h"
 #include "Drawer.h"
 #include "Image.h"
 #include "Application.h"
@@ -23,7 +24,7 @@ Map::Map( ) {
 		_stages.push_back( str );
 	}
 
-	loadStage( _stages[ 0 ] );
+	loadStage( _stages[ 1 ] );
 }
 
 Map::~Map( ) {
@@ -61,6 +62,7 @@ void Map::loadStage( std::string stage_name ) {
 
 	_feed_pos.clear( );
 	_enemy_pos.clear( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	unsigned char object;
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		binary->read( (void*)&object, sizeof( unsigned char ) );
@@ -94,6 +96,7 @@ void Map::update( ) {
 }
 
 void Map::draw( ) const {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	_stage->setRect( 0, 0, 4800, 1920 );
 	_stage->setPos( 0, 0, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	_stage->draw( );
@@ -102,6 +105,7 @@ void Map::draw( ) const {
 }
 
 void Map::drawFeed( ) const {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		int sx = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
 		int sy = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
@@ -119,13 +123,14 @@ void Map::drawFeed( ) const {
 }
 
 unsigned char Map::getObject( const Vector& pos ) const {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	int ox = ( int )( pos.x / CHIP_SIZE );
 	int oy = ( int )( pos.y / CHIP_SIZE );
 	return getObject( ox, oy );
 }
 
 unsigned char Map::getObject( int ox, int oy ) const {
-	assert( ox >= 0 && ox <= MAP_WIDTH_CHIP_NUM && oy >= 0 && oy <= MAP_HEIGHT_CHIP_NUM );
+//	assert( ox >= 0 && ox <= MAP_WIDTH_CHIP_NUM && oy >= 0 && oy <= MAP_HEIGHT_CHIP_NUM );
 	if ( ox < 0 || ox >= MAP_WIDTH_CHIP_NUM || oy < 0 || oy >= MAP_HEIGHT_CHIP_NUM ) {
 		return OBJECT_WALL;
 	}
@@ -136,6 +141,7 @@ unsigned char Map::getObject( int ox, int oy ) const {
 }
 
 void Map::eatFeed( const Vector& pos ) {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	int ox = ( int )( pos.x / CHIP_SIZE );
 	int oy = ( int )( pos.y / CHIP_SIZE );
 	eatFeed( ox, oy );
@@ -157,9 +163,11 @@ Vector Map::getPlayerPos( int id ) {
 }
 
 int Map::getMapX( const Vector& pos ) const {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	return ( int )( pos.x / CHIP_SIZE );
 }
 
 int Map::getMapY( const Vector& pos ) const {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	return ( int )( pos.y / CHIP_SIZE );
 }

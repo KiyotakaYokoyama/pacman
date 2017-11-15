@@ -3,8 +3,6 @@
 const int WIDTH = 1280;
 const int HEIGHT = 720;
 const int PLAYER_NUM = 2;
-const int CHIP_SIZE = 16;
-const int CHARA_SIZE = CHIP_SIZE - 3;
 
 struct IMGAE_DATA {
 	int sx1;
@@ -31,8 +29,9 @@ struct IMGAE_DATA {
 //Editor
 const int MAP_WIDTH_CHIP_NUM = 75;
 const int MAP_HEIGHT_CHIP_NUM = 30;
-const int DRAW_X = ( WIDTH - ( CHIP_SIZE * MAP_WIDTH_CHIP_NUM ) ) / 2;
-const int DRAW_Y = HEIGHT - ( CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
+const int EDITOR_CHIP_SIZE = 16;
+const int DRAW_X = ( WIDTH - ( EDITOR_CHIP_SIZE * MAP_WIDTH_CHIP_NUM ) ) / 2;
+const int DRAW_Y = HEIGHT - ( EDITOR_CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 
 const unsigned char OBJECT_NONE         = 0x00;
 const unsigned char OBJECT_WALL         = 0x01;

@@ -19,39 +19,20 @@ void EnemyShadow::act( ) {
 	MapPtr map = Game::getTask( )->getMap( );
 	PacmanConstPtr pacman = Game::getTask( )->getPacman( );
 	Vector pacman_pos = pacman->getPos( );
-	Vector self_pos = getPos( );// + Vector( 0, -CHARA_SIZE / 2 );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
+	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
 
-	setVec( getVecToGoal( self_pos, pacman_pos ).normalize( ) * MOVE_SPEED );
-	/*Vector distance = pacman_pos - self_pos;
-	Vector dir = distance.normalize( );
-	if ( fabs( distance.y ) > fabs( distance.x ) ) {
-		Vector vec = getVec( );
-		vec.y += dir.y * MOVE_SPEED;
-		if ( map->getObject( self_pos + Vector( 0, vec.y + dir.y > 0 ? CHARA_SIZE : 0 ) ) == OBJECT_WALL ) {
-			vec.y -= dir.y * MOVE_SPEED;
-			vec.x += dir.x * MOVE_SPEED;
-		}
-		setVec( vec );
-	} else {
-		Vector vec = getVec( );
-		vec.x += dir.x * MOVE_SPEED;
-		if ( map->getObject( self_pos + Vector( vec.x + dir.x > 0 ? CHARA_SIZE : -CHARA_SIZE, 0 ) ) == OBJECT_WALL ) {
-			vec.x -= dir.x * MOVE_SPEED;
-			vec.y += dir.y * MOVE_SPEED;
-		}
-		setVec( vec );
-	}
-	{
-		Vector vec = getVec( );
-		if ( vec.getLength2( ) > MAX_SPEED * MAX_SPEED ) {
-			setVec( vec.normalize( ) * MAX_SPEED );
-		}
-	}*/
+	//Vector vec = AStar( self_pos, pacman_pos ) * MOVE_SPEED;
+	//if ( ( pacman_pos - self_pos ).getLength2( ) < MOVE_SPEED * MOVE_SPEED ) {
+	//	vec = pacman_pos - self_pos;
+	//}
+	//setVec( vec );
 }
 
 IMGAE_DATA EnemyShadow::getImageData( ) const {
 	IMGAE_DATA result = IMGAE_DATA( );
 	Vector pos = getPos( );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
 	result.sx1 = ( int )( pos.x - CHARA_SIZE / 2 );
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );
 	

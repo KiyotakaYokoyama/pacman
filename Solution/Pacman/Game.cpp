@@ -16,6 +16,8 @@ GamePtr Game::getTask( ) {
 }
 
 Game::Game( ) {
+	ApplicationPtr app = Application::getInstance( );
+	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
 }
 
 Game::~Game( ) {
@@ -27,10 +29,10 @@ void Game::initialize( ) {
 		_player[ i ] = PacmanPtr( new Pacman( i, _map->getPlayerPos( i ) ) );
 	}
 	_military = MilitaryPtr( new Military );
-	_military->addEnemy( EnemyPtr( new EnemyShadow( Vector( 480, 480 - 64 ) ) ) );
-	_military->addEnemy( EnemyPtr( new EnemyBashful( Vector( 960, 480 - 64 ) ) ) );
-	_military->addEnemy( EnemyPtr( new EnemySpeedy( Vector( 480, 120 - 64 ) ) ) );
-	_military->addEnemy( EnemyPtr( new EnemyPokey( Vector( 960, 120 - 64 ) ) ) );
+	_military->addEnemy( EnemyPtr( new EnemyShadow( Vector( 20 * 16, 20 * 16 ) ) ) );
+	//_military->addEnemy( EnemyPtr( new EnemyBashful( Vector( 960, 480 - 64 ) ) ) );
+	//_military->addEnemy( EnemyPtr( new EnemySpeedy( Vector( 480, 120 - 64 ) ) ) );
+	//_military->addEnemy( EnemyPtr( new EnemyPokey( Vector( 960, 120 - 64 ) ) ) );
 }
 
 void Game::update( ) {
@@ -67,4 +69,12 @@ MapPtr Game::getMap( ) {
 
 PacmanConstPtr Game::getPacman( ) {
 	return _player[ 0 ];
+}
+
+int Game::getChipSize( ) const {
+	return _chip_size;
+}
+
+int Game::getCharaSize( ) const {
+	return _chip_size - 3;
 }

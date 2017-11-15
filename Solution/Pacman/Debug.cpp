@@ -71,6 +71,7 @@ void Debug::update( ) {
 
 void Debug::draw( ) const {
 	DrawerPtr drawer = Drawer::getTask( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	for ( int i = 0; i <= MAP_HEIGHT_CHIP_NUM; i++ ) {
 		drawer->drawLine( 0, i * CHIP_SIZE, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, i * CHIP_SIZE );
 	}

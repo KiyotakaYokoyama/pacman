@@ -8,7 +8,6 @@
 #include <assert.h>
 
 const int SPRITE_SIZE = 64;
-const int DRAW_SIZE = CHIP_SIZE;
 const int MOVE_SPEED = 3;
 const int MAX_SPEED = 8;
 const int WAIT_ANIM_TIME = 5;
@@ -79,7 +78,9 @@ void Pacman::actOnMove( ) {
 }
 
 void Pacman::actOnEat( ) {
-	MapPtr map = Game::getTask( )->getMap( );
+	GamePtr game = Game::getTask( );
+	MapPtr map = game->getMap( );
+	const int CHIP_SIZE = game->getChipSize( );
 	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
 	unsigned char obj = map->getObject( check );
 	if ( obj == OBJECT_ENHANCE_FEED || obj == OBJECT_FEED ) {
@@ -91,7 +92,9 @@ void Pacman::actOnEat( ) {
 }
 
 void Pacman::actOnWarp( ) {
-	MapPtr map = Game::getTask( )->getMap( );
+	GamePtr game = Game::getTask( );
+	MapPtr map = game->getMap( );
+	const int CHIP_SIZE = game->getChipSize( );
 	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
 	unsigned char obj = map->getObject( check );
 	if ( obj == OBJECT_STAGE_WARP ) {
@@ -108,6 +111,7 @@ void Pacman::actOnWarp( ) {
 }
 
 void Pacman::actOnAutoMove( ) {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	const int MAP_WIDTH = CHIP_SIZE * MAP_WIDTH_CHIP_NUM;
 	bool automatic = true;
 	Vector pos = getPos( );
@@ -142,6 +146,7 @@ void Pacman::actOnAutoMove( ) {
 }
 
 void Pacman::draw( ) const {
+	const int DRAW_SIZE = Game::getTask( )->getChipSize( ) - 2;
 	Vector pos = getPos( );
 	_sprite->setRect( ( ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ) * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE );
 	int sx = ( int )( pos.x - DRAW_SIZE / 2 );
