@@ -9,231 +9,225 @@ Character( pos ) {
 Enemy::~Enemy( ) {
 }
 
-Vector Enemy::getVecToGoal( const Vector& start, const Vector& goal ) {
+Vector Enemy::AStar( const Vector& start, const Vector& goal ) {
 	MapPtr map = Game::getTask( )->getMap( );
-	Vector s_pos( map->getMapX( start ), map->getMapY( start ) );
-	Vector g_pos( map->getMapX( goal ), map->getMapY( goal ) );
+	Vector start_pos( map->getMapX( start ), map->getMapY( start ) );
+	Vector goal_pos( map->getMapX( goal ), map->getMapY( goal ) );
 
 	std::vector< PROCEED > proceeds;
-	
-	DIRECTION next = DIRECTION_START;
-	Vector next_pos = s_pos;
-	bool back = false;
-	int count = 0;
-	while ( true ) {
-		if ( next_pos == g_pos ) {
-			break;
-		}
-		count++;
+	int min_score = 0;
+	{
 		PROCEED pro;
-		pro.before_dir = next;
-		pro.pos = next_pos;
-		if ( back ) {
-			int idx = ( int )proceeds.size( ) - 1;
-			pro.up = proceeds[ idx ].up;
-			pro.down = proceeds[ idx ].down;
-			pro.left = proceeds[ idx ].left;
-			pro.right = proceeds[ idx ].right;
+		pro.pos = start_pos;
+		pro.state = STATE_OPEN;
+		pro.cost = 0;
+		pro.heristic = ( int )( fabs( goal_pos.x - start_pos.x ) + fabs( goal_pos.y - start_pos.y ) );
+		pro.setScore( );
+		min_score = pro.score;
+		proceeds.push_back( pro );
+	}
+
+	int count = 0;
+
+	while ( true ) {
+		count++;
+		if ( count > 10 ) {
+			int a = 0;
 		}
 
-		back = false;
+		// 一番小さいscoreを検索
+		{
+			std::vector< PROCEED >::iterator ite = proceeds.begin( );
+			bool score_up = true;
+			while ( ite != proceeds.end( ) ) {
+				PROCEED pro = *ite;
+				if ( min_score == pro.score &&
+					 pro.state == STATE_OPEN ) {
+					score_up = false;
+					break;
+				}
+				ite++;
+			}
+			if ( score_up ) {
+				min_score++;
+			}
+		}
+		
+		// 一番小さいscoreのチップをclose
+		std::vector< PROCEED > open_tmp;
+		{
+			std::vector< PROCEED >::iterator ite = proceeds.begin( );
+			while ( ite != proceeds.end( ) ) {
+				PROCEED origin = *ite;
+				if ( min_score != origin.score ||
+					 origin.state == STATE_COLSE ) {
+					ite++;
+					continue;
+				}
+				(*ite).state = STATE_COLSE;
+				ite++;
+				PROCEED pro_up;
+				PROCEED pro_down;
+				PROCEED pro_left;
+				PROCEED pro_right;
 
-		if ( map->getObject( ( int )pro.pos.x, ( int )pro.pos.y - 1 ) == OBJECT_WALL ) {
-			pro.up = false;
-		}
-		if ( map->getObject( ( int )pro.pos.x, ( int )pro.pos.y + 1 ) == OBJECT_WALL ) {
-			pro.down = false;
-		}
-		if ( map->getObject( ( int )pro.pos.x - 1, ( int )pro.pos.y ) == OBJECT_WALL ) {
-			pro.left = false;
-		}
-		if ( map->getObject( ( int )pro.pos.x + 1, ( int )pro.pos.y ) == OBJECT_WALL ) {
-			pro.right = false;
+				//初期代入
+				{
+					pro_up.pos    = origin.pos + Vector(  0, -1 );
+					pro_down.pos  = origin.pos + Vector(  0,  1 );
+					pro_left.pos  = origin.pos + Vector( -1,  0 );
+					pro_right.pos = origin.pos + Vector(  1,  0 );
+
+					pro_up.cost    = origin.cost + 1;
+					pro_down.cost  = origin.cost + 1;
+					pro_left.cost  = origin.cost + 1;
+					pro_right.cost = origin.cost + 1;
+
+					if ( map->getObject( ( int )pro_up.pos.x, ( int )pro_up.pos.y ) != OBJECT_WALL ) {
+						pro_up.state = STATE_OPEN;
+						if ( pro_up.pos == goal_pos ) {
+							pro_up.state = STATE_COLSE;
+							open_tmp.push_back( pro_up );
+							break;
+						}
+					}
+					if ( map->getObject( ( int )pro_down.pos.x, ( int )pro_down.pos.y ) != OBJECT_WALL ) {
+						pro_down.state = STATE_OPEN;
+						if ( pro_down.pos == goal_pos ) {
+							pro_down.state = STATE_COLSE;
+							open_tmp.push_back( pro_down );
+							break;
+						}
+					}
+					if ( map->getObject( ( int )pro_left.pos.x, ( int )pro_left.pos.y ) != OBJECT_WALL ) {
+						pro_left.state = STATE_OPEN;
+						if ( pro_left.pos == goal_pos ) {
+							pro_left.state = STATE_COLSE;
+							open_tmp.push_back( pro_left );
+							break;
+						}
+					}
+					if ( map->getObject( ( int )pro_right.pos.x, ( int )pro_right.pos.y ) != OBJECT_WALL ) {
+						pro_right.state = STATE_OPEN;
+						if ( pro_right.pos == goal_pos ) {
+							pro_right.state = STATE_COLSE;
+							open_tmp.push_back( pro_right );
+							break;
+						}
+					}
+
+					pro_up.heristic    = ( int )( fabs( goal_pos.x - pro_up.pos.x )    + fabs( goal_pos.y - pro_up.pos.y ) );
+					pro_down.heristic  = ( int )( fabs( goal_pos.x - pro_down.pos.x )  + fabs( goal_pos.y - pro_down.pos.y ) );
+					pro_left.heristic  = ( int )( fabs( goal_pos.x - pro_left.pos.x )  + fabs( goal_pos.y - pro_left.pos.y ) );
+					pro_right.heristic = ( int )( fabs( goal_pos.x - pro_right.pos.x ) + fabs( goal_pos.y - pro_right.pos.y ) );
+
+					pro_up.setScore( );
+					pro_down.setScore( );
+					pro_left.setScore( );
+					pro_right.setScore( );
+				}
+				
+				// すでにopenされているか確認
+				{
+					std::vector< PROCEED >::iterator open_ite = proceeds.begin( );
+					while ( open_ite != proceeds.end( ) ) {
+						PROCEED pro = *open_ite;
+						if ( pro.pos == pro_up.pos    ) pro_up    = PROCEED( );
+						if ( pro.pos == pro_down.pos  ) pro_down  = PROCEED( );
+						if ( pro.pos == pro_left.pos  ) pro_left  = PROCEED( );
+						if ( pro.pos == pro_right.pos ) pro_right = PROCEED( );
+						open_ite++;
+					}
+					std::vector< PROCEED >::iterator pro_ite = open_tmp.begin( );
+					while ( pro_ite != open_tmp.end( ) ) {
+						PROCEED pro = *pro_ite;
+						if ( pro.pos == pro_up.pos    ) pro_up    = PROCEED( );
+						if ( pro.pos == pro_down.pos  )	pro_down  = PROCEED( );
+						if ( pro.pos == pro_left.pos  ) pro_left  = PROCEED( );
+						if ( pro.pos == pro_right.pos ) pro_right = PROCEED( );
+						pro_ite++;
+					}
+				}
+
+				// open_tmpにセット
+				{
+					if ( pro_up.state    == STATE_OPEN ) {
+						open_tmp.push_back( pro_up    );
+					}
+					if ( pro_down.state  == STATE_OPEN ) {
+						open_tmp.push_back( pro_down  );
+					}
+					if ( pro_left.state  == STATE_OPEN ) {
+						open_tmp.push_back( pro_left  );
+					}
+					if ( pro_right.state == STATE_OPEN ) {
+						open_tmp.push_back( pro_right );
+					}
+				}
+			}
+			
+			// proceedsにセット
+			{
+				std::vector< PROCEED >::iterator ite = open_tmp.begin( );
+				while ( ite != open_tmp.end( ) ) {
+					proceeds.push_back( *ite );
+					ite++;
+				}
+			}
 		}
 
-		Vector goal_dir = g_pos - pro.pos;
-		if ( goal_dir.x < 0 ) {
-			// left
-			if ( moveLeft( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
+		// openされたチップの中にgoal地点があったら終了
+		{
+			bool finish = false;
+			std::vector< PROCEED >::iterator ite = open_tmp.begin( );
+			while ( ite != open_tmp.end( ) ) {
+				if ( (*ite).pos == goal_pos ) {
+					finish = true;
+					break;
+				}
+				ite++;
 			}
-			// left-up
-			if ( goal_dir.y < 0 ) {
-				if ( moveUp( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveDown( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-			}
-			// left-down
-			if ( goal_dir.y > 0 ) {
-				if ( moveDown( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveUp( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-			}
-			// left-right
-			if ( moveRight( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
-			}
-		} 
-		if ( goal_dir.x > 0 ) {
-			// right
-			if ( moveRight( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
-			}
-			// right-up
-			if ( goal_dir.y < 0 ) {
-				if ( moveUp( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveDown( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-			}
-			// right-down
-			if ( goal_dir.y > 0 ) {
-				if ( moveDown( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveUp( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-			}
-			// right-left
-			if ( moveLeft( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
+			if ( finish ) {
+				break;
 			}
 		}
-		if ( goal_dir.y < 0 ) {
-			// up
-			if ( moveUp( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
-			}
-			// up-left
-			if ( goal_dir.x < 0 ) {
-				if ( moveLeft( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveRight( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-			}
-			// up-right
-			if ( goal_dir.x > 0 ) {
-				if ( moveRight( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveLeft( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-			}
-			// up-down
-			if ( moveDown( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
-			}
-		}
-		if ( goal_dir.y > 0 ) {
-			// down
-			if ( moveDown( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
-			}
-			// down-left
-			if ( goal_dir.x < 0 ) {
-				if ( moveLeft( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveRight( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
+
+		open_tmp.clear( );
+	}
+
+	// goalからstartへの道を検索
+	std::vector< PROCEED > root;
+	{
+		std::vector< PROCEED >::iterator ite = proceeds.begin( );
+		PROCEED check = proceeds[ proceeds.size( ) - 1 ];
+		while ( check.pos != start_pos ) {
+			PROCEED pro = *ite;
+			if ( pro.pos == check.pos && pro.state == STATE_COLSE ) {
+				root.push_back( pro );
+				std::vector< PROCEED >::iterator check_ite = proceeds.begin( );
+				while ( check_ite != proceeds.end( ) ) {
+					if ( pro.pos + Vector(  1,  0 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
+						check = *check_ite;
+					}
+					if ( pro.pos + Vector( -1,  0 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
+						check = *check_ite;
+					}
+					if ( pro.pos + Vector(  0,  1 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
+						check = *check_ite;
+					}
+					if ( pro.pos + Vector(  0, -1 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
+						check = *check_ite;
+					}
+					check_ite++;
 				}
 			}
-			// down-right
-			if ( goal_dir.x > 0 ) {
-				if ( moveRight( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-				if ( moveLeft( &pro, &proceeds, &next, &next_pos, &back ) ) {
-					continue;
-				}
-			}
-			// down-up
-			if ( moveUp( &pro, &proceeds, &next, &next_pos, &back ) ) {
-				continue;
+			ite++;
+			if ( ite == proceeds.end( ) ) {
+				ite = proceeds.begin( );
 			}
 		}
 	}
 
-	int size = ( int )proceeds.size( );
-	Vector result = g_pos - s_pos;
-	if ( size > 1 ) {
-		result = proceeds[ 1 ].pos - s_pos;
-	}
-	return result;
-}
-
-bool Enemy::moveUp( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back ) {
-	if ( proceed->up ) {
-		next_pos->y--;
-		if ( proceed->before_dir == DIRECTION_DOWN ) {
-			(*proceeds).pop_back( );
-			*back = true;
-		} else {
-			*next_dir = DIRECTION_UP;
-			proceed->up = false;
-			(*proceeds).push_back( *proceed );
-		}
-		return true;
-	}
-	return false;
-}
-
-bool Enemy::moveDown( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back ) {
-	if ( proceed->down ) {
-		next_pos->y++;
-		if ( proceed->before_dir == DIRECTION_UP ) {
-			(*proceeds).pop_back( );
-			*back = true;
-		} else {
-			*next_dir = DIRECTION_DOWN;
-			proceed->down = false;
-			(*proceeds).push_back( *proceed );
-		}
-		return true;
-	}
-	return false;
-}
-
-bool Enemy::moveLeft( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back ) {
-	if ( proceed->left ) {
-		next_pos->x--;
-		if ( proceed->before_dir == DIRECTION_RIGHT ) {
-			(*proceeds).pop_back( );
-			*back = true;
-		} else {
-			*next_dir = DIRECTION_LEFT;
-			proceed->left = false;
-			(*proceeds).push_back( *proceed );
-		}
-		return true;
-	}
-	return false;
-}
-
-bool Enemy::moveRight( PROCEED * proceed, std::vector< PROCEED > * proceeds, DIRECTION * next_dir, Vector * next_pos, bool * back ) {
-	if ( proceed->right ) {
-		next_pos->x++;
-		if ( proceed->before_dir == DIRECTION_LEFT ) {
-			(*proceeds).pop_back( );
-			*back = true;
-		} else {
-			*next_dir = DIRECTION_RIGHT;
-			proceed->right = false;
-			(*proceeds).push_back( *proceed );
-		}
-		return true;
-	}
-	return false;
+	int size = ( int )root.size( );
+	return ( root[ size - 2 ].pos - root[ size - 1 ].pos ).normalize( );
 }
