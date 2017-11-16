@@ -11,7 +11,7 @@ Enemy( pos ) {
 EnemyPokey::~EnemyPokey( ) {
 }
 
-void EnemyPokey::act( ) {
+void EnemyPokey::moving( ) {
 }
 
 IMGAE_DATA EnemyPokey::getImageData( ) const {

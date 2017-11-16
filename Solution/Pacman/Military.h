@@ -3,7 +3,6 @@
 #include <list>
 
 PTR( Image );
-PTR( Military );
 PTR( Enemy );
 
 class Military {

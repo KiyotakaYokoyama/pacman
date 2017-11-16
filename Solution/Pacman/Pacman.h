@@ -11,6 +11,7 @@ public:
 public:
 	void draw( ) const;
 	void entryStage( const Vector& pos );
+	bool isTurnaround( ) const;
 private:
 	void act( );
 	void actOnMove( );

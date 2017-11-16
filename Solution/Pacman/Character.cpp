@@ -8,7 +8,8 @@ static const int MAX_ACT_TIME = 0xfffffff;
 Character::Character( Vector pos, bool coll ) :
 _pos( pos ),
 _coll( coll ),
-_act_time( 0 ) {
+_bumped( false ),
+_act_count( 0 ) {
 }
 
 Character::~Character( ) {
@@ -16,7 +17,7 @@ Character::~Character( ) {
 
 void Character::update( ) {
 	act( );
-	_act_time = ( _act_time++ ) % MAX_ACT_TIME;
+	_act_count = ( _act_count++ ) % MAX_ACT_TIME;
 
 	if( _coll ) {
 		updateColl( );
@@ -28,6 +29,7 @@ void Character::update( ) {
 }
 
 void Character::updateColl( ) {
+	_bumped = false;
 	MapPtr map = Game::getTask( )->getMap( );
 	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
@@ -37,6 +39,7 @@ void Character::updateColl( ) {
 		if ( ( _pos.y + _vec.y ) - CHARA_SIZE < 0 ) {
 			_pos.y = CHIP_SIZE;
 			_vec.y = 0;
+			_bumped = true;
 		} else {
 			//ç∂è„
 			unsigned char left_obj = map->getObject( _pos + Vector( -HARF_CHARA_SIZE, _vec.y - CHARA_SIZE ) );
@@ -45,6 +48,7 @@ void Character::updateColl( ) {
 			if ( left_obj == OBJECT_WALL || light_obj == OBJECT_WALL ) {
 				_pos.y = ( ( int )( _pos.y + _vec.y - CHARA_SIZE ) / CHIP_SIZE + 1 ) * CHIP_SIZE + CHARA_SIZE;
 				_vec.y = 0;
+				_bumped = true;
 			}
 		}
 	}
@@ -57,6 +61,7 @@ void Character::updateColl( ) {
 		if ( left_obj == OBJECT_WALL || light_obj == OBJECT_WALL ) {
 			_pos.y = ( ( int )( _pos.y + _vec.y ) / CHIP_SIZE ) * CHIP_SIZE - 1;
 			_vec.y = 0;
+			_bumped = true;
 		}
 	}
 	//ç∂ë§
@@ -65,6 +70,7 @@ void Character::updateColl( ) {
 		if ( f_pos.x < 0 ) {
 			_pos.x = HARF_CHARA_SIZE;
 			_vec.x = 0;
+			_bumped = true;
 		} else {
 			//ç∂è„
 			unsigned char up_obj = map->getObject( f_pos + Vector( 0, -CHARA_SIZE ) );
@@ -73,6 +79,7 @@ void Character::updateColl( ) {
 			if ( up_obj == OBJECT_WALL || down_obj == OBJECT_WALL ) {
 				_pos.x = ( ( ( int )f_pos.x / CHIP_SIZE ) + 1 ) * CHIP_SIZE + HARF_CHARA_SIZE;
 				_vec.x = 0;
+				_bumped = true;
 			}
 		}
 	}
@@ -86,6 +93,7 @@ void Character::updateColl( ) {
 		if ( up_obj == OBJECT_WALL || down_obj == OBJECT_WALL ) {
 			_pos.x = ( ( int )f_pos.x / CHIP_SIZE ) * CHIP_SIZE - HARF_CHARA_SIZE - 1;
 			_vec.x = 0;
+			_bumped = true;
 		}
 	}
 }
@@ -108,7 +116,7 @@ void Character::updateDir( ) {
 }
 
 int Character::getActTime( ) const {
-	return _act_time;
+	return _act_count;
 }
 
 Vector Character::getPos( ) const {
@@ -133,4 +141,12 @@ void Character::setColl( bool coll ) {
 
 Character::DIR Character::getDir( ) const {
 	return _dir;
+}
+
+void Character::setActCount( int count ) {
+	_act_count = count;
+}
+
+bool Character::isBumped( ) const {
+	return _bumped;
 }

@@ -10,7 +10,7 @@ Enemy( pos ) {
 EnemySpeedy::~EnemySpeedy( ) {
 }
 
-void EnemySpeedy::act( ) {
+void EnemySpeedy::moving( ) {
 }
 
 IMGAE_DATA EnemySpeedy::getImageData( ) const {

@@ -8,6 +8,6 @@ public:
 public:
 	IMGAE_DATA getImageData( ) const;
 private:
-	void act( );
+	void moving( );
 };
 

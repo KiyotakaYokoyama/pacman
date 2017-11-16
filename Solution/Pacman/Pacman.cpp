@@ -12,6 +12,7 @@ const int MOVE_SPEED = 3;
 const int MAX_SPEED = 8;
 const int WAIT_ANIM_TIME = 5;
 const int ANIM_NUM = 3;
+const int TURNAROUND_TIME = 300;
 
 Pacman::Pacman( int id, const Vector& pos ) :
 Character( pos ),
@@ -39,6 +40,10 @@ void Pacman::act( ) {
 		actOnWarp( );
 	} else {
 		actOnAutoMove( );
+	}
+
+	if ( _turnaround && getActTime( ) > TURNAROUND_TIME ) {
+		_turnaround = false;
 	}
 }
 
@@ -88,6 +93,7 @@ void Pacman::actOnEat( ) {
 	}
 	if ( obj == OBJECT_ENHANCE_FEED ) {
 		_turnaround = true;
+		setActCount( 0 );
 	}
 }
 
@@ -157,4 +163,8 @@ void Pacman::draw( ) const {
 
 void Pacman::entryStage( const Vector& pos ) {
 	setPos( pos );
+}
+
+bool Pacman::isTurnaround( ) const {
+	return _turnaround;
 }

@@ -2,16 +2,59 @@
 #include "Game.h"
 #include "Map.h"
 
+static const int MOVE_SPEED = 5;
+static const int MAX_SPEED = 6;
+
 Enemy::Enemy( const Vector& pos ) :
-Character( pos ) {
+Character( pos ),
+_auto_move( false ),
+_goal_pos( Vector( -1, -1 ) ) {
 }
 
 Enemy::~Enemy( ) {
 }
 
-Vector Enemy::AStar( const Vector& start, const Vector& goal ) {
+void Enemy::act( ) {
+	if ( !_auto_move ) {
+		moving( );
+	} else {
+		checkGoal( );
+	}
+}
+
+void Enemy::moveGoal( const Vector goal ) {
+	_auto_move = true;
+	_goal_pos = goal;
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	Vector pos = getPos( );
+	Vector vec = ( goal - pos ).normalize( ) * MOVE_SPEED + getVec( );
+
+	if ( vec.getLength2( ) > MAX_SPEED * MAX_SPEED ) {
+		vec = vec.normalize( ) * MAX_SPEED;
+	}
+	setVec( vec );
+}
+
+void Enemy::checkGoal( ) {
+	int chara_size = Game::getTask( )->getCharaSize( );
+	Vector distance = getPos( ) - _goal_pos;
+	if ( distance.getLength2( ) < chara_size * chara_size ) {
+		_auto_move = false;
+		_goal_pos = Vector( -1, -1 );
+	}
+	if ( distance.getLength2( ) < getVec( ).getLength2( ) ) {
+		_auto_move = false;
+		_goal_pos = Vector( -1, -1 );
+	}
+	if ( isBumped( ) ) {
+		_auto_move = false;
+		_goal_pos = Vector( -1, -1 );
+	}
+}
+
+Vector Enemy::AStar( const Vector& goal ) {
 	MapPtr map = Game::getTask( )->getMap( );
-	Vector start_pos( map->getMapX( start ), map->getMapY( start ) );
+	Vector start_pos( map->getMapX( getPos( ) ), map->getMapY( getPos( ) ) );
 	Vector goal_pos( map->getMapX( goal ), map->getMapY( goal ) );
 
 	std::vector< PROCEED > proceeds;
@@ -198,27 +241,34 @@ Vector Enemy::AStar( const Vector& start, const Vector& goal ) {
 	// goalÇ©ÇÁstartÇ÷ÇÃìπÇåüçı
 	std::vector< PROCEED > root;
 	{
+		int size = ( int )proceeds.size( ) - 1;
+		PROCEED check = proceeds[ size ];
+		if ( check.pos != goal_pos ) {
+			for ( int i = size; i > 0; i-- ) {
+				check = proceeds[ i ];
+				if ( check.pos == goal_pos ) break;
+			}
+		}
 		std::vector< PROCEED >::iterator ite = proceeds.begin( );
-		PROCEED check = proceeds[ proceeds.size( ) - 1 ];
 		while ( check.pos != start_pos ) {
 			PROCEED pro = *ite;
 			if ( pro.pos == check.pos && pro.state == STATE_COLSE ) {
 				root.push_back( pro );
-				std::vector< PROCEED >::iterator check_ite = proceeds.begin( );
-				while ( check_ite != proceeds.end( ) ) {
-					if ( pro.pos + Vector(  1,  0 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
-						check = *check_ite;
+				std::vector< PROCEED >::iterator next_ite = proceeds.begin( );
+				while ( next_ite != proceeds.end( ) ) {
+					if ( pro.pos + Vector(  1,  0 ) == (*next_ite).pos && check.cost > (*next_ite).cost ) {
+						check = *next_ite;
 					}
-					if ( pro.pos + Vector( -1,  0 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
-						check = *check_ite;
+					if ( pro.pos + Vector( -1,  0 ) == (*next_ite).pos && check.cost > (*next_ite).cost ) {
+						check = *next_ite;
 					}
-					if ( pro.pos + Vector(  0,  1 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
-						check = *check_ite;
+					if ( pro.pos + Vector(  0,  1 ) == (*next_ite).pos && check.cost > (*next_ite).cost ) {
+						check = *next_ite;
 					}
-					if ( pro.pos + Vector(  0, -1 ) == (*check_ite).pos && check.cost > (*check_ite).cost ) {
-						check = *check_ite;
+					if ( pro.pos + Vector(  0, -1 ) == (*next_ite).pos && check.cost > (*next_ite).cost ) {
+						check = *next_ite;
 					}
-					check_ite++;
+					next_ite++;
 				}
 			}
 			ite++;
@@ -229,5 +279,9 @@ Vector Enemy::AStar( const Vector& start, const Vector& goal ) {
 	}
 
 	int size = ( int )root.size( );
-	return ( root[ size - 2 ].pos - root[ size - 1 ].pos ).normalize( );
+	Vector dir = goal_pos - start_pos;
+	if ( size > 1 ) {
+		dir = ( root[ size - 2 ].pos - root[ size - 1 ].pos ).normalize( );
+	}
+	return dir;
 }

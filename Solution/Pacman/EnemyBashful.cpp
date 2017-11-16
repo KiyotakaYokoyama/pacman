@@ -10,7 +10,7 @@ Enemy( pos ) {
 EnemyBashful::~EnemyBashful( ) {
 }
 
-void EnemyBashful::act( ) {
+void EnemyBashful::moving( ) {
 }
 
 IMGAE_DATA EnemyBashful::getImageData( ) const {

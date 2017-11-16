@@ -10,9 +10,8 @@ public:
 	virtual ~EnemyShadow( );
 public:
 	IMGAE_DATA getImageData( ) const;
-protected:
-	void act( );
 private:
+	void moving( );
 	ImagePtr _sprite;
 };
 

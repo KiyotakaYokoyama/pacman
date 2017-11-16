@@ -19,7 +19,9 @@ protected:
 	void setPos( const Vector& pos );
 	void setVec( const Vector& vec );
 	void setColl( bool coll );
+	void setActCount( int count );
 	int getActTime( ) const;
+	bool isBumped( ) const;
 	Vector getVec( ) const;
 	DIR getDir( ) const;
 private:
@@ -27,8 +29,9 @@ private:
 	void updateColl( );
 	void updateDir( );
 private:
-	int _act_time;
+	int _act_count;
 	bool _coll;
+	bool _bumped;
 	Vector _pos;
 	Vector _vec;
 	DIR _dir;

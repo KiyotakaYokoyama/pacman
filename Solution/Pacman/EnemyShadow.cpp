@@ -4,8 +4,10 @@
 #include "Map.h"
 
 static const int WAIT_ANIM_TIME = 5;
-static const int MOVE_SPEED = 5;
-static const int MAX_SPEED = 6;
+static const Vector UP   (  0, -1 );
+static const Vector DOWN (  0,  1 );
+static const Vector LEFT ( -1,  0 );
+static const Vector RIGHT(  1,  0 );
 
 EnemyShadow::EnemyShadow( const Vector& pos ) :
 Enemy( pos ) {
@@ -15,18 +17,53 @@ Enemy( pos ) {
 EnemyShadow::~EnemyShadow( ) {
 }
 
-void EnemyShadow::act( ) {
-	MapPtr map = Game::getTask( )->getMap( );
-	PacmanConstPtr pacman = Game::getTask( )->getPacman( );
-	Vector pacman_pos = pacman->getPos( );
-	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
+void EnemyShadow::moving( ) {
+	GamePtr game = Game::getTask( );
+	MapPtr map = game->getMap( );
+	const int CHARA_SIZE = game->getCharaSize( );
+	const int CHIP_SIZE = game->getChipSize( );
+	Vector pacman_pos = game->getPacman( )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
 	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+	Vector distance = pacman_pos - self_pos;
+	if ( fabs( distance.x ) > 3 * CHIP_SIZE ||
+		 fabs( distance.y ) > 3 * CHIP_SIZE ) {
+		distance = distance.normalize( ) * ( 3 * CHIP_SIZE );
+	}
 
-	//Vector vec = AStar( self_pos, pacman_pos ) * MOVE_SPEED;
-	//if ( ( pacman_pos - self_pos ).getLength2( ) < MOVE_SPEED * MOVE_SPEED ) {
-	//	vec = pacman_pos - self_pos;
-	//}
-	//setVec( vec );
+	Vector goal = self_pos + distance;
+	if ( map->getObject( goal ) == OBJECT_WALL ) {
+		while ( true ) {
+			if ( map->getObject( goal + UP * CHIP_SIZE ) != OBJECT_WALL ) {
+				goal += UP * CHIP_SIZE;
+				break;
+			}
+			if ( map->getObject( goal + DOWN * CHIP_SIZE ) != OBJECT_WALL ) {
+				goal += DOWN * CHIP_SIZE;
+				break;
+			}
+			if ( map->getObject( goal + LEFT * CHIP_SIZE ) != OBJECT_WALL ) {
+				goal += LEFT * CHIP_SIZE;
+				break;
+			}
+			if ( map->getObject( goal + RIGHT * CHIP_SIZE ) != OBJECT_WALL ) {
+				goal += RIGHT * CHIP_SIZE;
+				break;
+			}
+
+			goal += goal.x < goal.y ?
+						( goal.x < 0 ? LEFT * CHIP_SIZE : RIGHT * CHIP_SIZE ) :
+						( goal.y < 0 ? UP   * CHIP_SIZE : DOWN  * CHIP_SIZE );
+		}
+	}
+
+	Vector vec = getVec( ) + AStar( goal ) * 5;
+	if ( vec.getLength2( ) > 6 * 6 ) {
+		vec = vec.normalize( ) * 6;
+	}
+	if ( ( pacman_pos - self_pos ).getLength2( ) < 5 * 5 ) {
+		vec = pacman_pos - self_pos;
+	}
+	setVec( vec );
 }
 
 IMGAE_DATA EnemyShadow::getImageData( ) const {

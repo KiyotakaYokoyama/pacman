@@ -1,5 +1,7 @@
 #include "Military.h"
+#include "Game.h"
 #include "Enemy.h"
+#include "Pacman.h"
 #include "define.h"
 #include "Drawer.h"
 #include "Image.h"
@@ -13,10 +15,24 @@ Military::~Military( ) {
 }
 
 void Military::update( ) {
+	GamePtr game = Game::getTask( );
+	PacmanConstPtr pacman = game->getPacman( );
+	Vector pacman_pos = pacman->getPos( );
+	bool escape = pacman->isTurnaround( );
+	int chara_size = game->getCharaSize( );
 	std::list< EnemyPtr >::const_iterator ite = _enemies.begin( );
 	while ( ite != _enemies.end( ) ) {
 		EnemyPtr enemy = *ite;
 		enemy->update( );
+
+		if ( escape ) {
+			Vector distance = pacman->getPos( ) - enemy->getPos( );
+			if ( distance.getLength2( ) < chara_size * chara_size ) {
+				_enemies.remove( enemy );
+				enemy.reset( );
+			}
+		}
+
 		ite++;
 	}
 }

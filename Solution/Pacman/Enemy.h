@@ -10,7 +10,8 @@ public:
 public:
 	virtual IMGAE_DATA getImageData( ) const = 0;
 protected:
-	Vector AStar( const Vector& start, const Vector& goal );
+	void moveGoal( const Vector goal );
+	Vector AStar(  const Vector& goal );
 private:
 	enum STATE {
 		STATE_NONE,
@@ -35,5 +36,12 @@ private:
 			score = cost + heristic;
 		}
 	};
+private:
+	void act( );
+	void checkGoal( );
+	virtual void moving( ) = 0;
+private:
+	bool _auto_move;
+	Vector _goal_pos;
 };
 
