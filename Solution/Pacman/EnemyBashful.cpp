@@ -1,16 +1,38 @@
 #include "EnemyBashful.h"
 #include "Game.h"
+#include "Pacman.h"
+#include "EnemyShadow.h"
+
 static const int WAIT_ANIM_TIME = 5;
+static const int MOVE_SPEED = 5;
+static const int MAX_SPEED = 6;
 
 
-EnemyBashful::EnemyBashful( const Vector& pos ) :
-Enemy( pos ) {
+EnemyBashful::EnemyBashful( const Vector& pos, EnemyShadowPtr shadow ) :
+Enemy( pos ), 
+_shadow( shadow ) {
 }
 
 EnemyBashful::~EnemyBashful( ) {
 }
 
 void EnemyBashful::moving( ) {
+	GamePtr game = Game::getTask( );
+	const int CHARA_SIZE = game->getCharaSize( );
+	const int CHIP_SIZE = game->getChipSize( );
+	Vector pacman_pos = game->getPacman( )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+	Vector shadow_pos = _shadow->getPos( );
+	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+
+	Vector distance = shadow_pos - pacman_pos;
+	distance *= -1;
+	Vector goal_pos = pacman_pos + distance;
+	Vector to_goal = goal_pos - self_pos;
+	Vector vec = to_goal.normalize( ) * MOVE_SPEED;
+	if ( to_goal.getLength( ) < MOVE_SPEED ) {
+		vec = to_goal;
+	}
+	setVec( vec );
 }
 
 IMGAE_DATA EnemyBashful::getImageData( ) const {
