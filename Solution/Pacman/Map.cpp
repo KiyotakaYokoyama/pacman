@@ -1,6 +1,11 @@
 #include "Map.h"
 #include "define.h"
 #include "Game.h"
+#include "Military.h"
+#include "EnemyBashful.h"
+#include "EnemyPokey.h"
+#include "EnemyShadow.h"
+#include "EnemySpeedy.h"
 #include "Drawer.h"
 #include "Image.h"
 #include "Application.h"
@@ -171,4 +176,27 @@ int Map::getMapX( const Vector& pos ) const {
 int Map::getMapY( const Vector& pos ) const {
 	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	return ( int )( pos.y / CHIP_SIZE );
+}
+
+void Map::generateEnemy( MilitaryPtr military ) const {
+	const int SIZE = ( int )_enemy_pos.size( );
+	for ( int i = 0; i < SIZE; i++ ) {
+		ENEMY enemy = _enemy_pos[ i ];
+		switch ( enemy.index ) {
+		case OBJECT_SHADOW:
+			military->addEnemy( EnemyPtr( new EnemyShadow( enemy.pos ) ) );
+			continue;
+		case OBJECT_SPEEDY:
+			military->addEnemy( EnemyPtr( new EnemySpeedy( enemy.pos ) ) );
+			continue;
+		case OBJECT_BASHFUL:
+			military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos ) ) );
+			continue;
+		case OBJECT_POKEY:
+			military->addEnemy( EnemyPtr( new EnemyPokey( enemy.pos ) ) );
+			continue;
+		default:
+			continue;
+		}
+	}
 }

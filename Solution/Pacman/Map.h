@@ -7,6 +7,7 @@
 #include "define.h"
 
 PTR( Image );
+PTR( Military );
 
 class Map {
 public:
@@ -24,6 +25,7 @@ public:
 	unsigned char getObject( const Vector& pos ) const;
 	unsigned char getObject( int ox, int oy ) const;
 	Vector getPlayerPos( int id );
+	void generateEnemy( MilitaryPtr military ) const;
 private:
 	struct ENEMY {
 		unsigned char index;
