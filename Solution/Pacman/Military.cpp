@@ -28,8 +28,9 @@ void Military::update( ) {
 		if ( escape ) {
 			Vector distance = pacman->getPos( ) - enemy->getPos( );
 			if ( distance.getLength2( ) < chara_size * chara_size ) {
-				_enemies.remove( enemy );
+				ite = _enemies.erase( ite );
 				enemy.reset( );
+				continue;
 			}
 		}
 
