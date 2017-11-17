@@ -45,6 +45,9 @@ void Map::loadStage( std::string stage_name ) {
 		DrawerPtr drawer = Drawer::getTask( );
 		std::string file_path = "MapData/" + stage_name + "_stage.png";
 		_stage = drawer->createImage( file_path.c_str( ) );
+		const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+		_stage->setRect( 0, 0, 4800, 1920 );
+		_stage->setPos( 0, 0, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	}
 
 	ApplicationPtr app = Application::getInstance( );
@@ -62,19 +65,19 @@ void Map::loadStage( std::string stage_name ) {
 
 	_feed_pos.clear( );
 	_enemy_pos.clear( );
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask()->getChipSize();
 	unsigned char object;
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		binary->read( (void*)&object, sizeof( unsigned char ) );
 		_objects[ i ] = object;
+		const double X = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE + CHIP_SIZE / 2;
+		const double Y = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE + CHIP_SIZE;
 		if ( object == OBJECT_PLAYER1 ) {
-			_player_pos[ 0 ].x = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
-			_player_pos[ 0 ].y = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
+			_player_pos[ 0 ] = Vector( X, Y );
 			_objects[ i ] = OBJECT_NONE;
 		}
 		if ( object == OBJECT_PLAYER2 ) {
-			_player_pos[ 1 ].x = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
-			_player_pos[ 1 ].y = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
+			_player_pos[ 1 ] = Vector( X, Y );
 			_objects[ i ] = OBJECT_NONE;
 		}
 
@@ -86,8 +89,9 @@ void Map::loadStage( std::string stage_name ) {
 			 OBJECT_POKEY || OBJECT_SPEEDY ) {
 			ENEMY enemy;
 			enemy.index = object;
-			enemy.pos = Vector( );
+			enemy.pos = Vector( X, Y );
 			_enemy_pos.push_back( enemy );
+			_objects[ i ] = OBJECT_NONE;
 		}
 	}
 }
@@ -96,9 +100,6 @@ void Map::update( ) {
 }
 
 void Map::draw( ) const {
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
-	_stage->setRect( 0, 0, 4800, 1920 );
-	_stage->setPos( 0, 0, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	_stage->draw( );
 	
 	drawFeed( );
