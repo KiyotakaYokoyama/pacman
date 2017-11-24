@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -13,10 +12,10 @@
     <ClCompile Include="EnemySpeedy.cpp" />
     <ClCompile Include="EnemyBashful.cpp" />
     <ClCompile Include="EnemyPokey.cpp" />
+    <ClCompile Include="SceneStage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Debug.h" />
@@ -26,5 +25,6 @@
     <ClInclude Include="EnemySpeedy.h" />
     <ClInclude Include="EnemyBashful.h" />
     <ClInclude Include="EnemyPokey.h" />
+    <ClInclude Include="SceneStage.h" />
   </ItemGroup>
 </Project>

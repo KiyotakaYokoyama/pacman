@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "define.h"
-#include "Game.h"
+#include "SceneStage.h"
 #include "Military.h"
 #include "EnemyBashful.h"
 #include "EnemyPokey.h"
@@ -50,7 +50,7 @@ void Map::loadStage( std::string stage_name ) {
 		DrawerPtr drawer = Drawer::getTask( );
 		std::string file_path = "MapData/" + stage_name + "_stage.png";
 		_stage = drawer->createImage( file_path.c_str( ) );
-		const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+		const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 		_stage->setRect( 0, 0, 4800, 1920 );
 		_stage->setPos( 0, 0, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	}
@@ -70,7 +70,7 @@ void Map::loadStage( std::string stage_name ) {
 
 	_feed_pos.clear( );
 	_enemy_pos.clear( );
-	const int CHIP_SIZE = Game::getTask()->getChipSize();
+	const int CHIP_SIZE = SceneStage::getTask()->getChipSize();
 	unsigned char object;
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		binary->read( (void*)&object, sizeof( unsigned char ) );
@@ -111,7 +111,7 @@ void Map::draw( ) const {
 }
 
 void Map::drawFeed( ) const {
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		int sx = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
 		int sy = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
@@ -129,7 +129,7 @@ void Map::drawFeed( ) const {
 }
 
 unsigned char Map::getObject( const Vector& pos ) const {
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	int ox = ( int )( pos.x / CHIP_SIZE );
 	int oy = ( int )( pos.y / CHIP_SIZE );
 	return getObject( ox, oy );
@@ -147,7 +147,7 @@ unsigned char Map::getObject( int ox, int oy ) const {
 }
 
 void Map::eatFeed( const Vector& pos ) {
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	int ox = ( int )( pos.x / CHIP_SIZE );
 	int oy = ( int )( pos.y / CHIP_SIZE );
 	eatFeed( ox, oy );
@@ -169,28 +169,35 @@ Vector Map::getPlayerPos( int id ) {
 }
 
 int Map::getMapX( const Vector& pos ) const {
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	return ( int )( pos.x / CHIP_SIZE );
 }
 
 int Map::getMapY( const Vector& pos ) const {
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	return ( int )( pos.y / CHIP_SIZE );
 }
 
 void Map::generateEnemy( MilitaryPtr military ) const {
 	const int SIZE = ( int )_enemy_pos.size( );
+	EnemyShadowPtr shadow = EnemyShadowPtr( );
 	for ( int i = 0; i < SIZE; i++ ) {
 		ENEMY enemy = _enemy_pos[ i ];
 		switch ( enemy.index ) {
 		case OBJECT_SHADOW:
-			military->addEnemy( EnemyPtr( new EnemyShadow( enemy.pos ) ) );
+			if ( !shadow ) {
+				shadow = EnemyShadowPtr( new EnemyShadow( enemy.pos ) );
+				military->addEnemy( shadow );
+			} else {
+				military->addEnemy( EnemyPtr( new EnemyShadow( enemy.pos ) ) );
+			}
 			continue;
 		case OBJECT_SPEEDY:
 			military->addEnemy( EnemyPtr( new EnemySpeedy( enemy.pos ) ) );
 			continue;
 		case OBJECT_BASHFUL:
-			military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos ) ) );
+			military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos, shadow ) ) );
+			shadow = EnemyShadowPtr( );
 			continue;
 		case OBJECT_POKEY:
 			military->addEnemy( EnemyPtr( new EnemyPokey( enemy.pos ) ) );

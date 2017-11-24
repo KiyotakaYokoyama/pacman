@@ -1,5 +1,5 @@
 #include "EnemySpeedy.h"
-#include "Game.h"
+#include "SceneStage.h"
 
 static const int WAIT_ANIM_TIME = 5;
 
@@ -15,7 +15,7 @@ void EnemySpeedy::moving( ) {
 
 IMGAE_DATA EnemySpeedy::getImageData( ) const {
 	IMGAE_DATA result = IMGAE_DATA( );
-	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
+	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
 	Vector pos = getPos( );
 	result.sx1 = ( int )( pos.x - CHARA_SIZE / 2 );
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );

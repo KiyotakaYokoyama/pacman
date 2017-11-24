@@ -4,18 +4,18 @@
 #include <array>
 #include "define.h"
 
-PTR( Game );
+PTR( SceneStage );
 PTR( Map );
 PTR( Pacman );
 PTR( Military );
 
-class Game : public Task {
+class SceneStage : public Task {
 public:
 	static std::string getTag( ) { return "GAME"; };
-	static GamePtr getTask( );
+	static SceneStagePtr getTask( );
 public:
-	Game( );
-	virtual ~Game( );
+	SceneStage( );
+	virtual ~SceneStage( );
 public:
 	void initialize( );
 	void update( );

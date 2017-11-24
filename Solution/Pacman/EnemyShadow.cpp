@@ -1,5 +1,5 @@
 #include "EnemyShadow.h"
-#include "Game.h"
+#include "SceneStage.h"
 #include "Pacman.h"
 #include "Map.h"
 
@@ -18,7 +18,7 @@ EnemyShadow::~EnemyShadow( ) {
 }
 
 void EnemyShadow::moving( ) {
-	GamePtr game = Game::getTask( );
+	SceneStagePtr game = SceneStage::getTask( );
 	MapPtr map = game->getMap( );
 	const int CHARA_SIZE = game->getCharaSize( );
 	const int CHIP_SIZE = game->getChipSize( );
@@ -69,7 +69,7 @@ void EnemyShadow::moving( ) {
 IMGAE_DATA EnemyShadow::getImageData( ) const {
 	IMGAE_DATA result = IMGAE_DATA( );
 	Vector pos = getPos( );
-	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
+	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
 	result.sx1 = ( int )( pos.x - CHARA_SIZE / 2 );
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );
 	

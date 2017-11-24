@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "SceneStage.h"
 #include "Application.h"
 #include "Drawer.h"
 
@@ -7,19 +7,19 @@
 #include "Military.h"
 #include "Debug.h"
 
-GamePtr Game::getTask( ) {
-	return std::dynamic_pointer_cast< Game >( Application::getInstance( )->getTask( getTag( ) ) );
+SceneStagePtr SceneStage::getTask( ) {
+	return std::dynamic_pointer_cast< SceneStage >( Application::getInstance( )->getTask( getTag( ) ) );
 }
 
-Game::Game( ) {
+SceneStage::SceneStage( ) {
 	ApplicationPtr app = Application::getInstance( );
 	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
 }
 
-Game::~Game( ) {
+SceneStage::~SceneStage( ) {
 }
 
-void Game::initialize( ) {
+void SceneStage::initialize( ) {
 	_map = MapPtr( new Map );
 	for ( int i = 0; i < PLAYER_NUM; i++ ) {
 		_player[ i ] = PacmanPtr( new Pacman( i, _map->getPlayerPos( i ) ) );
@@ -28,7 +28,7 @@ void Game::initialize( ) {
 	_map->generateEnemy( _military );
 }
 
-void Game::update( ) {
+void SceneStage::update( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	drawer->waitForSync( );
 	drawer->flip( );
@@ -56,18 +56,18 @@ void Game::update( ) {
 	}
 }
 
-MapPtr Game::getMap( ) {
+MapPtr SceneStage::getMap( ) {
 	return _map;
 }
 
-PacmanConstPtr Game::getPacman( ) {
+PacmanConstPtr SceneStage::getPacman( ) {
 	return _player[ 0 ];
 }
 
-int Game::getChipSize( ) const {
+int SceneStage::getChipSize( ) const {
 	return _chip_size;
 }
 
-int Game::getCharaSize( ) const {
+int SceneStage::getCharaSize( ) const {
 	return _chip_size - 3;
 }

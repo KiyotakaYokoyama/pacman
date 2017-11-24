@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include "Game.h"
+#include "SceneStage.h"
 #include "Map.h"
 
 static const int MOVE_SPEED = 5;
@@ -25,7 +25,7 @@ void Enemy::act( ) {
 void Enemy::moveGoal( const Vector goal ) {
 	_auto_move = true;
 	_goal_pos = goal;
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	Vector pos = getPos( );
 	Vector vec = ( goal - pos ).normalize( ) * MOVE_SPEED + getVec( );
 
@@ -36,7 +36,7 @@ void Enemy::moveGoal( const Vector goal ) {
 }
 
 void Enemy::checkGoal( ) {
-	int chara_size = Game::getTask( )->getCharaSize( );
+	int chara_size = SceneStage::getTask( )->getCharaSize( );
 	Vector distance = getPos( ) - _goal_pos;
 	if ( distance.getLength2( ) < chara_size * chara_size ) {
 		_auto_move = false;
@@ -53,7 +53,7 @@ void Enemy::checkGoal( ) {
 }
 
 Vector Enemy::AStar( const Vector& goal ) {
-	MapPtr map = Game::getTask( )->getMap( );
+	MapPtr map = SceneStage::getTask( )->getMap( );
 	Vector start_pos( map->getMapX( getPos( ) ), map->getMapY( getPos( ) ) );
 	Vector goal_pos( map->getMapX( goal ), map->getMapY( goal ) );
 

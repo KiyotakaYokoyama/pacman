@@ -1,5 +1,5 @@
 #include "Military.h"
-#include "Game.h"
+#include "SceneStage.h"
 #include "Enemy.h"
 #include "Pacman.h"
 #include "define.h"
@@ -15,7 +15,7 @@ Military::~Military( ) {
 }
 
 void Military::update( ) {
-	GamePtr game = Game::getTask( );
+	SceneStagePtr game = SceneStage::getTask( );
 	PacmanConstPtr pacman = game->getPacman( );
 	Vector pacman_pos = pacman->getPos( );
 	bool escape = pacman->isTurnaround( );

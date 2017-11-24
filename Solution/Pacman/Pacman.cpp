@@ -1,6 +1,6 @@
 #include "Pacman.h"
 #include "define.h"
-#include "Game.h"
+#include "SceneStage.h"
 #include "Map.h"
 #include "Drawer.h"
 #include "Image.h"
@@ -83,7 +83,7 @@ void Pacman::actOnMove( ) {
 }
 
 void Pacman::actOnEat( ) {
-	GamePtr game = Game::getTask( );
+	SceneStagePtr game = SceneStage::getTask( );
 	MapPtr map = game->getMap( );
 	const int CHIP_SIZE = game->getChipSize( );
 	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
@@ -98,7 +98,7 @@ void Pacman::actOnEat( ) {
 }
 
 void Pacman::actOnWarp( ) {
-	GamePtr game = Game::getTask( );
+	SceneStagePtr game = SceneStage::getTask( );
 	MapPtr map = game->getMap( );
 	const int CHIP_SIZE = game->getChipSize( );
 	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
@@ -117,7 +117,7 @@ void Pacman::actOnWarp( ) {
 }
 
 void Pacman::actOnAutoMove( ) {
-	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	const int MAP_WIDTH = CHIP_SIZE * MAP_WIDTH_CHIP_NUM;
 	bool automatic = true;
 	Vector pos = getPos( );
@@ -152,7 +152,7 @@ void Pacman::actOnAutoMove( ) {
 }
 
 void Pacman::draw( ) const {
-	const int DRAW_SIZE = Game::getTask( )->getChipSize( ) - 2;
+	const int DRAW_SIZE = SceneStage::getTask( )->getChipSize( ) - 2;
 	Vector pos = getPos( );
 	_sprite->setRect( ( ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ) * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE );
 	int sx = ( int )( pos.x - DRAW_SIZE / 2 );
