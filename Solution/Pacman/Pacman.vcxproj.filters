@@ -13,6 +13,7 @@
     <ClCompile Include="EnemyBashful.cpp" />
     <ClCompile Include="EnemyPokey.cpp" />
     <ClCompile Include="SceneStage.cpp" />
+    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -26,5 +27,6 @@
     <ClInclude Include="EnemyBashful.h" />
     <ClInclude Include="EnemyPokey.h" />
     <ClInclude Include="SceneStage.h" />
+    <ClInclude Include="Game.h" />
   </ItemGroup>
 </Project>

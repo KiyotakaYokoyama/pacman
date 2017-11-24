@@ -6,6 +6,7 @@
 #include "Pacman.h"
 #include "Military.h"
 #include "Debug.h"
+#include "Game.h"
 
 SceneStagePtr SceneStage::getTask( ) {
 	return std::dynamic_pointer_cast< SceneStage >( Application::getInstance( )->getTask( getTag( ) ) );
@@ -29,6 +30,10 @@ void SceneStage::initialize( ) {
 }
 
 void SceneStage::update( ) {
+	if ( Game::getTask( )->getNowScene( ) != Game::SCENE_STAGE ) {
+		return;
+	}
+
 	DrawerPtr drawer = Drawer::getTask( );
 	drawer->waitForSync( );
 	drawer->flip( );

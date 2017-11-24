@@ -11,7 +11,7 @@ PTR( Military );
 
 class SceneStage : public Task {
 public:
-	static std::string getTag( ) { return "GAME"; };
+	static std::string getTag( ) { return "SCENESTAGE"; };
 	static SceneStagePtr getTask( );
 public:
 	SceneStage( );
