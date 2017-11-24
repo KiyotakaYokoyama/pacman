@@ -1,6 +1,7 @@
 #include "SceneStage.h"
 #include "Application.h"
 #include "Drawer.h"
+#include <assert.h>
 
 #include "Map.h"
 #include "Pacman.h"
@@ -65,8 +66,19 @@ MapPtr SceneStage::getMap( ) {
 	return _map;
 }
 
-PacmanConstPtr SceneStage::getPacman( ) {
-	return _player[ 0 ];
+PacmanConstPtr SceneStage::getPacman( int idx ) {
+	assert( idx == 0 || idx == 1 );
+	return _player[ idx ];
+}
+
+PacmanConstPtr SceneStage::getPacman( Vector pos ) {
+	Vector dis1 = _player[ 0 ]->getPos( ) - pos;
+	Vector dis2 = _player[ 1 ]->getPos( ) - pos;
+	int idx = 0;
+	if ( dis1.getLength2( ) > dis2.getLength2( ) ) {
+		idx = 1;
+	}
+	return _player[ idx ];
 }
 
 int SceneStage::getChipSize( ) const {

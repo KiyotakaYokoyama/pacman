@@ -2,6 +2,7 @@
 #include "Task.h"
 #include <string>
 #include <array>
+#include "mathmatics.h"
 #include "define.h"
 
 PTR( SceneStage );
@@ -22,7 +23,8 @@ public:
 	int getChipSize( ) const;
 	int getCharaSize( ) const;
 	MapPtr getMap( );
-	PacmanConstPtr getPacman( );
+	PacmanConstPtr getPacman( int idx );
+	PacmanConstPtr getPacman( Vector pos );
 private:
 	int _chip_size;
 	MapPtr _map;

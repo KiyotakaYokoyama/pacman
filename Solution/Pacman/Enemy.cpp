@@ -54,8 +54,8 @@ void Enemy::checkGoal( ) {
 
 Vector Enemy::AStar( const Vector& goal ) {
 	MapPtr map = SceneStage::getTask( )->getMap( );
-	Vector start_pos( map->getMapX( getPos( ) ), map->getMapY( getPos( ) ) );
-	Vector goal_pos( map->getMapX( goal ), map->getMapY( goal ) );
+	Vector start_pos( map->getMapPos( getPos( ) ) );
+	Vector goal_pos( map->getMapPos( goal ) );
 
 	std::vector< PROCEED > proceeds;
 	int min_score = 0;

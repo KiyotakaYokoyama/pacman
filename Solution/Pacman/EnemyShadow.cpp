@@ -22,8 +22,8 @@ void EnemyShadow::moving( ) {
 	MapPtr map = game->getMap( );
 	const int CHARA_SIZE = game->getCharaSize( );
 	const int CHIP_SIZE = game->getChipSize( );
-	Vector pacman_pos = game->getPacman( )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
 	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+	Vector pacman_pos = game->getPacman( self_pos )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
 	Vector distance = pacman_pos - self_pos;
 	if ( fabs( distance.x ) > 3 * CHIP_SIZE ||
 		 fabs( distance.y ) > 3 * CHIP_SIZE ) {

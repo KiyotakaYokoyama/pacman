@@ -168,14 +168,12 @@ Vector Map::getPlayerPos( int id ) {
 	return _player_pos[ id ];
 }
 
-int Map::getMapX( const Vector& pos ) const {
+Vector Map::getMapPos( const Vector& pos ) const {
 	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
-	return ( int )( pos.x / CHIP_SIZE );
-}
-
-int Map::getMapY( const Vector& pos ) const {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
-	return ( int )( pos.y / CHIP_SIZE );
+	Vector result;
+	result.x = ( int )( pos.x / CHIP_SIZE );
+	result.y = ( int )( pos.y / CHIP_SIZE );
+	return result;
 }
 
 void Map::generateEnemy( MilitaryPtr military ) const {

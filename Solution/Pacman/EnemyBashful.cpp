@@ -20,9 +20,9 @@ void EnemyBashful::moving( ) {
 	SceneStagePtr game = SceneStage::getTask( );
 	const int CHARA_SIZE = game->getCharaSize( );
 	const int CHIP_SIZE = game->getChipSize( );
-	Vector pacman_pos = game->getPacman( )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
-	Vector shadow_pos = _shadow ? _shadow->getPos( ) : pacman_pos;
 	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+	Vector pacman_pos = game->getPacman( self_pos )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+	Vector shadow_pos = _shadow ? _shadow->getPos( ) : pacman_pos;
 
 	Vector distance = shadow_pos - pacman_pos;
 	distance *= -1;

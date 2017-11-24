@@ -16,7 +16,7 @@ Military::~Military( ) {
 
 void Military::update( ) {
 	SceneStagePtr game = SceneStage::getTask( );
-	PacmanConstPtr pacman = game->getPacman( );
+	PacmanConstPtr pacman = game->getPacman( 0 );
 	Vector pacman_pos = pacman->getPos( );
 	bool escape = pacman->isTurnaround( );
 	int chara_size = game->getCharaSize( );
