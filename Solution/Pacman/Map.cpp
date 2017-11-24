@@ -29,7 +29,7 @@ Map::Map( ) {
 		_stages.push_back( str );
 	}
 
-	loadStage( _stages[ 1 ] );
+	loadStage( _stages[ 0 ] );
 }
 
 Map::~Map( ) {
@@ -91,7 +91,7 @@ void Map::loadStage( std::string stage_name ) {
 			_feed_pos.push_back( pos );
 		}
 		if ( object == OBJECT_SHADOW || object == OBJECT_BASHFUL ||
-			 OBJECT_POKEY || OBJECT_SPEEDY ) {
+			 object == OBJECT_POKEY  || object == OBJECT_SPEEDY ) {
 			ENEMY enemy;
 			enemy.index = object;
 			enemy.pos = Vector( X, Y );
