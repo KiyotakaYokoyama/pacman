@@ -13,9 +13,10 @@ public:
 	SceneTitle( );
 	virtual ~SceneTitle( );
 public:
+	void draw( ) const;
+private:
 	void initialize( );
 	void update( );
-private:
 	void checkKey( );
 private:
 	ImagePtr _title;

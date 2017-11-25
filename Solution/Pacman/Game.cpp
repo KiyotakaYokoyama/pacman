@@ -18,7 +18,7 @@ GamePtr Game::getTask( ) {
 Game::Game( ) :
 _time ( START_TIME ),
 _score( INIT_SCORE ),
-_scene( SCENE_STAGE ) {
+_scene( SCENE_TITLE ) {
 }
 
 Game::~Game( ) {
@@ -32,7 +32,6 @@ void Game::initialize( ) {
 
 void Game::update( ) {
 	_time--;
-	draw( );
 }
 
 void Game::draw( ) const {

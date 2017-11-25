@@ -21,6 +21,7 @@ public:
 		SCENE_RESULT,
 	};
 public:
+	void draw( ) const;
 	void setNextScene( SCENE scene );
 	void addScore( PLAYER idx, int score );
 	int getGameTime( ) const;
@@ -28,7 +29,6 @@ public:
 private:
 	void initialize( );
 	void update( );
-	void draw( ) const;
 private:
 	int _time;
 	std::array< int, MAX_PLAYER > _score;

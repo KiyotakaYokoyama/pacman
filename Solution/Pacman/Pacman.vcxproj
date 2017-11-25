@@ -172,6 +172,7 @@
     <ClCompile Include="Military.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Military.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Pacmanframe\Pacmanframe.vcxproj">

@@ -1,6 +1,5 @@
 #include "SceneStage.h"
 #include "Application.h"
-#include "Drawer.h"
 #include <assert.h>
 
 #include "Map.h"
@@ -35,9 +34,6 @@ void SceneStage::update( ) {
 		return;
 	}
 
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->waitForSync( );
-	drawer->flip( );
 
 	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		_player[ i ]->update( );
@@ -45,11 +41,6 @@ void SceneStage::update( ) {
 	_military->update( );
 
 	
-	_map->draw( );
-	for ( int i = 0; i < MAX_PLAYER; i++ ) {
-		_player[ i ]->draw( );
-	}
-	_military->draw( );
 	
 	DebugPtr debug = Debug::getTask( );
 	if ( debug->isActive( ) ) {
@@ -58,7 +49,14 @@ void SceneStage::update( ) {
 				_player[ i ]->entryStage( _map->getPlayerPos( i ) );
 			}
 		}
-		debug->draw( );
+	}
+}
+
+void SceneStage::draw( ) const {
+	_map->draw( );
+	_military->draw( );
+	for ( int i = 0; i < MAX_PLAYER; i++ ) {
+		_player[ i ]->draw( );
 	}
 }
 

@@ -30,12 +30,10 @@ void SceneTitle::update( ) {
 		return;
 	}
 
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->waitForSync( );
-	drawer->flip( );
-
 	checkKey( );
+}
 
+void SceneTitle::draw( ) const {
 	_title->draw( );
 }
 

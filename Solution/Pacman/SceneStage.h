@@ -18,13 +18,15 @@ public:
 	SceneStage( );
 	virtual ~SceneStage( );
 public:
-	void initialize( );
-	void update( );
+	void draw( ) const;
 	int getChipSize( ) const;
 	int getCharaSize( ) const;
 	MapPtr getMap( );
 	PacmanConstPtr getPacman( int idx );
 	PacmanConstPtr getPacman( Vector pos );
+private:
+	void initialize( );
+	void update( );
 private:
 	int _chip_size;
 	MapPtr _map;
