@@ -28,7 +28,7 @@ public:
 private:
 	int _chip_size;
 	MapPtr _map;
-	std::array< PacmanPtr, PLAYER_NUM > _player;
+	std::array< PacmanPtr, MAX_PLAYER > _player;
 	MilitaryPtr _military;
 };
 

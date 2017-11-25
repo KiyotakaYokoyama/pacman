@@ -7,7 +7,6 @@
 #include "Keyboard.h"
 #include <assert.h>
 
-const int SPRITE_SIZE = 64;
 const int MOVE_SPEED = 3;
 const int MAX_SPEED = 8;
 const int WAIT_ANIM_TIME = 5;

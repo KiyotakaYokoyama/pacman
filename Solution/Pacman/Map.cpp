@@ -64,7 +64,7 @@ void Map::loadStage( std::string stage_name ) {
 	_objects.clear( );
 	_objects.resize( MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM );
 
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		_player_pos[ i ] = Vector( 32 + i * 868, 32 + i * 268 );
 	}
 

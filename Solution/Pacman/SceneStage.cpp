@@ -23,7 +23,7 @@ SceneStage::~SceneStage( ) {
 
 void SceneStage::initialize( ) {
 	_map = MapPtr( new Map );
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		_player[ i ] = PacmanPtr( new Pacman( i, _map->getPlayerPos( i ) ) );
 	}
 	_military = MilitaryPtr( new Military );
@@ -39,14 +39,14 @@ void SceneStage::update( ) {
 	drawer->waitForSync( );
 	drawer->flip( );
 
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		_player[ i ]->update( );
 	}
 	_military->update( );
 
 	
 	_map->draw( );
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
+	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		_player[ i ]->draw( );
 	}
 	_military->draw( );
@@ -54,7 +54,7 @@ void SceneStage::update( ) {
 	DebugPtr debug = Debug::getTask( );
 	if ( debug->isActive( ) ) {
 		if ( debug->isNewStage( ) ) {
-			for ( int i = 0; i < PLAYER_NUM; i++ ) {
+			for ( int i = 0; i < MAX_PLAYER; i++ ) {
 				_player[ i ]->entryStage( _map->getPlayerPos( i ) );
 			}
 		}

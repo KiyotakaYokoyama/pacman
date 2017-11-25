@@ -42,7 +42,7 @@ private:
 	std::vector< unsigned char > _objects;
 	std::vector< Vector > _feed_pos;
 	std::vector< ENEMY > _enemy_pos;
-	std::array< Vector, PLAYER_NUM > _player_pos;
+	std::array< Vector, MAX_PLAYER > _player_pos;
 	ImagePtr _stage;
 	ImagePtr _feeds;
 };

@@ -1,8 +1,11 @@
 #pragma once
 #include "Task.h"
 #include <string>
+#include <array>
+#include "define.h"
 
 PTR( Game );
+PTR( Image );
 
 class Game : public Task {
 public:
@@ -18,11 +21,19 @@ public:
 		SCENE_RESULT,
 	};
 public:
-	void initialize( );
-	void update( );
 	void setNextScene( SCENE scene );
+	void addScore( PLAYER idx, int score );
+	int getGameTime( ) const;
 	SCENE getNowScene( ) const;
 private:
+	void initialize( );
+	void update( );
+	void draw( ) const;
+private:
+	int _time;
+	std::array< int, MAX_PLAYER > _score;
 	SCENE _scene;
+	ImagePtr _number;
+	ImagePtr _player_name;
 };
 

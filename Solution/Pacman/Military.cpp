@@ -16,17 +16,27 @@ Military::~Military( ) {
 
 void Military::update( ) {
 	SceneStagePtr game = SceneStage::getTask( );
-	PacmanConstPtr pacman = game->getPacman( 0 );
-	Vector pacman_pos = pacman->getPos( );
-	bool escape = pacman->isTurnaround( );
 	int chara_size = game->getCharaSize( );
+	PacmanConstPtr player1 = game->getPacman( PLAYER_1 );
+	PacmanConstPtr player2 = game->getPacman( PLAYER_2 );
+	bool escape1 = player1->isTurnaround( );
+	bool escape2 = player2->isTurnaround( );
 	std::list< EnemyPtr >::const_iterator ite = _enemies.begin( );
 	while ( ite != _enemies.end( ) ) {
 		EnemyPtr enemy = *ite;
 		enemy->update( );
 
-		if ( escape ) {
-			Vector distance = pacman->getPos( ) - enemy->getPos( );
+		if ( escape1 ) {
+			Vector distance = player1->getPos( ) - enemy->getPos( );
+			if ( distance.getLength2( ) < chara_size * chara_size ) {
+				ite = _enemies.erase( ite );
+				enemy.reset( );
+				continue;
+			}
+		}
+		
+		if ( escape2 ) {
+			Vector distance = player2->getPos( ) - enemy->getPos( );
 			if ( distance.getLength2( ) < chara_size * chara_size ) {
 				ite = _enemies.erase( ite );
 				enemy.reset( );

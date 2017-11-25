@@ -2,7 +2,12 @@
 
 const int WIDTH = 1280;
 const int HEIGHT = 720;
-const int PLAYER_NUM = 2;
+const int SPRITE_SIZE = 64;
+enum PLAYER {
+	PLAYER_1,
+	PLAYER_2,
+	MAX_PLAYER,
+};
 
 struct IMGAE_DATA {
 	int sx1;

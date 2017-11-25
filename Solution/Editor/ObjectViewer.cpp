@@ -5,8 +5,6 @@
 #include "Image.h"
 #include "ImageTarget.h"
 
-const int SPRITE_SIZE = 64;
-
 ObjectViewer::ObjectViewer( ObjectConstPtr object ) :
 _object( object ) {
 	_image = Drawer::getTask( )->createImage( "object.png" );
