@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "define.h"
 #include "SceneStage.h"
+#include "Pacman.h"
 #include "Military.h"
 #include "EnemyBashful.h"
 #include "EnemyPokey.h"
@@ -69,8 +70,9 @@ void Map::loadStage( std::string stage_name ) {
 	}
 
 	_feed_pos.clear( );
+	_revival_feed_pos.clear( );
 	_enemy_pos.clear( );
-	const int CHIP_SIZE = SceneStage::getTask()->getChipSize();
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	unsigned char object;
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		binary->read( (void*)&object, sizeof( unsigned char ) );
@@ -90,6 +92,10 @@ void Map::loadStage( std::string stage_name ) {
 			Vector pos( i % MAP_WIDTH_CHIP_NUM, i / MAP_WIDTH_CHIP_NUM );
 			_feed_pos.push_back( pos );
 		}
+		if ( object == OBJECT_REVIVAL_FEED ) {
+			Vector pos( i % MAP_WIDTH_CHIP_NUM, i / MAP_WIDTH_CHIP_NUM );
+			_revival_feed_pos.push_back( pos );
+		}
 		if ( object == OBJECT_SHADOW || object == OBJECT_BASHFUL ||
 			 object == OBJECT_POKEY  || object == OBJECT_SPEEDY ) {
 			ENEMY enemy;
@@ -102,6 +108,36 @@ void Map::loadStage( std::string stage_name ) {
 }
 
 void Map::update( ) {
+	checkRevivalFeed( );
+}
+
+void Map::checkRevivalFeed( ) {
+	SceneStagePtr master = SceneStage::getTask( );
+	Vector p1_pos = getMapPos( master->getPacman( PLAYER_1 )->getPos( ) );
+	Vector p2_pos = getMapPos( master->getPacman( PLAYER_2 )->getPos( ) );
+
+	bool revival = false;
+	int size = ( int )_revival_feed_pos.size( );
+	for ( int i = 0; i < size; i++ ) {
+		if ( _revival_feed_pos[ i ] == p1_pos ||
+			 _revival_feed_pos[ i ] == p2_pos ) {
+			revival = true;
+			break;
+		}
+	}
+
+	if ( revival ) {
+		int size = ( int )_feed_pos.size( );
+		for ( int i = 0; i < size; i++ ) {
+			if ( getObject( _feed_pos[ i ].x, _feed_pos[ i ].y ) == OBJECT_ENHANCE_FEED ) {
+				return;
+			}
+		}
+		for ( int i = 0; i < size; i++ ) {
+			int idx = ( int )( _feed_pos[ i ].x + _feed_pos[ i ].y * MAP_WIDTH_CHIP_NUM );
+			_objects[ idx ] = OBJECT_ENHANCE_FEED;
+		}
+	}
 }
 
 void Map::draw( ) const {

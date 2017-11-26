@@ -37,10 +37,12 @@ private:
 	};
 private:
 	void loadStage( std::string stage_name );
+	void checkRevivalFeed( );
 private:
 	std::vector< std::string > _stages;
 	std::vector< unsigned char > _objects;
 	std::vector< Vector > _feed_pos;
+	std::vector< Vector > _revival_feed_pos;
 	std::vector< ENEMY > _enemy_pos;
 	std::array< Vector, MAX_PLAYER > _player_pos;
 	ImagePtr _stage;

@@ -21,7 +21,8 @@ public:
 		MODE_WALL,
 		MODE_FEED,
 		MODE_ENHANCE_FEET,
-		MODE_STAGE_WARP
+		MODE_STAGE_WARP,
+		MODE_REVIVAL_FEED
 	};
 public:
 	void update( );

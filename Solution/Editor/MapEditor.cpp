@@ -70,12 +70,14 @@ void MapEditor::drawInfo( ) const {
 			case ObjectEditor::MODE_BASHFUL:	  str += "アオスケ\n"; break;
 			case ObjectEditor::MODE_POKEY:        str += "グズタ\n"; break;
 			case ObjectEditor::MODE_STAGE_WARP:	  str += "ワープブロック\n"; break;
+			case ObjectEditor::MODE_REVIVAL_FEED: str += "エサ復活ポジション\n"; break;
 			}
 			str += "1:削除\n";
 			str += "2:壁\n";
 			str += "3:餌\n";
 			str += "4:パワーエサ\n";
 			str += "5:ワープブロック\n";
+			str += "6:エサ復活ポジション\n";
 			str += "Q:プレイヤー１\n";
 			str += "W:プレイヤー２\n";
 			str += "E:アカベエ\n";

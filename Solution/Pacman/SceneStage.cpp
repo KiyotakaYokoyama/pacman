@@ -39,8 +39,7 @@ void SceneStage::update( ) {
 		_player[ i ]->update( );
 	}
 	_military->update( );
-
-	
+	_map->update( );	
 	
 	DebugPtr debug = Debug::getTask( );
 	if ( debug->isActive( ) ) {
@@ -64,8 +63,8 @@ MapPtr SceneStage::getMap( ) {
 	return _map;
 }
 
-PacmanConstPtr SceneStage::getPacman( int idx ) {
-	assert( idx == 0 || idx == 1 );
+PacmanConstPtr SceneStage::getPacman( PLAYER idx ) {
+	assert( idx == PLAYER_1 || idx == PLAYER_2 );
 	return _player[ idx ];
 }
 

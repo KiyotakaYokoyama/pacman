@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Drawer.h"
 #include "Image.h"
+#include "SceneResult.h"
 
 const int FPS = 30;
 const int START_TIME = 60 * FPS;
@@ -28,6 +29,7 @@ void Game::initialize( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_number = drawer->createImage( "num.png" );
 	_player_name = drawer->createImage( "playerName.png" );
+	SceneResult::getTask( )->setNumberImage( _number );
 }
 
 void Game::update( ) {

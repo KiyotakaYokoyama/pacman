@@ -42,6 +42,9 @@ void ObjectEditor::updateMode( ) {
 	if ( key->isPushKey( "5" ) ) {
 		_mode = MODE_STAGE_WARP;
 	}
+	if ( key->isPushKey( "6" ) ) {
+		_mode = MODE_REVIVAL_FEED;
+	}
 	if ( key->isPushKey( "Q" ) ) {
 		_mode = MODE_PLAYER1;
 	}
@@ -78,43 +81,22 @@ void ObjectEditor::edit( ) {
 		return;
 	}
 
-	unsigned char chip = OBJECT_NONE;
-	switch ( _mode ) {
-	case MODE_NONE:
-		chip = OBJECT_NONE;
-		break;
-	case MODE_WALL:
-		chip = OBJECT_WALL;
-		break;
-	case MODE_FEED:
-		chip = OBJECT_FEED;
-		break;
-	case MODE_ENHANCE_FEET:
-		chip = OBJECT_ENHANCE_FEED;
-		break;
-	case MODE_PLAYER1:
-		chip = OBJECT_PLAYER1;
-		break;
-	case MODE_PLAYER2:
-		chip = OBJECT_PLAYER2;
-		break;
-	case MODE_SAHDOW:
-		chip = OBJECT_SHADOW;
-		break;
-	case MODE_SPEEDY:
-		chip = OBJECT_SPEEDY;
-		break;
-	case MODE_BASHFUL:
-		chip = OBJECT_BASHFUL;
-		break;
-	case MODE_POKEY:
-		chip = OBJECT_POKEY;
-		break;
-	case MODE_STAGE_WARP:
-		chip = OBJECT_STAGE_WARP;
-		break;
-	}
 	if ( Mouse::getTask( )->isHoldLeftButton( ) ) {
+		unsigned char chip = OBJECT_NONE;
+		switch ( _mode ) {
+		case MODE_NONE:         chip = OBJECT_NONE; break;
+		case MODE_WALL:         chip = OBJECT_WALL; break;
+		case MODE_FEED:         chip = OBJECT_FEED; break;
+		case MODE_ENHANCE_FEET: chip = OBJECT_ENHANCE_FEED; break;
+		case MODE_PLAYER1:      chip = OBJECT_PLAYER1; break;
+		case MODE_PLAYER2:      chip = OBJECT_PLAYER2; break;
+		case MODE_SAHDOW:       chip = OBJECT_SHADOW; break;
+		case MODE_SPEEDY:       chip = OBJECT_SPEEDY; break;
+		case MODE_BASHFUL:      chip = OBJECT_BASHFUL; break;
+		case MODE_POKEY:        chip = OBJECT_POKEY; break;
+		case MODE_STAGE_WARP:   chip = OBJECT_STAGE_WARP; break;
+		case MODE_REVIVAL_FEED: chip = OBJECT_REVIVAL_FEED; break;
+		}
 		if ( chip == OBJECT_PLAYER1 || chip == OBJECT_PLAYER2 ) {
 			checkAndEditChip( chip );
 		}
