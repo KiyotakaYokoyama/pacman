@@ -129,7 +129,7 @@ void Map::checkRevivalFeed( ) {
 	if ( revival ) {
 		int size = ( int )_feed_pos.size( );
 		for ( int i = 0; i < size; i++ ) {
-			if ( getObject( _feed_pos[ i ].x, _feed_pos[ i ].y ) == OBJECT_ENHANCE_FEED ) {
+			if ( getObject( ( int )_feed_pos[ i ].x, ( int )_feed_pos[ i ].y ) == OBJECT_ENHANCE_FEED ) {
 				return;
 			}
 		}
