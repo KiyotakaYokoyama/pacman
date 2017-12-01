@@ -9,6 +9,7 @@ Character::Character( Vector pos, bool coll ) :
 _pos( pos ),
 _coll( coll ),
 _bumped( false ),
+_dir( DIR_RIGHT ),
 _act_count( 0 ) {
 }
 

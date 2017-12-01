@@ -8,6 +8,7 @@
 #include "Debug.h"
 #include "Game.h"
 
+
 SceneStagePtr SceneStage::getTask( ) {
 	return std::dynamic_pointer_cast< SceneStage >( Application::getInstance( )->getTask( getTag( ) ) );
 }
@@ -34,7 +35,13 @@ void SceneStage::update( ) {
 		return;
 	}
 
+	if ( !Game::getTask( )->isStaging( ) ) {
+		updateBattle( );
+	}
 
+}
+
+void SceneStage::updateBattle( ) {
 	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		_player[ i ]->update( );
 	}
@@ -54,8 +61,24 @@ void SceneStage::update( ) {
 void SceneStage::draw( ) const {
 	_map->draw( );
 	_military->draw( );
-	for ( int i = 0; i < MAX_PLAYER; i++ ) {
-		_player[ i ]->draw( );
+	if ( Game::getTask( )->isStaging( ) ) {
+		drawStageing( );
+	} else {
+		for ( int i = 0; i < MAX_PLAYER; i++ ) {
+			_player[ i ]->draw( );
+		}
+	}
+}
+
+void SceneStage::drawStageing( ) const {
+	GamePtr game = Game::getTask( );
+	const int STAGE_TIME = game->getStageingTime( );
+	const int MAX_STAGE_TIME = game->getMaxStageingTime( );
+	if ( STAGE_TIME < MAX_STAGE_TIME / 2 ) {
+		_player[ PLAYER_1 ]->drawStageing( STAGE_TIME, MAX_STAGE_TIME / 2 );
+	} else {
+		_player[ PLAYER_1 ]->draw( );
+		_player[ PLAYER_2 ]->drawStageing( STAGE_TIME - MAX_STAGE_TIME / 2, MAX_STAGE_TIME / 2 );
 	}
 }
 

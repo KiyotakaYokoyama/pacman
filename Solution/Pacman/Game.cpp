@@ -5,6 +5,7 @@
 #include "SceneResult.h"
 
 const int FPS = 30;
+const int MAX_STAGEING_TIME = 8 * FPS;
 const int START_TIME = 60 * FPS;
 const std::array< int, MAX_PLAYER > INIT_SCORE = { 0 };
 const int DRAW_SCORE1_X = SPRITE_SIZE;
@@ -17,9 +18,10 @@ GamePtr Game::getTask( ) {
 }
 
 Game::Game( ) :
-_time ( START_TIME ),
+_staging_time( 0 ),
+_battle_time( START_TIME ),
 _score( INIT_SCORE ),
-_scene( SCENE_TITLE ) {
+_scene( SCENE_STAGE ) {
 }
 
 Game::~Game( ) {
@@ -33,14 +35,24 @@ void Game::initialize( ) {
 }
 
 void Game::update( ) {
-	_time--;
+	if ( _scene == SCENE_STAGE ) {
+		if ( _staging_time < MAX_STAGEING_TIME ) {
+			_staging_time++;
+		} else {
+			_battle_time--;
+		}
+	}
+	if ( _scene == SCENE_TITLE ) {
+		_staging_time = 0;
+		_battle_time = START_TIME;
+	}
 }
 
 void Game::draw( ) const {
 	const int NUM_SIZE = 10;
 	const int NUM[ NUM_SIZE ] = { 9, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 	{ // time
-		const int TIME = _time / FPS;
+		const int TIME = _battle_time / FPS;
 		const int DIGIT = ( int )log10( TIME ) + 1;
 
 		for ( int i = 0; i < DIGIT; i++ ) {
@@ -101,5 +113,17 @@ void Game::addScore( PLAYER idx, int score ) {
 }
 
 int Game::getGameTime( ) const {
-	return _time;
+	return _battle_time;
+}
+
+int Game::getMaxStageingTime( ) const {
+	return MAX_STAGEING_TIME;
+}
+
+int Game::getStageingTime( ) const {
+	return _staging_time;
+}
+
+bool Game::isStaging( ) const {
+	return _staging_time < MAX_STAGEING_TIME;
 }

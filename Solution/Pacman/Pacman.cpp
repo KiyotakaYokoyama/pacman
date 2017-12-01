@@ -5,6 +5,7 @@
 #include "Drawer.h"
 #include "Image.h"
 #include "Keyboard.h"
+#include "Application.h"
 #include <assert.h>
 
 const int MOVE_SPEED = 3;
@@ -172,6 +173,32 @@ void Pacman::draw( ) const {
 		sx2 = tmp;
 	}
 	_sprite->setPos( sx, sy, sx2, sy + DRAW_SIZE );
+	_sprite->draw( );
+}
+
+void Pacman::drawStageing( const int time, const int max_time ) const {
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int STAGE_WIDTH = CHIP_SIZE * MAP_WIDTH_CHIP_NUM;
+	const int STAGE_HEIGHT = CHIP_SIZE * MAP_HEIGHT_CHIP_NUM;
+	const double RATIO = ( ( double )( max_time - time ) / max_time );
+	const Vector START_POS( STAGE_WIDTH / 2, STAGE_HEIGHT );
+	Vector distance = getPos( ) - START_POS;
+	Vector pos = distance * ( 1.0 - RATIO ) + START_POS;
+	const int DRAW_SIZE = SceneStage::getTask( )->getCharaSize( );
+
+	_sprite->setRect( 0, 0, SPRITE_SIZE, SPRITE_SIZE );
+	const int MAGNIFICAT = 30;
+	int sx = pos.x - ( DRAW_SIZE * 0.5 ) * ( RATIO * MAGNIFICAT );
+	int sy = pos.y - DRAW_SIZE * ( ( RATIO * MAGNIFICAT ) + 1 );
+	int sx2 = sx + DRAW_SIZE * ( RATIO * MAGNIFICAT );
+	int sy2 = pos.y;
+	if ( abs( sx - sx2 ) < DRAW_SIZE ) {
+		sx2 = sx + DRAW_SIZE;
+	}
+	if ( sy2 - sy < DRAW_SIZE ) {
+		sy2 = sy + DRAW_SIZE;
+	}
+	_sprite->setPos( sx, sy, sx2, sy2 );
 	_sprite->draw( );
 }
 

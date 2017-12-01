@@ -27,6 +27,8 @@ public:
 private:
 	void initialize( );
 	void update( );
+	void updateBattle( );
+	void drawStageing( ) const;
 private:
 	int _chip_size;
 	MapPtr _map;

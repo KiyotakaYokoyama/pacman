@@ -10,6 +10,7 @@ public:
 	virtual ~Pacman( );
 public:
 	void draw( ) const;
+	void drawStageing( const int time, const int max_time ) const;
 	void entryStage( const Vector& pos );
 	bool isTurnaround( ) const;
 private:

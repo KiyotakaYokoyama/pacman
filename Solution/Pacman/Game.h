@@ -25,12 +25,16 @@ public:
 	void setNextScene( SCENE scene );
 	void addScore( PLAYER idx, int score );
 	int getGameTime( ) const;
+	int getStageingTime( ) const;
+	int getMaxStageingTime( ) const;
+	bool isStaging( ) const;
 	SCENE getNowScene( ) const;
 private:
 	void initialize( );
 	void update( );
 private:
-	int _time;
+	int _battle_time;
+	int _staging_time;
 	std::array< int, MAX_PLAYER > _score;
 	SCENE _scene;
 	ImagePtr _number;
