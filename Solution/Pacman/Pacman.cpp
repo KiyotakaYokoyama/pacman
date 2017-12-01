@@ -10,8 +10,9 @@
 const int MOVE_SPEED = 3;
 const int MAX_SPEED = 8;
 const int WAIT_ANIM_TIME = 5;
-const int ANIM_NUM = 3;
 const int TURNAROUND_TIME = 300;
+const int ANIM[ ] = { 0, 1, 2, 1 };
+const int ANIM_NUM = sizeof( ANIM ) / sizeof( ANIM[ 0 ] );
 
 Pacman::Pacman( int id, const Vector& pos ) :
 Character( pos ),
@@ -151,12 +152,26 @@ void Pacman::actOnAutoMove( ) {
 }
 
 void Pacman::draw( ) const {
-	const int DRAW_SIZE = SceneStage::getTask( )->getChipSize( ) - 2;
+	const int DRAW_SIZE = SceneStage::getTask( )->getCharaSize( );
 	Vector pos = getPos( );
-	_sprite->setRect( ( ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ) * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE );
+	int tx = ANIM[ ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ] * SPRITE_SIZE;
+	int ty = 0;
+	if ( getDir( ) == DIR_UP ) {
+		ty = SPRITE_SIZE * 1;
+	}
+	if ( getDir( ) == DIR_DOWN ) {
+		ty = SPRITE_SIZE * 2;
+	}
+	_sprite->setRect( tx, ty, SPRITE_SIZE, SPRITE_SIZE );
 	int sx = ( int )( pos.x - DRAW_SIZE / 2 );
 	int sy = ( int )( pos.y - DRAW_SIZE );
-	_sprite->setPos( sx, sy, sx + DRAW_SIZE, sy + DRAW_SIZE );
+	int sx2 = sx + DRAW_SIZE;
+	if ( getDir( ) == DIR_LEFT ) {
+		int tmp = sx;
+		sx = sx2;
+		sx2 = tmp;
+	}
+	_sprite->setPos( sx, sy, sx2, sy + DRAW_SIZE );
 	_sprite->draw( );
 }
 

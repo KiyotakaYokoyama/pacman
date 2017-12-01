@@ -25,7 +25,7 @@ void Debug::initialize( ) {
 }
 
 void Debug::update( ) {
-	if ( Keyboard::getTask( )->isPushKey( "SPACE" ) ) {
+	if ( Keyboard::getTask( )->isPushKey( "F1" ) ) {
 		_active = !_active;
 	}
 	if ( _new_stage ) {
