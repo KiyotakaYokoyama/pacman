@@ -212,36 +212,36 @@ Vector Enemy::AStar( const Vector& goal ) {
 
 					if ( map->getObject( ( int )pro_up.pos.x, ( int )pro_up.pos.y ) != OBJECT_WALL ) {
 						pro_up.state = STATE_OPEN;
+					}
 						if ( pro_up.pos == goal_pos ) {
 							pro_up.state = STATE_COLSE;
 							open_tmp.push_back( pro_up );
 							break;
 						}
-					}
 					if ( map->getObject( ( int )pro_down.pos.x, ( int )pro_down.pos.y ) != OBJECT_WALL ) {
 						pro_down.state = STATE_OPEN;
+					}
 						if ( pro_down.pos == goal_pos ) {
 							pro_down.state = STATE_COLSE;
 							open_tmp.push_back( pro_down );
 							break;
 						}
-					}
 					if ( map->getObject( ( int )pro_left.pos.x, ( int )pro_left.pos.y ) != OBJECT_WALL ) {
 						pro_left.state = STATE_OPEN;
+					}
 						if ( pro_left.pos == goal_pos ) {
 							pro_left.state = STATE_COLSE;
 							open_tmp.push_back( pro_left );
 							break;
 						}
-					}
 					if ( map->getObject( ( int )pro_right.pos.x, ( int )pro_right.pos.y ) != OBJECT_WALL ) {
 						pro_right.state = STATE_OPEN;
+					}
 						if ( pro_right.pos == goal_pos ) {
 							pro_right.state = STATE_COLSE;
 							open_tmp.push_back( pro_right );
 							break;
 						}
-					}
 
 					pro_up.heristic    = ( int )( fabs( goal_pos.x - pro_up.pos.x )    + fabs( goal_pos.y - pro_up.pos.y ) );
 					pro_down.heristic  = ( int )( fabs( goal_pos.x - pro_down.pos.x )  + fabs( goal_pos.y - pro_down.pos.y ) );
@@ -366,7 +366,7 @@ Vector Enemy::AStar( const Vector& goal ) {
 	int size = ( int )root.size( );
 	Vector dir = goal - getPos( );
 	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
-	if ( dir.getLength( ) > CHARA_SIZE ) {
+	if ( size > 1 ) {
 		dir = ( root[ size - 2 ].pos - root[ size - 1 ].pos ).normalize( );
 	}
 	return dir;

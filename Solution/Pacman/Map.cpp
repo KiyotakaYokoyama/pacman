@@ -226,16 +226,16 @@ void Map::generateEnemy( MilitaryPtr military ) const {
 				military->addEnemy( EnemyPtr( new EnemyShadow( enemy.pos ) ) );
 			}
 			continue;
-		//case OBJECT_SPEEDY:
-		//	military->addEnemy( EnemyPtr( new EnemySpeedy( enemy.pos ) ) );
-		//	continue;
-		//case OBJECT_BASHFUL:
-		//	military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos, shadow ) ) );
-		//	shadow = EnemyShadowPtr( );
-		//	continue;
-		//case OBJECT_POKEY:
-		//	military->addEnemy( EnemyPtr( new EnemyPokey( enemy.pos ) ) );
-		//	continue;
+		case OBJECT_SPEEDY:
+			military->addEnemy( EnemyPtr( new EnemySpeedy( enemy.pos ) ) );
+			continue;
+		case OBJECT_BASHFUL:
+			military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos, shadow ) ) );
+			shadow = EnemyShadowPtr( );
+			continue;
+		case OBJECT_POKEY:
+			military->addEnemy( EnemyPtr( new EnemyPokey( enemy.pos ) ) );
+			continue;
 		default:
 			continue;
 		}

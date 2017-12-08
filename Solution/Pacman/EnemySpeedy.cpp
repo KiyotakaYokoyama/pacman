@@ -1,7 +1,9 @@
 #include "EnemySpeedy.h"
 #include "SceneStage.h"
+#include "Pacman.h"
 
 static const int WAIT_ANIM_TIME = 5;
+static const int MOVE_SPEED = 3;
 
 
 EnemySpeedy::EnemySpeedy( const Vector& pos ) :
@@ -11,6 +13,10 @@ EnemySpeedy::~EnemySpeedy( ) {
 }
 
 void EnemySpeedy::moving( ) {
+	SceneStagePtr scene_stage = SceneStage::getTask( );
+	Vector self_pos = getPos( ) + getCharaSize( );
+	Vector pacman_pos = scene_stage->getPacman( self_pos )->getPos( ) + getCharaSize( );
+	moveGoal( pacman_pos + Vector( scene_stage->getChipSize( ) * -1 * 3, 0 ) );
 }
 
 IMGAE_DATA EnemySpeedy::getImageData( ) const {
