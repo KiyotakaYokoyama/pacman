@@ -5,6 +5,7 @@
 #include "Debug.h"
 #include "SceneTitle.h"
 #include "SceneStage.h"
+#include "SceneResult.h"
 
 ViewerPtr Viewer::getTask( ) {
 	return std::dynamic_pointer_cast< Viewer >( Application::getInstance( )->getTask( getTag( ) ) );
@@ -32,6 +33,7 @@ void Viewer::update( ) {
 		if ( Debug::getTask( )->isActive( ) ) Debug::getTask( )->draw( );
 		break;
 	case Game::SCENE_RESULT:
+		SceneResult::getTask( )->draw( );
 		break;
 	}
 }
