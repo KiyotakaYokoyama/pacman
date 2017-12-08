@@ -4,6 +4,7 @@
 
 static const int MOVE_SPEED = 2;
 static const int MAX_SPEED = 1;
+static const int MAX_CEARCH_LENGTH = 15;
 
 Enemy::Enemy( const Vector& pos ) :
 Character( pos ) {
@@ -42,7 +43,7 @@ void Enemy::moveGoal( const Vector goal ) {
 	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
 	Vector diff = goal - getPos( );
 	int root_num = ( int )( ( diff.x + 0.5 ) / CHIP_SIZE + ( diff.y + 0.5 ) / CHIP_SIZE );
-	if ( root_num > 10 ) {
+	if ( root_num > MAX_CEARCH_LENGTH ) {
 		Vector vec = toStraight( getPos( ), goal );
 		if ( vec.getLength( ) > MAX_SPEED ) {
 			vec = vec.normalize( ) * MAX_SPEED;

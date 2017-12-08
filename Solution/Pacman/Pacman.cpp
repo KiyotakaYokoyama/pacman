@@ -9,7 +9,7 @@
 #include <assert.h>
 
 const int MOVE_SPEED = 3;
-const int MAX_SPEED = 8;
+const int MAX_SPEED = 3;
 const int WAIT_ANIM_TIME = 5;
 const int TURNAROUND_TIME = 300;
 const int ANIM[ ] = { 0, 1, 2, 1 };
