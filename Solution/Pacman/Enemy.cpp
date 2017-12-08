@@ -2,54 +2,144 @@
 #include "SceneStage.h"
 #include "Map.h"
 
-static const int MOVE_SPEED = 5;
-static const int MAX_SPEED = 6;
+static const int MOVE_SPEED = 2;
+static const int MAX_SPEED = 1;
 
 Enemy::Enemy( const Vector& pos ) :
-Character( pos ),
-_auto_move( false ),
-_goal_pos( Vector( -1, -1 ) ) {
+Character( pos ) {
 }
 
 Enemy::~Enemy( ) {
 }
 
 void Enemy::act( ) {
-	if ( !_auto_move ) {
+	SceneStagePtr scene_stage = SceneStage::getTask( );
+	const int CHIP_SIZE = scene_stage->getChipSize( );
+	const int CHARA_SIZE = scene_stage->getCharaSize( );
+	Vector pos = getPos( );
+	bool center = ( int )pos.x % CHIP_SIZE == CHIP_SIZE / 2 &&
+				  ( int )pos.y % CHIP_SIZE == CHARA_SIZE;
+
+	if ( center ) {
 		moving( );
+		decisionMoveDir( );
 	} else {
-		checkGoal( );
+		adjustVec( );
 	}
 }
 
-void Enemy::moveGoal( const Vector goal ) {
-	_auto_move = true;
-	_goal_pos = goal;
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
-	Vector pos = getPos( );
-	Vector vec = ( goal - pos ).normalize( ) * MOVE_SPEED + getVec( );
+void Enemy::decisionMoveDir( ) {
+	Vector vec = getVec( );
+	if ( vec.y * vec.y < vec.x * vec.x ) {
+		vec.y = 0;
+	} else {
+		vec.x = 0;
+	}
+	setVec( vec );
+}
 
-	if ( vec.getLength2( ) > MAX_SPEED * MAX_SPEED ) {
+void Enemy::moveGoal( const Vector goal ) {
+	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	Vector diff = goal - getPos( );
+	int root_num = ( int )( ( diff.x + 0.5 ) / CHIP_SIZE + ( diff.y + 0.5 ) / CHIP_SIZE );
+	if ( root_num > 10 ) {
+		Vector vec = toStraight( getPos( ), goal );
+		if ( vec.getLength( ) > MAX_SPEED ) {
+			vec = vec.normalize( ) * MAX_SPEED;
+		}
+		setVec( vec );
+	} else {
+		Vector vec = AStar( goal );
+		if ( vec.getLength( ) == 1.0 ) {
+			vec = vec * MOVE_SPEED + getVec( );
+		}
+
+		if ( vec.getLength2( ) > MAX_SPEED * MAX_SPEED ) {
+			vec = vec.normalize( ) * MAX_SPEED;
+		}
+		setVec( vec );
+	}
+}
+
+void Enemy::adjustVec( ) {
+	SceneStagePtr scene_stage = SceneStage::getTask( );
+	const int CHIP_SIZE = scene_stage->getChipSize( );
+	const int CHARA_SIZE = scene_stage->getCharaSize( );
+	Vector f_pos = getPos( ) + getVec( );
+	Vector vec = getVec( );
+	if ( ( int )f_pos.x % CHIP_SIZE != CHIP_SIZE / 2 && vec.x == 0 ) {
+		vec.x += CHIP_SIZE / 2 - ( int )f_pos.x % CHIP_SIZE ;
+	}
+	if ( ( int )f_pos.y % CHIP_SIZE != CHARA_SIZE && vec.y == 0 ) {
+		vec.y += ( CHARA_SIZE ) - ( int )f_pos.y % CHIP_SIZE;
+	}
+
+	if ( vec.getLength( ) > MAX_SPEED ) {
 		vec = vec.normalize( ) * MAX_SPEED;
 	}
 	setVec( vec );
 }
 
-void Enemy::checkGoal( ) {
-	int chara_size = SceneStage::getTask( )->getCharaSize( );
-	Vector distance = getPos( ) - _goal_pos;
-	if ( distance.getLength2( ) < chara_size * chara_size ) {
-		_auto_move = false;
-		_goal_pos = Vector( -1, -1 );
+Vector Enemy::getCharaSize( ) const {
+	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	return Vector( 0, -CHARA_SIZE / 2 );
+}
+
+Vector Enemy::toStraight( const Vector& start, const Vector& goal ) {
+	SceneStagePtr scene_stage = SceneStage::getTask( );
+	const int CHIP_SIZE = scene_stage->getChipSize( );
+	MapPtr map = scene_stage->getMap( );
+
+	enum DIRECTION {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		MAX_DIRECTION
+	};
+
+	const Vector DIRECT[ MAX_DIRECTION ] = {
+		Vector(  0, -1 ) * CHIP_SIZE,
+		Vector(  0,  1 ) * CHIP_SIZE,
+		Vector( -1,  0 ) * CHIP_SIZE,
+		Vector(  1,  0 ) * CHIP_SIZE
+	};
+
+	Vector count = Vector( );
+	int num_count[ MAX_DIRECTION ] = { 0 };
+	for ( int i = 0; i < MAX_DIRECTION; i++, count = Vector( ) ) {
+		while ( map->getObject( start + count ) != OBJECT_WALL ) {
+			num_count[ i ]++;
+			count += DIRECT[ i ];
+		}
 	}
-	if ( distance.getLength2( ) < getVec( ).getLength2( ) ) {
-		_auto_move = false;
-		_goal_pos = Vector( -1, -1 );
+
+	Vector distance = goal - start;
+	Vector result;
+	if ( distance.x * distance.x < distance.y * distance.y ) {
+		if ( distance.x < 0 && num_count[ LEFT ] > 0 ) {
+			result = DIRECT[ LEFT ];
+		}
+		if ( distance.x > 0 && num_count[ RIGHT ] > 0 ) {
+			result = DIRECT[ RIGHT ];
+		}
+		if ( num_count[ UP ] > 0 ) {
+			result = DIRECT[ UP ];
+		}
+		result = DIRECT[ DOWN ];
+	} else {
+		if ( distance.y < 0 && num_count[ UP ] > 0 ) {
+			result = DIRECT[ UP ];
+		}
+		if ( distance.y > 0 && num_count[ DOWN ] > 0 ) {
+			result = DIRECT[ DOWN ];
+		}
+		if ( num_count[ LEFT ] > 0 ) {
+			result = DIRECT[ LEFT ];
+		}
+		result = DIRECT[ RIGHT ];
 	}
-	if ( isBumped( ) ) {
-		_auto_move = false;
-		_goal_pos = Vector( -1, -1 );
-	}
+	return result;
 }
 
 Vector Enemy::AStar( const Vector& goal ) {
@@ -69,15 +159,8 @@ Vector Enemy::AStar( const Vector& goal ) {
 		min_score = pro.score;
 		proceeds.push_back( pro );
 	}
-
-	int count = 0;
-
+	
 	while ( true ) {
-		count++;
-		if ( count > 10 ) {
-			int a = 0;
-		}
-
 		// àÍî‘è¨Ç≥Ç¢scoreÇåüçı
 		{
 			std::vector< PROCEED >::iterator ite = proceeds.begin( );
@@ -276,11 +359,13 @@ Vector Enemy::AStar( const Vector& goal ) {
 				ite = proceeds.begin( );
 			}
 		}
+		root.push_back( check );
 	}
 
 	int size = ( int )root.size( );
-	Vector dir = goal_pos - start_pos;
-	if ( size > 1 ) {
+	Vector dir = goal - getPos( );
+	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	if ( dir.getLength( ) > CHARA_SIZE ) {
 		dir = ( root[ size - 2 ].pos - root[ size - 1 ].pos ).normalize( );
 	}
 	return dir;

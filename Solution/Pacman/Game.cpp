@@ -5,7 +5,7 @@
 #include "SceneResult.h"
 
 const int FPS = 30;
-const int MAX_STAGEING_TIME = 8 * FPS;
+const int MAX_STAGEING_TIME = 1 * FPS;
 const int START_TIME = 60 * FPS;
 const std::array< int, MAX_PLAYER > INIT_SCORE = { 0 };
 const int DRAW_SCORE1_X = SPRITE_SIZE;

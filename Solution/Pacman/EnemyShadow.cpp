@@ -18,52 +18,10 @@ EnemyShadow::~EnemyShadow( ) {
 }
 
 void EnemyShadow::moving( ) {
-	SceneStagePtr game = SceneStage::getTask( );
-	MapPtr map = game->getMap( );
-	const int CHARA_SIZE = game->getCharaSize( );
-	const int CHIP_SIZE = game->getChipSize( );
-	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
-	Vector pacman_pos = game->getPacman( self_pos )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
-	Vector distance = pacman_pos - self_pos;
-	if ( fabs( distance.x ) > 3 * CHIP_SIZE ||
-		 fabs( distance.y ) > 3 * CHIP_SIZE ) {
-		distance = distance.normalize( ) * ( 3 * CHIP_SIZE );
-	}
-
-	Vector goal = self_pos + distance;
-	if ( map->getObject( goal ) == OBJECT_WALL ) {
-		while ( true ) {
-			if ( map->getObject( goal + UP * CHIP_SIZE ) != OBJECT_WALL ) {
-				goal += UP * CHIP_SIZE;
-				break;
-			}
-			if ( map->getObject( goal + DOWN * CHIP_SIZE ) != OBJECT_WALL ) {
-				goal += DOWN * CHIP_SIZE;
-				break;
-			}
-			if ( map->getObject( goal + LEFT * CHIP_SIZE ) != OBJECT_WALL ) {
-				goal += LEFT * CHIP_SIZE;
-				break;
-			}
-			if ( map->getObject( goal + RIGHT * CHIP_SIZE ) != OBJECT_WALL ) {
-				goal += RIGHT * CHIP_SIZE;
-				break;
-			}
-
-			goal += goal.x < goal.y ?
-						( goal.x < 0 ? LEFT * CHIP_SIZE : RIGHT * CHIP_SIZE ) :
-						( goal.y < 0 ? UP   * CHIP_SIZE : DOWN  * CHIP_SIZE );
-		}
-	}
-
-	Vector vec = getVec( ) + AStar( goal ) * 5;
-	if ( vec.getLength2( ) > 6 * 6 ) {
-		vec = vec.normalize( ) * 6;
-	}
-	if ( ( pacman_pos - self_pos ).getLength2( ) < 5 * 5 ) {
-		vec = pacman_pos - self_pos;
-	}
-	setVec( vec );
+	SceneStagePtr scene_stage = SceneStage::getTask( );
+	Vector self_pos = getPos( ) + getCharaSize( );
+	Vector pacman_pos = scene_stage->getPacman( self_pos )->getPos( ) + getCharaSize( );
+	moveGoal( pacman_pos );
 }
 
 IMGAE_DATA EnemyShadow::getImageData( ) const {

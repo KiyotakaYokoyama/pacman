@@ -11,7 +11,7 @@ public:
 	virtual IMGAE_DATA getImageData( ) const = 0;
 protected:
 	void moveGoal( const Vector goal );
-	Vector AStar(  const Vector& goal );
+	Vector getCharaSize( ) const;
 private:
 	enum STATE {
 		STATE_NONE,
@@ -38,10 +38,10 @@ private:
 	};
 private:
 	void act( );
-	void checkGoal( );
 	virtual void moving( ) = 0;
-private:
-	bool _auto_move;
-	Vector _goal_pos;
+	void adjustVec( );
+	void decisionMoveDir( );
+	Vector toStraight( const Vector& start, const Vector& goal );
+	Vector AStar(  const Vector& goal );
 };
 
