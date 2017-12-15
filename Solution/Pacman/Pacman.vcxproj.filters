@@ -7,11 +7,8 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Military.cpp" />
-    <ClCompile Include="SceneStage.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Viewer.cpp" />
-    <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="Enemy.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -36,6 +33,15 @@
     <ClCompile Include="EnemyYellow.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="SceneResult.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneStage.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -43,11 +49,8 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Military.h" />
-    <ClInclude Include="SceneStage.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Viewer.h" />
-    <ClInclude Include="SceneResult.h" />
     <ClInclude Include="Enemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -72,10 +75,22 @@
     <ClInclude Include="EnemyYellow.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="SceneResult.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneStage.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTitle.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">
       <UniqueIdentifier>{6679b9be-d643-4225-8638-78a054847cbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{2a84b6a3-48b6-4300-a487-4948c37c4c64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
