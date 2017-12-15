@@ -6,33 +6,76 @@
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Debug.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyShadow.cpp" />
     <ClCompile Include="Military.cpp" />
-    <ClCompile Include="EnemySpeedy.cpp" />
-    <ClCompile Include="EnemyBashful.cpp" />
-    <ClCompile Include="EnemyPokey.cpp" />
     <ClCompile Include="SceneStage.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="SceneResult.cpp" />
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBashful.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyPokey.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyShadow.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpeedy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGreen.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyPurple.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyYellow.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Debug.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyShadow.h" />
     <ClInclude Include="Military.h" />
-    <ClInclude Include="EnemySpeedy.h" />
-    <ClInclude Include="EnemyBashful.h" />
-    <ClInclude Include="EnemyPokey.h" />
     <ClInclude Include="SceneStage.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Viewer.h" />
     <ClInclude Include="SceneResult.h" />
+    <ClInclude Include="Enemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBashful.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPokey.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyShadow.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpeedy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGreen.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPurple.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyYellow.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{6679b9be-d643-4225-8638-78a054847cbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

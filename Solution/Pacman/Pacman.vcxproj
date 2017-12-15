@@ -162,9 +162,12 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBashful.cpp" />
+    <ClCompile Include="EnemyGreen.cpp" />
     <ClCompile Include="EnemyPokey.cpp" />
+    <ClCompile Include="EnemyPurple.cpp" />
     <ClCompile Include="EnemyShadow.cpp" />
     <ClCompile Include="EnemySpeedy.cpp" />
+    <ClCompile Include="EnemyYellow.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="SceneStage.cpp" />
@@ -180,9 +183,12 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBashful.h" />
+    <ClInclude Include="EnemyGreen.h" />
     <ClInclude Include="EnemyPokey.h" />
+    <ClInclude Include="EnemyPurple.h" />
     <ClInclude Include="EnemyShadow.h" />
     <ClInclude Include="EnemySpeedy.h" />
+    <ClInclude Include="EnemyYellow.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="SceneResult.h" />
     <ClInclude Include="SceneStage.h" />

@@ -1,26 +1,20 @@
-#include "EnemySpeedy.h"
+#include "EnemyPurple.h"
 #include "SceneStage.h"
-#include "Pacman.h"
 
 static const int WAIT_ANIM_TIME = 5;
-static const int MOVE_SPEED = 3;
 
-
-EnemySpeedy::EnemySpeedy( const Vector& pos ) :
+EnemyPurple::EnemyPurple( const Vector& pos ) :
 Enemy( pos ) {
 }
 
-EnemySpeedy::~EnemySpeedy( ) {
+
+EnemyPurple::~EnemyPurple( ) {
 }
 
-void EnemySpeedy::moving( ) {
-	SceneStagePtr scene_stage = SceneStage::getTask( );
-	Vector self_pos = getPos( ) + getCharaSize( );
-	Vector pacman_pos = scene_stage->getPacman( self_pos )->getPos( ) + getCharaSize( );
-	moveGoal( pacman_pos + Vector( scene_stage->getChipSize( ) * -1 * 3, 0 ) );
+void EnemyPurple::moving( ) {
 }
 
-IMGAE_DATA EnemySpeedy::getImageData( ) const {
+IMGAE_DATA EnemyPurple::getImageData( ) const {
 	IMGAE_DATA result = IMGAE_DATA( );
 	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
 	Vector pos = getPos( );
@@ -28,7 +22,7 @@ IMGAE_DATA EnemySpeedy::getImageData( ) const {
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );
 	
 	result.tx  = ( ( getActTime( ) / WAIT_ANIM_TIME ) % 2 ) * 64;
-	result.ty  = 64 * 2;
+	result.ty  = 64 * 6;
 	
 	if ( getDir( ) == DIR_UP ) {
 		result.tx += 64 * 4;
