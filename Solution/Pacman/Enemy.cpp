@@ -44,7 +44,7 @@ void Enemy::moveGoal( const Vector goal ) {
 	Vector diff = goal - getPos( );
 	int root_num = ( int )( ( diff.x + 0.5 ) / CHIP_SIZE + ( diff.y + 0.5 ) / CHIP_SIZE );
 	if ( abs( root_num ) > MAX_CEARCH_LENGTH ) {
-		Vector vec = toStraight( getPos( ), goal );
+		Vector vec = toStraight( getPos( ), goal ) * MOVE_SPEED + getVec( );
 		if ( vec.getLength( ) > MAX_SPEED ) {
 			vec = vec.normalize( ) * MAX_SPEED;
 		}

@@ -188,10 +188,10 @@ void Pacman::drawStageing( const int time, const int max_time ) const {
 
 	_sprite->setRect( 0, 0, SPRITE_SIZE, SPRITE_SIZE );
 	const int MAGNIFICAT = 30;
-	int sx = pos.x - ( DRAW_SIZE * 0.5 ) * ( RATIO * MAGNIFICAT );
-	int sy = pos.y - DRAW_SIZE * ( ( RATIO * MAGNIFICAT ) + 1 );
-	int sx2 = sx + DRAW_SIZE * ( RATIO * MAGNIFICAT );
-	int sy2 = pos.y;
+	int sx = ( int )( pos.x - ( DRAW_SIZE * 0.5 ) * ( RATIO * MAGNIFICAT ) );
+	int sy = ( int )( pos.y - DRAW_SIZE * ( ( RATIO * MAGNIFICAT ) + 1 ) );
+	int sx2 = ( int )( sx + DRAW_SIZE * ( RATIO * MAGNIFICAT ) );
+	int sy2 = ( int )pos.y;
 	if ( abs( sx - sx2 ) < DRAW_SIZE ) {
 		sx2 = sx + DRAW_SIZE;
 	}

@@ -19,11 +19,18 @@
 
 const std::string FILE_DIRECTORY = "Resource/MapData/";
 const int STAGE_NUM = 10;
+const int MAX_COUNT = 0xfffffff;
+const int MAX_FADE_COUNT = 150;
+const double FADE_SPEED = 1.0 / ( MAX_FADE_COUNT / 2 );
 
-Map::Map( ) {
+Map::Map( ) :
+_count( 0 ),
+_eaten_feeds( 0 ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_feeds = drawer->createImage( "feeds.png" );
-
+	_revival_area = drawer->createImage( "revival_area.png" );
+	_revival_area->setRect( 0, 0, 64, 64 );
+	
 	std::string filename = FILE_DIRECTORY + "stage";
 	LoadCSV csv = LoadCSV( filename.c_str( ), STAGE_NUM );
 
@@ -112,6 +119,25 @@ void Map::loadStage( std::string stage_name ) {
 
 void Map::update( ) {
 	checkRevivalFeed( );
+	_count = ( _count + 1 ) % MAX_COUNT;
+}
+
+void Map::drawRevivalArea( ) const {
+	SceneStagePtr master = SceneStage::getTask( );
+	const int CHIP_SIZE = master->getChipSize( );
+	if ( _eaten_feeds == _feed_pos.size( ) ) {
+		double ratio = FADE_SPEED * ( _count % MAX_FADE_COUNT );
+		if ( ratio > 1.0 ) {
+			ratio = 2.0 - ratio;
+		}
+		size_t size = _revival_feed_pos.size( );
+		for ( int i = 0; i < size; i++ ) {
+			_revival_area->setBlend( Image::BLEND_ALPHA, ratio );
+			Vector pos = _revival_feed_pos[ i ] * CHIP_SIZE;
+			_revival_area->setPos( ( int )pos.x, ( int )pos.y, ( int )pos.x + CHIP_SIZE, ( int )pos.y + CHIP_SIZE );
+			_revival_area->draw( );
+		}
+	}
 }
 
 void Map::checkRevivalFeed( ) {
@@ -140,12 +166,13 @@ void Map::checkRevivalFeed( ) {
 			int idx = ( int )( _feed_pos[ i ].x + _feed_pos[ i ].y * MAP_WIDTH_CHIP_NUM );
 			_objects[ idx ] = OBJECT_ENHANCE_FEED;
 		}
+		_eaten_feeds = 0;
 	}
 }
 
 void Map::draw( ) const {
 	_stage->draw( );
-	
+	drawRevivalArea( );
 	drawFeed( );
 }
 
@@ -200,6 +227,9 @@ void Map::eatFeed( int ox, int oy ) {
 	}
 #endif
 	int idx = ox + oy * MAP_WIDTH_CHIP_NUM;
+	if ( _objects[ idx ] == OBJECT_ENHANCE_FEED ) {
+		_eaten_feeds++;
+	}
 	_objects[ idx ] = OBJECT_NONE;
 }
 

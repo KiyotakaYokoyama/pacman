@@ -37,8 +37,11 @@ private:
 	};
 private:
 	void loadStage( std::string stage_name );
+	void drawRevivalArea( ) const;
 	void checkRevivalFeed( );
 private:
+	int _eaten_feeds;
+	int _count;
 	std::vector< std::string > _stages;
 	std::vector< unsigned char > _objects;
 	std::vector< Vector > _feed_pos;
@@ -47,5 +50,6 @@ private:
 	std::array< Vector, MAX_PLAYER > _player_pos;
 	ImagePtr _stage;
 	ImagePtr _feeds;
+	ImagePtr _revival_area;
 };
 
