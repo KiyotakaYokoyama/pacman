@@ -50,3 +50,7 @@ IMGAE_DATA EnemySpeedy::getImageData( ) const {
 
 	return result;
 }
+
+SCORE EnemySpeedy::getScore( ) const {
+	return SCORE_SPEEDY;
+}

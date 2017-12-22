@@ -44,3 +44,7 @@ IMGAE_DATA EnemyPurple::getImageData( ) const {
 
 	return result;
 }
+
+SCORE EnemyPurple::getScore( ) const {
+	return SCORE_PURPLE;
+}

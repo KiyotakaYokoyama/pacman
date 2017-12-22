@@ -65,3 +65,7 @@ IMGAE_DATA EnemyBashful::getImageData( ) const {
 
 	return result;
 }
+
+SCORE EnemyBashful::getScore( ) const {
+	return SCORE_BASHFUL;
+}

@@ -44,3 +44,7 @@ IMGAE_DATA EnemyPokey::getImageData( ) const {
 
 	return result;
 }
+
+SCORE EnemyPokey::getScore( ) const {
+	return SCORE_POKEY;
+}

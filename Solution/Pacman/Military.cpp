@@ -5,6 +5,7 @@
 #include "define.h"
 #include "Drawer.h"
 #include "Image.h"
+#include "Game.h"
 
 Military::Military( ) {
 	_image = Drawer::getTask( )->createImage( "enemies.png" );
@@ -15,10 +16,11 @@ Military::~Military( ) {
 }
 
 void Military::update( ) {
-	SceneStagePtr game = SceneStage::getTask( );
-	int chara_size = game->getCharaSize( );
-	PacmanConstPtr player1 = game->getPacman( PLAYER_1 );
-	PacmanConstPtr player2 = game->getPacman( PLAYER_2 );
+	GamePtr game = Game::getTask( );
+	SceneStagePtr scene_stage = SceneStage::getTask( );
+	int chara_size = scene_stage->getCharaSize( );
+	PacmanConstPtr player1 = scene_stage->getPacman( PLAYER_1 );
+	PacmanConstPtr player2 = scene_stage->getPacman( PLAYER_2 );
 	bool escape1 = player1->isTurnaround( );
 	bool escape2 = player2->isTurnaround( );
 	std::list< EnemyPtr >::const_iterator ite = _enemies.begin( );
@@ -29,6 +31,7 @@ void Military::update( ) {
 		if ( escape1 ) {
 			Vector distance = player1->getPos( ) - enemy->getPos( );
 			if ( distance.getLength2( ) < chara_size * chara_size ) {
+				game->addScore( PLAYER_1, enemy->getScore( ) );
 				ite = _enemies.erase( ite );
 				enemy.reset( );
 				continue;
@@ -38,6 +41,7 @@ void Military::update( ) {
 		if ( escape2 ) {
 			Vector distance = player2->getPos( ) - enemy->getPos( );
 			if ( distance.getLength2( ) < chara_size * chara_size ) {
+				game->addScore( PLAYER_2, enemy->getScore( ) );
 				ite = _enemies.erase( ite );
 				enemy.reset( );
 				continue;

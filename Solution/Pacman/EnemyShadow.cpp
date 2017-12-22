@@ -54,3 +54,7 @@ IMGAE_DATA EnemyShadow::getImageData( ) const {
 
 	return result;
 }
+
+SCORE EnemyShadow::getScore( ) const {
+	return SCORE_SHADOW;
+}

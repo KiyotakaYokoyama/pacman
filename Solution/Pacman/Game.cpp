@@ -108,8 +108,11 @@ Game::SCENE Game::getNowScene( ) const {
 	return _scene;
 }
 
-void Game::addScore( PLAYER idx, int score ) {
+void Game::addScore( PLAYER idx, SCORE score ) {
 	_score[ idx ] += score;
+	if ( _score[ idx ] < 0 ) {
+		_score[ idx ] = 0;
+	}
 }
 
 int Game::getGameTime( ) const {

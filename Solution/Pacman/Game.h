@@ -23,7 +23,7 @@ public:
 public:
 	void draw( ) const;
 	void setNextScene( SCENE scene );
-	void addScore( PLAYER idx, int score );
+	void addScore( PLAYER idx, SCORE score );
 	int getGameTime( ) const;
 	int getStageingTime( ) const;
 	int getMaxStageingTime( ) const;

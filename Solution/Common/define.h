@@ -8,6 +8,15 @@ enum PLAYER {
 	PLAYER_2,
 	MAX_PLAYER,
 };
+enum SCORE {
+	SCORE_SHADOW  = 10,
+	SCORE_BASHFUL = 30,
+	SCORE_SPEEDY  = 20,
+	SCORE_POKEY   = 20,
+	SCORE_GREEN   = 30,
+	SCORE_PURPLE  = 30,
+	SCORE_YELLOW  = 30,
+};
 
 struct IMGAE_DATA {
 	int sx1;

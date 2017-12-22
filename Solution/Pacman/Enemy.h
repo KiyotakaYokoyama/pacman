@@ -9,6 +9,7 @@ public:
 	virtual ~Enemy( );
 public:
 	virtual IMGAE_DATA getImageData( ) const = 0;
+	virtual SCORE getScore( ) const = 0;
 protected:
 	void moveGoal( const Vector goal );
 	Vector getCharaSize( ) const;

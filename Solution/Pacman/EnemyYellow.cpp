@@ -44,3 +44,7 @@ IMGAE_DATA EnemyYellow::getImageData( ) const {
 
 	return result;
 }
+
+SCORE EnemyYellow::getScore( ) const {
+	return SCORE_YELLOW;
+}

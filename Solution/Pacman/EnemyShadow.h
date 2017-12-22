@@ -12,6 +12,6 @@ public:
 	IMGAE_DATA getImageData( ) const;
 private:
 	void moving( );
-	ImagePtr _sprite;
+	SCORE getScore( ) const;
 };
 

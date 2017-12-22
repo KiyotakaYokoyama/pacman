@@ -9,5 +9,6 @@ public:
 	IMGAE_DATA getImageData( ) const;
 private:
 	void moving( );
+	SCORE getScore( ) const;
 };
 
