@@ -8,6 +8,7 @@ public:
 public:
 	void update( );
 	Vector getPos( ) const;
+	Vector getVec( ) const;
 protected:
 	enum DIR {
 		DIR_UP,
@@ -22,7 +23,6 @@ protected:
 	void setActCount( int count );
 	int getActTime( ) const;
 	bool isBumped( ) const;
-	Vector getVec( ) const;
 	DIR getDir( ) const;
 private:
 	virtual void act( ) = 0;
