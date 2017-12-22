@@ -107,37 +107,34 @@ Vector Enemy::toStraight( const Vector& start, const Vector& goal ) {
 	};
 
 	Vector count = Vector( );
-	int num_count[ MAX_DIRECTION ] = { 0 };
+	int root[ MAX_DIRECTION ] = { 0 };
 	for ( int i = 0; i < MAX_DIRECTION; i++, count = Vector( ) ) {
 		while ( map->getObject( start + count ) != OBJECT_WALL ) {
-			num_count[ i ]++;
+			root[ i ]++;
 			count += DIRECT[ i ];
 		}
 	}
 
 	Vector distance = goal - start;
 	Vector result;
-	if ( distance.x * distance.x < distance.y * distance.y ) {
-		if ( distance.x < 0 && num_count[ LEFT ] > 0 ) {
-			result = DIRECT[ LEFT ];
-		}
-		if ( distance.x > 0 && num_count[ RIGHT ] > 0 ) {
-			result = DIRECT[ RIGHT ];
-		}
-		if ( num_count[ UP ] > 0 ) {
-			result = DIRECT[ UP ];
-		}
+	if ( root[ UP ] > root[ DOWN ] &&
+		 root[ UP ] > root[ LEFT ] &&
+		 root[ UP ] > root[ RIGHT ] ) {
+		result = DIRECT[ UP ]; 
+	}
+	if ( root[ DOWN ] > root[ UP ] &&
+		 root[ DOWN ] > root[ LEFT ] &&
+		 root[ DOWN ] > root[ RIGHT ] ) {
 		result = DIRECT[ DOWN ];
-	} else {
-		if ( distance.y < 0 && num_count[ UP ] > 0 ) {
-			result = DIRECT[ UP ];
-		}
-		if ( distance.y > 0 && num_count[ DOWN ] > 0 ) {
-			result = DIRECT[ DOWN ];
-		}
-		if ( num_count[ LEFT ] > 0 ) {
-			result = DIRECT[ LEFT ];
-		}
+	}
+	if ( root[ LEFT ] > root[ UP ] &&
+		 root[ LEFT ] > root[ DOWN ] &&
+		 root[ LEFT ] > root[ RIGHT ] ) {
+		result = DIRECT[ LEFT ];
+	}
+	if ( root[ RIGHT ] > root[ UP ] &&
+		 root[ RIGHT ] > root[ DOWN ] &&
+		 root[ RIGHT ] > root[ LEFT ] ) {
 		result = DIRECT[ RIGHT ];
 	}
 	return result;
