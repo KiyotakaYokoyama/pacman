@@ -2,6 +2,7 @@
 #include "Task.h"
 #include <string>
 #include <array>
+#include <vector>
 #include "define.h"
 
 PTR( Game );
@@ -30,12 +31,23 @@ public:
 	bool isStaging( ) const;
 	SCENE getNowScene( ) const;
 private:
+	struct SCORE_EFFECT {
+		int time;
+		PLAYER player;
+		SCORE score;
+
+		SCORE_EFFECT( );
+		SCORE_EFFECT( int time_, PLAYER player_, SCORE score_ );
+	};
+private:
 	void initialize( );
 	void update( );
+	void drawScoreEffet( ) const;
 private:
 	int _battle_time;
 	int _staging_time;
 	std::array< int, MAX_PLAYER > _score;
+	std::vector< SCORE_EFFECT > _s_effects;
 	SCENE _scene;
 	ImagePtr _number;
 	ImagePtr _player_name;
