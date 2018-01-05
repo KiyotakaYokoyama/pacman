@@ -22,8 +22,8 @@ public:
 	int getChipSize( ) const;
 	int getCharaSize( ) const;
 	MapPtr getMap( );
-	PacmanConstPtr getPacman( PLAYER idx );
-	PacmanConstPtr getPacman( Vector pos );
+	PacmanPtr getPacman( PLAYER idx ) const;
+	PacmanPtr getPacman( Vector pos ) const;
 private:
 	void initialize( );
 	void update( );

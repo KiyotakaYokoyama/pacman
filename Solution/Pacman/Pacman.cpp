@@ -14,10 +14,12 @@ const int WAIT_ANIM_TIME = 5;
 const int TURNAROUND_TIME = 300;
 const int ANIM[ ] = { 0, 1, 2, 1 };
 const int ANIM_NUM = sizeof( ANIM ) / sizeof( ANIM[ 0 ] );
+const int DAMAGE_TIME = 60;
 
 Pacman::Pacman( int id, const Vector& pos ) :
 Character( pos ),
 _id( id ),
+_damage( 0 ),
 _auto_move( false ),
 _turnaround( false ),
 _auto_vec( Vector( ) ) {
@@ -35,12 +37,19 @@ Pacman::~Pacman( ) {
 }
 
 void Pacman::act( ) {
-	if ( !_auto_move ) {
-		actOnMove( );
-		actOnEat( );
-		actOnWarp( );
+	if ( _damage > 0 ) {
+		Vector vec = getVec( );
+		vec -= vec.normalize( ) * ( MOVE_SPEED / 3 );
+		setVec( vec );
+		_damage--;
 	} else {
-		actOnAutoMove( );
+		if ( !_auto_move ) {
+			actOnMove( );
+			actOnEat( );
+			actOnWarp( );
+		} else {
+			actOnAutoMove( );
+		}
 	}
 
 	if ( _turnaround && getActTime( ) > TURNAROUND_TIME ) {
@@ -153,6 +162,10 @@ void Pacman::actOnAutoMove( ) {
 }
 
 void Pacman::draw( ) const {
+	if ( _damage % 6 < 3 && _damage > 0 ) {
+		return;
+	}
+
 	const int DRAW_SIZE = SceneStage::getTask( )->getCharaSize( );
 	Vector pos = getPos( );
 	int tx = ANIM[ ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ] * SPRITE_SIZE;
@@ -206,6 +219,14 @@ void Pacman::entryStage( const Vector& pos ) {
 	setPos( pos );
 }
 
+void Pacman::damage( ) {
+	_damage = DAMAGE_TIME;
+}
+
 bool Pacman::isTurnaround( ) const {
 	return _turnaround;
+}
+
+bool Pacman::isDamaging( ) const {
+	return _damage > 0;
 }

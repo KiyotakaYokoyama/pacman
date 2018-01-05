@@ -20,7 +20,11 @@ EnemyShadow::~EnemyShadow( ) {
 void EnemyShadow::moving( ) {
 	SceneStagePtr scene_stage = SceneStage::getTask( );
 	Vector self_pos = getPos( ) + getCharaSize( );
-	Vector pacman_pos = scene_stage->getPacman( self_pos )->getPos( ) + getCharaSize( );
+	PacmanConstPtr pacman = scene_stage->getPacman( self_pos );
+	Vector pacman_pos = getPos( ) + ( Vector( WIDTH / 2, MAP_HEIGHT_CHIP_NUM * scene_stage->getChipSize( ) / 2 ) - getPos( ) ).normalize( ) * 5;
+	if ( pacman ) {
+		pacman_pos = pacman->getPos( ) + getCharaSize( );
+	}
 	moveGoal( pacman_pos );
 }
 

@@ -21,7 +21,11 @@ void EnemyBashful::moving( ) {
 	const int CHARA_SIZE = game->getCharaSize( );
 	const int CHIP_SIZE = game->getChipSize( );
 	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
-	Vector pacman_pos = game->getPacman( self_pos )->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+	PacmanConstPtr pacman = game->getPacman( self_pos );
+	Vector pacman_pos = getPos( ) + ( Vector( WIDTH / 2, MAP_HEIGHT_CHIP_NUM * CHIP_SIZE / 2 ) - getPos( ) ).normalize( ) * 5;
+	if ( pacman ) {
+		pacman_pos = pacman->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
+	}
 	Vector shadow_pos = _shadow ? _shadow->getPos( ) : pacman_pos;
 
 	Vector distance = shadow_pos - pacman_pos;

@@ -18,8 +18,14 @@ void EnemyGreen::moving( ) {
 	const int CHIP_SIZE = scene_stage->getChipSize( );
 	Vector self_pos = getPos( ) + getCharaSize( );
 	PacmanConstPtr pacman = scene_stage->getPacman( self_pos );
-	Vector pacman_pos = pacman->getPos( ) + getCharaSize( );
-	Vector pacman_vec = pacman->getVec( );
+	Vector pacman_pos = getPos( ) + ( Vector( WIDTH / 2, MAP_HEIGHT_CHIP_NUM * CHIP_SIZE / 2 ) - getPos( ) ).normalize( ) * 5;
+	if ( pacman ) {
+		pacman_pos = pacman->getPos( ) + getCharaSize( );
+	}
+	Vector pacman_vec;
+	if ( pacman ) {
+		pacman_vec = pacman->getVec( );
+	}
 
 	Vector distance = pacman_pos - self_pos;
 	int root_num = ( int )( ( distance.x + 0.5 ) / CHIP_SIZE + ( distance.y + 0.5 ) / CHIP_SIZE );

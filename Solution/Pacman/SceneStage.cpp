@@ -86,18 +86,33 @@ MapPtr SceneStage::getMap( ) {
 	return _map;
 }
 
-PacmanConstPtr SceneStage::getPacman( PLAYER idx ) {
+PacmanPtr SceneStage::getPacman( PLAYER idx ) const {
 	assert( idx == PLAYER_1 || idx == PLAYER_2 );
 	return _player[ idx ];
 }
 
-PacmanConstPtr SceneStage::getPacman( Vector pos ) {
-	Vector dis1 = _player[ 0 ]->getPos( ) - pos;
-	Vector dis2 = _player[ 1 ]->getPos( ) - pos;
-	int idx = 0;
+PacmanPtr SceneStage::getPacman( Vector pos ) const {
+	Vector dis1 = _player[ PLAYER_1 ]->getPos( ) - pos;
+	Vector dis2 = _player[ PLAYER_2 ]->getPos( ) - pos;
+
+	int idx = ( int )PLAYER_1;
 	if ( dis1.getLength2( ) > dis2.getLength2( ) ) {
-		idx = 1;
+		idx = ( int )PLAYER_2;
 	}
+
+	if ( _player[ PLAYER_1 ]->isDamaging( ) ) {
+		idx = ( int )PLAYER_2;
+	}
+
+	if ( _player[ PLAYER_2 ]->isDamaging( ) ) {
+		idx = ( int )PLAYER_1;
+	}
+
+	if ( _player[ PLAYER_1 ]->isDamaging( ) &&
+		 _player[ PLAYER_2 ]->isDamaging( ) ) {
+		return PacmanPtr( );
+	}
+
 	return _player[ idx ];
 }
 

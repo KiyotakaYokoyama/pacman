@@ -142,7 +142,14 @@ void Game::drawScoreEffet( ) const {
 			_number->setPos( sx + j * SPRITE_SIZE, sy );
 			_number->draw( );
 		}
-	}
+		{
+			_number->setRect( NUM[ 0 ] * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE );
+			int sx = i ? DRAW_SCORE2_X : DRAW_SCORE1_X;
+			int sy = DRAW_NUM_Y - ( ( INIT_SCORE_EFFECT_TIME - _s_effects[ i ].time ) * 3 );
+			_number->setPos( sx + DIGIT * SPRITE_SIZE, sy );
+			_number->draw( );
+		}
+	}	
 }
 
 void Game::setNextScene( SCENE scene ) {

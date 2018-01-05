@@ -12,7 +12,9 @@ public:
 	void draw( ) const;
 	void drawStageing( const int time, const int max_time ) const;
 	void entryStage( const Vector& pos );
+	void damage( );
 	bool isTurnaround( ) const;
+	bool isDamaging( ) const;
 private:
 	void act( );
 	void actOnMove( );
@@ -21,6 +23,7 @@ private:
 	void actOnAutoMove( );
 private:
 	int _id;
+	int _damage;
 	bool _turnaround;
 	bool _auto_move;
 	Vector _auto_vec;
