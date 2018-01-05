@@ -43,6 +43,7 @@ private:
 	void adjustVec( );
 	void decisionMoveDir( );
 	Vector toStraight( const Vector& start, const Vector& goal );
-	Vector AStar(  const Vector& goal );
+	Vector AStar( const Vector& goal );
+	Vector getNearRoadPos( const Vector& goal );
 };
 

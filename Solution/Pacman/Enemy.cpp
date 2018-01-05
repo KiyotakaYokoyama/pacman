@@ -50,7 +50,7 @@ void Enemy::moveGoal( const Vector goal ) {
 		}
 		setVec( vec );
 	} else {
-		Vector vec = AStar( goal );
+		Vector vec = AStar( getNearRoadPos( goal ) );
 		if ( vec.getLength( ) == 1.0 ) {
 			vec = vec * MOVE_SPEED + getVec( );
 		}
@@ -115,7 +115,6 @@ Vector Enemy::toStraight( const Vector& start, const Vector& goal ) {
 		}
 	}
 
-	Vector distance = goal - start;
 	Vector result;
 	if ( root[ UP ] > root[ DOWN ] &&
 		 root[ UP ] > root[ LEFT ] &&
@@ -138,6 +137,50 @@ Vector Enemy::toStraight( const Vector& start, const Vector& goal ) {
 		result = DIRECT[ RIGHT ];
 	}
 	return result;
+}
+
+Vector Enemy::getNearRoadPos( const Vector& goal ) {
+	SceneStagePtr scene_stage = SceneStage::getTask( );
+	const int CHIP_SIZE = scene_stage->getChipSize( );
+	MapPtr map = scene_stage->getMap( );
+
+	if ( map->getObject( goal ) != OBJECT_WALL ) {
+		return goal;
+	}
+	
+	enum DIRECTION {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		MAX_DIRECTION
+	};
+
+	const Vector DIRECT[ MAX_DIRECTION ] = {
+		Vector(  0, -1 ) * CHIP_SIZE,
+		Vector(  0,  1 ) * CHIP_SIZE,
+		Vector( -1,  0 ) * CHIP_SIZE,
+		Vector(  1,  0 ) * CHIP_SIZE
+	};
+
+	
+	Vector count = Vector( );
+	int chip[ MAX_DIRECTION ] = { 0 };
+	for ( int i = 0; i < MAX_DIRECTION; i++, count = Vector( ) ) {
+		while ( map->getObject( goal + count ) == OBJECT_WALL ) {
+			chip[ i ]++;
+			count += DIRECT[ i ];
+		}
+	}
+
+	DIRECTION min_dir = UP;
+	for ( int i = 0; i < MAX_DIRECTION; i++ ) {
+		if ( chip[ min_dir ] > chip[ i ] ) {
+			min_dir = ( DIRECTION )i;
+		}
+	}
+
+	return goal + DIRECT[ min_dir ] * chip[ min_dir ];
 }
 
 Vector Enemy::AStar( const Vector& goal ) {
