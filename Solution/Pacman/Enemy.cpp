@@ -5,15 +5,29 @@
 static const int MOVE_SPEED = 2;
 static const int MAX_SPEED = 1;
 static const int MAX_CEARCH_LENGTH = 15;
+static const int INIT_HIDE_TIME = 150;
+static const int POP_TIME = 30;
 
 Enemy::Enemy( const Vector& pos ) :
-Character( pos ) {
+Character( pos ),
+_action( ACTION_ACT ),
+_start_pos( pos ),
+_hide_time( -1 ) {
 }
 
 Enemy::~Enemy( ) {
 }
 
 void Enemy::act( ) {
+	if ( _action == ACTION_HIDE ) {
+		_hide_time--;
+		if ( _hide_time < 0 ) {
+			_action = ACTION_ACT;
+			setColl( true );
+		}
+		return;
+	}
+
 	SceneStagePtr scene_stage = SceneStage::getTask( );
 	const int CHIP_SIZE = scene_stage->getChipSize( );
 	const int CHARA_SIZE = scene_stage->getCharaSize( );
@@ -79,6 +93,32 @@ void Enemy::adjustVec( ) {
 		vec = vec.normalize( ) * MAX_SPEED;
 	}
 	setVec( vec );
+}
+
+void Enemy::setHide( ) {
+	_action = ACTION_HIDE;
+	_hide_time = INIT_HIDE_TIME;
+	setPos( _start_pos );
+	setVec( Vector( ) );
+	setColl( false ); //character‚Ìˆ—‚ðŒy‚­
+}
+
+bool Enemy::isAction( ) const {
+	return _action == ACTION_ACT;
+}
+
+bool Enemy::isDrawing( ) const {
+	bool result = true;
+	if ( _action == ACTION_HIDE ) {
+		if ( _hide_time > POP_TIME ) {
+			result = false;
+		}
+		if ( _hide_time < POP_TIME && _hide_time % 4 < 2 ) {
+			result = false;
+		}
+	}
+
+	return result;
 }
 
 Vector Enemy::getCharaSize( ) const {

@@ -28,23 +28,19 @@ void Military::update( ) {
 		EnemyPtr enemy = *ite;
 		enemy->update( );
 
-		if ( escape1 ) {
+		if ( enemy->isAction( ) && escape1 ) {
 			Vector distance = player1->getPos( ) - enemy->getPos( );
 			if ( distance.getLength2( ) < chara_size * chara_size ) {
 				game->addScore( PLAYER_1, enemy->getScore( ) );
-				ite = _enemies.erase( ite );
-				enemy.reset( );
-				continue;
+				enemy->setHide( );
 			}
 		}
 		
-		if ( escape2 ) {
+		if ( enemy->isAction( ) && escape2 ) {
 			Vector distance = player2->getPos( ) - enemy->getPos( );
 			if ( distance.getLength2( ) < chara_size * chara_size ) {
 				game->addScore( PLAYER_2, enemy->getScore( ) );
-				ite = _enemies.erase( ite );
-				enemy.reset( );
-				continue;
+				enemy->setHide( );
 			}
 		}
 
@@ -56,11 +52,13 @@ void Military::draw( ) const {
 	std::list< EnemyPtr >::const_iterator ite = _enemies.begin( );
 	while ( ite != _enemies.end( ) ) {
 		EnemyPtr enemy = *ite;
-		IMGAE_DATA data = enemy->getImageData( );
+		if ( enemy->isDrawing( ) ) {
+			IMGAE_DATA data = enemy->getImageData( );
 
-		_image->setRect( data.tx, data.ty, data.tw, data.th );
-		_image->setPos( data.sx1, data.sy1, data.sx2, data.sy2 );
-		_image->draw( );
+			_image->setRect( data.tx, data.ty, data.tw, data.th );
+			_image->setPos( data.sx1, data.sy1, data.sx2, data.sy2 );
+			_image->draw( );
+		}
 		ite++;
 	}
 }
