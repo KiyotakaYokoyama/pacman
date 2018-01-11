@@ -24,11 +24,14 @@ private:
 	void initialize( );
 	void update( );
 	void chengeScene( );
+	void drawFade( ) const;
 private:
 	int _chip_size;
+	int _fade_count;
 	ScenePtr _scene;
 	Scene::SCENE _next;
 	ImagePtr _number;
 	ImagePtr _player_name;
+	ImagePtr _fade;
 };
 
