@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "Game.h"
 #include "SceneStage.h"
 #include "Map.h"
 #include "define.h"
@@ -31,9 +32,10 @@ void Character::update( ) {
 
 void Character::updateColl( ) {
 	_bumped = false;
-	MapPtr map = SceneStage::getTask( )->getMap( );
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
-	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	GamePtr game = Game::getTask( );
+	MapPtr map = game->getStage( )->getMap( );
+	const int CHIP_SIZE = game->getChipSize( );
+	const int CHARA_SIZE = game->getCharaSize( );
 	const int HARF_CHARA_SIZE = CHARA_SIZE / 2;
 	//è„
 	if ( _vec.y < 0 ) {

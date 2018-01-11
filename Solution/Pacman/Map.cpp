@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "define.h"
+#include "Game.h"
 #include "SceneStage.h"
 #include "Pacman.h"
 #include "Military.h"
@@ -61,7 +62,7 @@ void Map::loadStage( std::string stage_name ) {
 		DrawerPtr drawer = Drawer::getTask( );
 		std::string file_path = "MapData/" + stage_name + "_stage.png";
 		_stage = drawer->createImage( file_path.c_str( ) );
-		const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+		const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 		_stage->setRect( 0, 0, 4800, 1920 );
 		_stage->setPos( 0, 0, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	}
@@ -82,7 +83,7 @@ void Map::loadStage( std::string stage_name ) {
 	_feed_pos.clear( );
 	_revival_feed_pos.clear( );
 	_enemy_pos.clear( );
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	unsigned char object;
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		binary->read( (void*)&object, sizeof( unsigned char ) );
@@ -123,8 +124,8 @@ void Map::update( ) {
 }
 
 void Map::drawRevivalArea( ) const {
-	SceneStagePtr master = SceneStage::getTask( );
-	const int CHIP_SIZE = master->getChipSize( );
+	GamePtr game = Game::getTask( );
+	const int CHIP_SIZE = game->getChipSize( );
 	if ( _eaten_feeds == _feed_pos.size( ) ) {
 		double ratio = FADE_SPEED * ( _count % MAX_FADE_COUNT );
 		if ( ratio > 1.0 ) {
@@ -141,7 +142,7 @@ void Map::drawRevivalArea( ) const {
 }
 
 void Map::checkRevivalFeed( ) {
-	SceneStagePtr master = SceneStage::getTask( );
+	SceneStagePtr master = Game::getTask( )->getStage( );
 	Vector p1_pos = getMapPos( master->getPacman( PLAYER_1 )->getPos( ) );
 	Vector p2_pos = getMapPos( master->getPacman( PLAYER_2 )->getPos( ) );
 
@@ -177,7 +178,7 @@ void Map::draw( ) const {
 }
 
 void Map::drawFeed( ) const {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		int sx = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
 		int sy = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
@@ -195,7 +196,7 @@ void Map::drawFeed( ) const {
 }
 
 unsigned char Map::getObject( const Vector& pos ) const {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	int ox = ( int )( pos.x / CHIP_SIZE );
 	int oy = ( int )( pos.y / CHIP_SIZE );
 	return getObject( ox, oy );
@@ -213,7 +214,7 @@ unsigned char Map::getObject( int ox, int oy ) const {
 }
 
 void Map::eatFeed( const Vector& pos ) {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	int ox = ( int )( pos.x / CHIP_SIZE );
 	int oy = ( int )( pos.y / CHIP_SIZE );
 	eatFeed( ox, oy );
@@ -238,7 +239,7 @@ Vector Map::getPlayerPos( int id ) {
 }
 
 Vector Map::getMapPos( const Vector& pos ) const {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	Vector result;
 	result.x = ( int )( pos.x / CHIP_SIZE );
 	result.y = ( int )( pos.y / CHIP_SIZE );

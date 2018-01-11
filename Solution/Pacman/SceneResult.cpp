@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Drawer.h"
 #include "Image.h"
+#include "Keyboard.h"
 #include "Game.h"
 #include "define.h"
 
@@ -9,17 +10,8 @@ const int ANIM_WAIT_TIME = 3;
 const int CRACKER_NUM = 45;
 const int MAX_COUNT = ANIM_WAIT_TIME * CRACKER_NUM;
 
-SceneResultPtr SceneResult::getTask( ) {
-	return std::dynamic_pointer_cast< SceneResult >( Application::getInstance( )->getTask( getTag( ) ) );
-}
-
-SceneResult::SceneResult( ) {
-}
-
-SceneResult::~SceneResult( ) {
-}
-
-void SceneResult::initialize( ) {
+SceneResult::SceneResult( ) :
+_count( 0 ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	for ( int i = 0; i < CRACKER_NUM; i++ ) {
 		std::string path = "cracker/cracker-" + std::to_string( i + 1 ) + ".png";
@@ -29,22 +21,30 @@ void SceneResult::initialize( ) {
 	}
 }
 
-void SceneResult::update( ) {
-	if ( Game::getTask( )->getNowScene( ) != Game::SCENE_RESULT ) {
-		_count = 0;
-		return;
-	}
+SceneResult::~SceneResult( ) {
+}
 
+Scene::SCENE SceneResult::update( ) {
 	_count++;
 	if ( _count == MAX_COUNT ) {
 		_count = ANIM_WAIT_TIME * 6;
 	}
+
+	if ( checkKey( ) ) {
+ 		return SCENE_TITLE;
+	}
+
+	return SCENE_CONTINUE;
 }
 
 void SceneResult::draw( ) const {
 	_cracker[ _count / ANIM_WAIT_TIME ]->draw( );
 }
 
-void SceneResult::setNumberImage( ImagePtr image ) {
-	_number = image;
+bool SceneResult::checkKey( ) {
+	KeyboardPtr key = Keyboard::getTask( );
+	if ( key->isPushKey( "SPACE" ) ) {
+		return true;
+	}
+	return false;
 }

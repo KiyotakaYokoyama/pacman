@@ -1,5 +1,5 @@
 #include "EnemyYellow.h"
-#include "SceneStage.h"
+#include "Game.h"
 
 static const int WAIT_ANIM_TIME = 5;
 
@@ -16,7 +16,7 @@ void EnemyYellow::moving( ) {
 
 IMGAE_DATA EnemyYellow::getImageData( ) const {
 	IMGAE_DATA result = IMGAE_DATA( );
-	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
 	Vector pos = getPos( );
 	result.sx1 = ( int )( pos.x - CHARA_SIZE / 2 );
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );

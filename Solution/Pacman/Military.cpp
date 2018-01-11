@@ -17,8 +17,8 @@ Military::~Military( ) {
 
 void Military::update( ) {
 	GamePtr game = Game::getTask( );
-	SceneStagePtr scene_stage = SceneStage::getTask( );
-	int chara_size = scene_stage->getCharaSize( );
+	int chara_size = game->getCharaSize( );
+	SceneStagePtr scene_stage = game->getStage( );
 	PacmanPtr player1 = scene_stage->getPacman( PLAYER_1 );
 	PacmanPtr player2 = scene_stage->getPacman( PLAYER_2 );
 	bool escape1 = player1->isTurnaround( );
@@ -32,11 +32,11 @@ void Military::update( ) {
 			Vector distance1 = player1->getPos( ) - enemy->getPos( );
 			if ( distance1.getLength2( ) < chara_size * chara_size ) {
 				if ( escape1 ) {
-					game->addScore( PLAYER_1, enemy->getScore( ) );
+					game->getStage( )->addScore( PLAYER_1, enemy->getScore( ) );
 					enemy->setHide( );
 				} else {
 					if ( !player1->isDamaging( ) ) {
-						game->addScore( PLAYER_1, SCORE_DAMAGE );
+						game->getStage( )->addScore( PLAYER_1, SCORE_DAMAGE );
 						player1->damage( );
 					}
 				}
@@ -45,11 +45,11 @@ void Military::update( ) {
 			Vector distance2 = player2->getPos( ) - enemy->getPos( );
 			if ( distance2.getLength2( ) < chara_size * chara_size ) {
 				if ( escape2 ) {
-					game->addScore( PLAYER_2, enemy->getScore( ) );
+					game->getStage( )->addScore( PLAYER_2, enemy->getScore( ) );
 					enemy->setHide( );
 				} else {
 					if ( !player2->isDamaging( ) ) {
-						game->addScore( PLAYER_2, SCORE_DAMAGE );
+						game->getStage( )->addScore( PLAYER_2, SCORE_DAMAGE );
 						player2->damage( );
 					}
 				}

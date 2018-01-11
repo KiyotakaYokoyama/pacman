@@ -8,7 +8,6 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Military.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="Enemy.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -42,6 +41,10 @@
     <ClCompile Include="SceneTitle.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -50,7 +53,6 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Military.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Viewer.h" />
     <ClInclude Include="Enemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -84,6 +86,10 @@
     <ClInclude Include="SceneTitle.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

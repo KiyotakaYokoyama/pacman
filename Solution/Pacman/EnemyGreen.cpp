@@ -1,4 +1,5 @@
 #include "EnemyGreen.h"
+#include "Game.h"
 #include "SceneStage.h"
 #include "Pacman.h"
 #include "Map.h"
@@ -14,10 +15,10 @@ EnemyGreen::~EnemyGreen( ) {
 }
 
 void EnemyGreen::moving( ) {
-	SceneStagePtr scene_stage = SceneStage::getTask( );
-	const int CHIP_SIZE = scene_stage->getChipSize( );
+	GamePtr game = Game::getTask( );
+	const int CHIP_SIZE = game->getChipSize( );
 	Vector self_pos = getPos( ) + getCharaSize( );
-	PacmanConstPtr pacman = scene_stage->getPacman( self_pos );
+	PacmanConstPtr pacman = game->getStage( )->getPacman( self_pos );
 	Vector pacman_pos = getPos( ) + ( Vector( WIDTH / 2, MAP_HEIGHT_CHIP_NUM * CHIP_SIZE / 2 ) - getPos( ) ).normalize( ) * 5;
 	if ( pacman ) {
 		pacman_pos = pacman->getPos( ) + getCharaSize( );
@@ -38,7 +39,7 @@ void EnemyGreen::moving( ) {
 
 IMGAE_DATA EnemyGreen::getImageData( ) const {
 	IMGAE_DATA result = IMGAE_DATA( );
-	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
 	Vector pos = getPos( );
 	result.sx1 = ( int )( pos.x - CHARA_SIZE / 2 );
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );

@@ -1,5 +1,6 @@
 #include "Pacman.h"
 #include "define.h"
+#include "Game.h"
 #include "SceneStage.h"
 #include "Map.h"
 #include "Drawer.h"
@@ -93,8 +94,8 @@ void Pacman::actOnMove( ) {
 }
 
 void Pacman::actOnEat( ) {
-	SceneStagePtr game = SceneStage::getTask( );
-	MapPtr map = game->getMap( );
+	GamePtr game = Game::getTask( );
+	MapPtr map = game->getStage( )->getMap( );
 	const int CHIP_SIZE = game->getChipSize( );
 	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
 	unsigned char obj = map->getObject( check );
@@ -108,8 +109,8 @@ void Pacman::actOnEat( ) {
 }
 
 void Pacman::actOnWarp( ) {
-	SceneStagePtr game = SceneStage::getTask( );
-	MapPtr map = game->getMap( );
+	GamePtr game = Game::getTask( );
+	MapPtr map = game->getStage( )->getMap( );
 	const int CHIP_SIZE = game->getChipSize( );
 	Vector check = getPos( ) + Vector( 0, -CHIP_SIZE / 2 );
 	unsigned char obj = map->getObject( check );
@@ -127,7 +128,7 @@ void Pacman::actOnWarp( ) {
 }
 
 void Pacman::actOnAutoMove( ) {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	const int MAP_WIDTH = CHIP_SIZE * MAP_WIDTH_CHIP_NUM;
 	bool automatic = true;
 	Vector pos = getPos( );
@@ -166,7 +167,7 @@ void Pacman::draw( ) const {
 		return;
 	}
 
-	const int DRAW_SIZE = SceneStage::getTask( )->getCharaSize( );
+	const int DRAW_SIZE = Game::getTask( )->getCharaSize( );
 	Vector pos = getPos( );
 	int tx = ANIM[ ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ] * SPRITE_SIZE;
 	int ty = 0;
@@ -190,14 +191,14 @@ void Pacman::draw( ) const {
 }
 
 void Pacman::drawStageing( const int time, const int max_time ) const {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	const int DRAW_SIZE = Game::getTask( )->getCharaSize( );
 	const int STAGE_WIDTH = CHIP_SIZE * MAP_WIDTH_CHIP_NUM;
 	const int STAGE_HEIGHT = CHIP_SIZE * MAP_HEIGHT_CHIP_NUM;
 	const double RATIO = ( ( double )( max_time - time ) / max_time );
 	const Vector START_POS( STAGE_WIDTH / 2, STAGE_HEIGHT );
 	Vector distance = getPos( ) - START_POS;
 	Vector pos = distance * ( 1.0 - RATIO ) + START_POS;
-	const int DRAW_SIZE = SceneStage::getTask( )->getCharaSize( );
 
 	_sprite->setRect( 0, 0, SPRITE_SIZE, SPRITE_SIZE );
 	const int MAGNIFICAT = 30;

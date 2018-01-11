@@ -1,23 +1,17 @@
 #pragma once
-#include "Task.h"
-#include <string>
+#include "Scene.h"
+#include "smart_ptr.h"
 
-PTR( SceneTitle );
 PTR( Image );
 
-class SceneTitle : public Task {
-public:
-	static std::string getTag( ) { return "SCENETITLE"; };
-	static SceneTitlePtr getTask( );
+class SceneTitle : public Scene {
 public:
 	SceneTitle( );
 	virtual ~SceneTitle( );
-public:
-	void draw( ) const;
 private:
-	void initialize( );
-	void update( );
-	void checkKey( );
+	SCENE update( );
+	void draw( ) const;
+	bool checkKey( );
 private:
 	ImagePtr _title;
 };

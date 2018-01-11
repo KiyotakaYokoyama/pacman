@@ -6,17 +6,9 @@
 #include "Game.h"
 #include "define.h"
 
-SceneTitlePtr SceneTitle::getTask( ) {
-	return std::dynamic_pointer_cast< SceneTitle >( Application::getInstance( )->getTask( getTag( ) ) );
-}
+const int NEXT_SCENE_TIME = 10 * 30;
 
 SceneTitle::SceneTitle( ) {
-}
-
-SceneTitle::~SceneTitle( ) {
-}
-
-void SceneTitle::initialize( ) {
 	_title = Drawer::getTask( )->createImage( "title.png" );
 	int w;
 	int h;
@@ -25,21 +17,24 @@ void SceneTitle::initialize( ) {
 	_title->setPos( 0, 0, WIDTH, HEIGHT );
 }
 
-void SceneTitle::update( ) {
-	if ( Game::getTask( )->getNowScene( ) != Game::SCENE_TITLE ) {
-		return;
-	}
+SceneTitle::~SceneTitle( ) {
+}
 
-	checkKey( );
+Scene::SCENE SceneTitle::update( ) {
+	if ( checkKey( ) ) {
+		return SCENE_STAGE;
+	}
+	return SCENE_CONTINUE;
 }
 
 void SceneTitle::draw( ) const {
 	_title->draw( );
 }
 
-void SceneTitle::checkKey( ) {
+bool SceneTitle::checkKey( ) {
 	KeyboardPtr key = Keyboard::getTask( );
 	if ( key->isPushKey( "SPACE" ) ) {
-		Game::getTask( )->setNextScene( Game::SCENE_STAGE );
+		return true;
 	}
+	return false;
 }

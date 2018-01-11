@@ -5,23 +5,16 @@
 #include "Map.h"
 #include "Pacman.h"
 #include "Military.h"
+#include "Score.h"
 #include "Debug.h"
 #include "Game.h"
 
+const int FPS = 30;
+const int MAX_STAGEING_TIME = 1 * FPS;
 
-SceneStagePtr SceneStage::getTask( ) {
-	return std::dynamic_pointer_cast< SceneStage >( Application::getInstance( )->getTask( getTag( ) ) );
-}
-
-SceneStage::SceneStage( ) {
-	ApplicationPtr app = Application::getInstance( );
-	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
-}
-
-SceneStage::~SceneStage( ) {
-}
-
-void SceneStage::initialize( ) {
+SceneStage::SceneStage( ImagePtr number, ImagePtr player_name ) :
+_staging_time( 0 ) {
+	_score = ScorePtr( new Score( number, player_name ) );
 	_map = MapPtr( new Map );
 	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		_player[ i ] = PacmanPtr( new Pacman( i, _map->getPlayerPos( i ) ) );
@@ -30,15 +23,18 @@ void SceneStage::initialize( ) {
 	_map->generateEnemy( _military );
 }
 
-void SceneStage::update( ) {
-	if ( Game::getTask( )->getNowScene( ) != Game::SCENE_STAGE ) {
-		return;
-	}
+SceneStage::~SceneStage( ) {
+}
 
-	if ( !Game::getTask( )->isStaging( ) ) {
+Scene::SCENE SceneStage::update( ) {
+	if ( isStaging( ) ) {
+		_staging_time++;
+	} else {
 		updateBattle( );
+		_score->update( );
 	}
 
+	return SCENE_CONTINUE;
 }
 
 void SceneStage::updateBattle( ) {
@@ -61,24 +57,23 @@ void SceneStage::updateBattle( ) {
 void SceneStage::draw( ) const {
 	_map->draw( );
 	_military->draw( );
-	if ( Game::getTask( )->isStaging( ) ) {
+	if ( isStaging( ) ) {
 		drawStageing( );
 	} else {
 		for ( int i = 0; i < MAX_PLAYER; i++ ) {
 			_player[ i ]->draw( );
 		}
 	}
+	_score->draw( );
 }
 
 void SceneStage::drawStageing( ) const {
 	GamePtr game = Game::getTask( );
-	const int STAGE_TIME = game->getStageingTime( );
-	const int MAX_STAGE_TIME = game->getMaxStageingTime( );
-	if ( STAGE_TIME < MAX_STAGE_TIME / 2 ) {
-		_player[ PLAYER_1 ]->drawStageing( STAGE_TIME, MAX_STAGE_TIME / 2 );
+	if ( _staging_time < MAX_STAGEING_TIME / 2 ) {
+		_player[ PLAYER_1 ]->drawStageing( _staging_time, MAX_STAGEING_TIME / 2 );
 	} else {
 		_player[ PLAYER_1 ]->draw( );
-		_player[ PLAYER_2 ]->drawStageing( STAGE_TIME - MAX_STAGE_TIME / 2, MAX_STAGE_TIME / 2 );
+		_player[ PLAYER_2 ]->drawStageing( _staging_time - MAX_STAGEING_TIME / 2, MAX_STAGEING_TIME / 2 );
 	}
 }
 
@@ -116,10 +111,10 @@ PacmanPtr SceneStage::getPacman( Vector pos ) const {
 	return _player[ idx ];
 }
 
-int SceneStage::getChipSize( ) const {
-	return _chip_size;
+bool SceneStage::isStaging( ) const {
+	return _staging_time < MAX_STAGEING_TIME;
 }
 
-int SceneStage::getCharaSize( ) const {
-	return _chip_size - 3;
+void SceneStage::addScore( PLAYER idx, SCORE score ) {
+	_score->addScore( idx, score );
 }

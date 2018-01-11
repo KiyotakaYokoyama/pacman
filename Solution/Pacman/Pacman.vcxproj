@@ -169,6 +169,7 @@
     <ClCompile Include="EnemySpeedy.cpp" />
     <ClCompile Include="EnemyYellow.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneResult.cpp" />
     <ClCompile Include="SceneStage.cpp" />
     <ClCompile Include="main.cpp" />
@@ -176,7 +177,7 @@
     <ClCompile Include="Military.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
-    <ClCompile Include="Viewer.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -190,13 +191,14 @@
     <ClInclude Include="EnemySpeedy.h" />
     <ClInclude Include="EnemyYellow.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneResult.h" />
     <ClInclude Include="SceneStage.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Military.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="SceneTitle.h" />
-    <ClInclude Include="Viewer.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Pacmanframe\Pacmanframe.vcxproj">

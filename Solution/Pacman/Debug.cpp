@@ -1,4 +1,5 @@
 #include "Debug.h"
+#include "Game.h"
 #include "SceneStage.h"
 #include "Map.h"
 #include "define.h"
@@ -33,7 +34,7 @@ void Debug::update( ) {
 	}
 
 	if ( _active ) {
-		MapPtr map = SceneStage::getTask( )->getMap( );
+		MapPtr map = Game::getTask( )->getStage( )->getMap( );
 		KeyboardPtr key = Keyboard::getTask( );
 		bool succese = false;
 		if ( key->isPushKey( "0" ) ) {
@@ -71,7 +72,7 @@ void Debug::update( ) {
 
 void Debug::draw( ) const {
 	DrawerPtr drawer = Drawer::getTask( );
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	for ( int i = 0; i <= MAP_HEIGHT_CHIP_NUM; i++ ) {
 		drawer->drawLine( 0, i * CHIP_SIZE, CHIP_SIZE * MAP_WIDTH_CHIP_NUM, i * CHIP_SIZE );
 	}
@@ -79,7 +80,7 @@ void Debug::draw( ) const {
 		drawer->drawLine( i * CHIP_SIZE, 0, i * CHIP_SIZE, CHIP_SIZE * MAP_HEIGHT_CHIP_NUM );
 	}
 
-	MapPtr map = SceneStage::getTask( )->getMap( );
+	MapPtr map = Game::getTask( )->getStage( )->getMap( );
 	for ( int i = 0; i < MAP_WIDTH_CHIP_NUM * MAP_HEIGHT_CHIP_NUM; i++ ) {
 		int ox = i % MAP_WIDTH_CHIP_NUM;
 		int oy = i / MAP_WIDTH_CHIP_NUM;

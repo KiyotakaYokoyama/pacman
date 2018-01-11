@@ -1,4 +1,5 @@
 #include "EnemyBashful.h"
+#include "Game.h"
 #include "SceneStage.h"
 #include "Pacman.h"
 #include "EnemyShadow.h"
@@ -17,11 +18,11 @@ EnemyBashful::~EnemyBashful( ) {
 }
 
 void EnemyBashful::moving( ) {
-	SceneStagePtr game = SceneStage::getTask( );
+	GamePtr game = Game::getTask( );
 	const int CHARA_SIZE = game->getCharaSize( );
 	const int CHIP_SIZE = game->getChipSize( );
 	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
-	PacmanConstPtr pacman = game->getPacman( self_pos );
+	PacmanConstPtr pacman = game->getStage( )->getPacman( self_pos );
 	Vector pacman_pos = getPos( ) + ( Vector( WIDTH / 2, MAP_HEIGHT_CHIP_NUM * CHIP_SIZE / 2 ) - getPos( ) ).normalize( ) * 5;
 	if ( pacman ) {
 		pacman_pos = pacman->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
@@ -42,7 +43,7 @@ void EnemyBashful::moving( ) {
 IMGAE_DATA EnemyBashful::getImageData( ) const {
 	IMGAE_DATA result = IMGAE_DATA( );
 	Vector pos = getPos( );
-	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
 	result.sx1 = ( int )( pos.x - CHARA_SIZE / 2 );
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );
 	

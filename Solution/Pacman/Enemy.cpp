@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Game.h"
 #include "SceneStage.h"
 #include "Map.h"
 
@@ -28,9 +29,9 @@ void Enemy::act( ) {
 		return;
 	}
 
-	SceneStagePtr scene_stage = SceneStage::getTask( );
-	const int CHIP_SIZE = scene_stage->getChipSize( );
-	const int CHARA_SIZE = scene_stage->getCharaSize( );
+	GamePtr game = Game::getTask( );
+	const int CHIP_SIZE = game->getChipSize( );
+	const int CHARA_SIZE = game->getCharaSize( );
 	Vector pos = getPos( );
 	bool center = ( int )pos.x % CHIP_SIZE == CHIP_SIZE / 2 &&
 				  ( int )pos.y % CHIP_SIZE == CHARA_SIZE;
@@ -54,7 +55,7 @@ void Enemy::decisionMoveDir( ) {
 }
 
 void Enemy::moveGoal( const Vector goal ) {
-	const int CHIP_SIZE = SceneStage::getTask( )->getChipSize( );
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	Vector diff = goal - getPos( );
 	int root_num = ( int )( ( diff.x + 0.5 ) / CHIP_SIZE + ( diff.y + 0.5 ) / CHIP_SIZE );
 	if ( abs( root_num ) > MAX_CEARCH_LENGTH ) {
@@ -77,9 +78,9 @@ void Enemy::moveGoal( const Vector goal ) {
 }
 
 void Enemy::adjustVec( ) {
-	SceneStagePtr scene_stage = SceneStage::getTask( );
-	const int CHIP_SIZE = scene_stage->getChipSize( );
-	const int CHARA_SIZE = scene_stage->getCharaSize( );
+	GamePtr game = Game::getTask( );
+	const int CHIP_SIZE = game->getChipSize( );
+	const int CHARA_SIZE = game->getCharaSize( );
 	Vector f_pos = getPos( ) + getVec( );
 	Vector vec = getVec( );
 	if ( ( int )f_pos.x % CHIP_SIZE != CHIP_SIZE / 2 && vec.x == 0 ) {
@@ -122,14 +123,14 @@ bool Enemy::isDrawing( ) const {
 }
 
 Vector Enemy::getCharaSize( ) const {
-	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
 	return Vector( 0, -CHARA_SIZE / 2 );
 }
 
 Vector Enemy::toStraight( const Vector& start, const Vector& goal ) {
-	SceneStagePtr scene_stage = SceneStage::getTask( );
-	const int CHIP_SIZE = scene_stage->getChipSize( );
-	MapPtr map = scene_stage->getMap( );
+	GamePtr game = Game::getTask( );
+	const int CHIP_SIZE = game->getChipSize( );
+	MapPtr map = game->getStage( )->getMap( );
 
 	enum DIRECTION {
 		UP,
@@ -180,9 +181,9 @@ Vector Enemy::toStraight( const Vector& start, const Vector& goal ) {
 }
 
 Vector Enemy::getNearRoadPos( const Vector& goal ) {
-	SceneStagePtr scene_stage = SceneStage::getTask( );
-	const int CHIP_SIZE = scene_stage->getChipSize( );
-	MapPtr map = scene_stage->getMap( );
+	GamePtr game = Game::getTask( );
+	const int CHIP_SIZE = game->getChipSize( );
+	MapPtr map = game->getStage( )->getMap( );
 
 	if ( map->getObject( goal ) != OBJECT_WALL ) {
 		return goal;
@@ -224,7 +225,7 @@ Vector Enemy::getNearRoadPos( const Vector& goal ) {
 }
 
 Vector Enemy::AStar( const Vector& goal ) {
-	MapPtr map = SceneStage::getTask( )->getMap( );
+	MapPtr map = Game::getTask( )->getStage( )->getMap( );
 	Vector start_pos( map->getMapPos( getPos( ) ) );
 	Vector goal_pos( map->getMapPos( goal ) );
 
@@ -445,7 +446,7 @@ Vector Enemy::AStar( const Vector& goal ) {
 
 	int size = ( int )root.size( );
 	Vector dir = goal - getPos( );
-	const int CHARA_SIZE = SceneStage::getTask( )->getCharaSize( );
+	const int CHARA_SIZE = Game::getTask( )->getCharaSize( );
 	if ( size > 1 ) {
 		dir = ( root[ size - 2 ].pos - root[ size - 1 ].pos ).normalize( );
 	}
