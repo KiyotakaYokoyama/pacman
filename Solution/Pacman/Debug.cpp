@@ -34,38 +34,20 @@ void Debug::update( ) {
 	}
 
 	if ( _active ) {
-		MapPtr map = Game::getTask( )->getStage( )->getMap( );
+		reloadStage( );
+	}
+}
+
+void Debug::reloadStage( ) {
+	SceneStagePtr stage = Game::getTask( )->getStage( );
+	if ( stage ) {
+		MapPtr map = stage->getMap( );
 		KeyboardPtr key = Keyboard::getTask( );
-		bool succese = false;
-		if ( key->isPushKey( "0" ) ) {
-			_new_stage = map->loadStage( 0 );
-		}
-		if ( key->isPushKey( "1" ) ) {
-			_new_stage = map->loadStage( 1 );
-		}
-		if ( key->isPushKey( "2" ) ) {
-			_new_stage = map->loadStage( 2 );
-		}
-		if ( key->isPushKey( "3" ) ) {
-			_new_stage = map->loadStage( 3 );
-		}
-		if ( key->isPushKey( "4" ) ) {
-			_new_stage = map->loadStage( 4 );
-		}
-		if ( key->isPushKey( "5" ) ) {
-			_new_stage = map->loadStage( 5 );
-		}
-		if ( key->isPushKey( "6" ) ) {
-			_new_stage = map->loadStage( 6 );
-		}
-		if ( key->isPushKey( "7" ) ) {
-			_new_stage = map->loadStage( 7 );
-		}
-		if ( key->isPushKey( "8" ) ) {
-			_new_stage = map->loadStage( 8 );
-		}
-		if ( key->isPushKey( "9" ) ) {
-			_new_stage = map->loadStage( 9 );
+		for ( int i = 0; i < 10; i++ ) {
+			if ( key->isPushKey( std::to_string( i ) ) ) {
+				_new_stage = map->loadStage( i );
+				break;
+			}
 		}
 	}
 }

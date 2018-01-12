@@ -45,12 +45,13 @@ void SceneStage::updateBattle( ) {
 	_map->update( );	
 	
 	DebugPtr debug = Debug::getTask( );
-	if ( debug->isActive( ) ) {
-		if ( debug->isNewStage( ) ) {
-			for ( int i = 0; i < MAX_PLAYER; i++ ) {
-				_player[ i ]->entryStage( _map->getPlayerPos( i ) );
-			}
+	if ( debug->isActive( ) && debug->isNewStage( ) ) {
+		for ( int i = 0; i < MAX_PLAYER; i++ ) {
+			_player[ i ]->entryStage( _map->getPlayerPos( i ) );
 		}
+		_military->clearEnemy( );
+		_map->generateEnemy( _military );
+		_score->initialize( );
 	}
 }
 

@@ -145,3 +145,9 @@ void Score::addScore( PLAYER idx, SCORE score ) {
 		_performer.push_back( PERFORMER( INIT_SCORE_EFFECT_TIME, idx, score ) );
 	}
 }
+
+void Score::initialize( ) {
+	_battle_time = GAME_TIME;
+	_score = INIT_SCORE;
+	_performer.clear( );
+}

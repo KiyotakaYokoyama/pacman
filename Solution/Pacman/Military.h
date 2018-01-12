@@ -13,6 +13,7 @@ public:
 	void update( );
 	void draw( ) const;
 	void addEnemy( EnemyPtr enemy );
+	void clearEnemy( );
 private:
 	ImagePtr _image;
 	std::list< EnemyPtr > _enemies;

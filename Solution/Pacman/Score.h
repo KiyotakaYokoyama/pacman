@@ -11,6 +11,7 @@ public:
 	Score( ImagePtr number, ImagePtr player_name );
 	virtual ~Score( );
 public:
+	void initialize( ); // debug用でSceneStageからステージがリセットされたときに呼ばれる
 	void update( );
 	void draw( ) const;
 	void addScore( PLAYER idx, SCORE score );

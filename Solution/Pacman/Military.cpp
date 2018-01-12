@@ -77,3 +77,7 @@ void Military::draw( ) const {
 void Military::addEnemy( EnemyPtr enemy ) {
 	_enemies.push_back( enemy );
 }
+
+void Military::clearEnemy( ) {
+	_enemies.clear( );
+}

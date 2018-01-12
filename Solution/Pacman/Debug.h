@@ -22,6 +22,8 @@ public:
 	bool isActive( ) const;
 	bool isNewStage( ) const;
 private:
+	void reloadStage( );
+private:
 	bool _active;
 	bool _new_stage;
 	ImagePtr _block_chip;
