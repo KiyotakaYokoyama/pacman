@@ -38,11 +38,13 @@ Pacman::~Pacman( ) {
 }
 
 void Pacman::act( ) {
-	if ( _damage > 0 ) {
+	if ( _damage > DAMAGE_TIME / 2 ) {
 		Vector vec = getVec( );
 		vec -= vec.normalize( ) * ( MOVE_SPEED / 3 );
+		if ( vec.getLength( ) < MOVE_SPEED / 3 ) {
+			vec = Vector( );
+		}
 		setVec( vec );
-		_damage--;
 	} else {
 		if ( !_auto_move ) {
 			actOnMove( );
@@ -51,6 +53,10 @@ void Pacman::act( ) {
 		} else {
 			actOnAutoMove( );
 		}
+	}
+
+	if ( _damage > 0 ) {
+		_damage--;
 	}
 
 	if ( _turnaround && getActTime( ) > TURNAROUND_TIME ) {
