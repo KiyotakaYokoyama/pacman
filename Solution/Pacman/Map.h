@@ -25,6 +25,7 @@ public:
 	unsigned char getObject( int ox, int oy ) const;
 	Vector getPlayerPos( int id );
 	void generateEnemy( MilitaryPtr military ) const;
+	bool isInMap( const Vector& pos ) const;
 private:
 	struct ENEMY {
 		unsigned char index;

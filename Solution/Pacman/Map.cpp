@@ -284,3 +284,9 @@ void Map::generateEnemy( MilitaryPtr military ) const {
 		}
 	}
 }
+
+bool Map::isInMap( const Vector& pos ) const {
+	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
+	return pos.x >= 0 && pos.x < CHIP_SIZE * MAP_WIDTH_CHIP_NUM &&
+		   pos.y >= 0 && pos.y < CHIP_SIZE * MAP_HEIGHT_CHIP_NUM;
+}
