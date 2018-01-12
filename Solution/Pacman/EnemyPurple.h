@@ -10,5 +10,8 @@ public:
 private:
 	void moving( );
 	SCORE getScore( ) const;
+private:
+	int _move_count;
+	DIR _dir;
 };
 

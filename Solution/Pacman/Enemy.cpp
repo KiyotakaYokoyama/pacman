@@ -208,14 +208,14 @@ Vector Enemy::getNearRoadPos( const Vector& goal ) {
 	Vector count = Vector( );
 	int chip[ MAX_DIRECTION ] = { 0 };
 	for ( int i = 0; i < MAX_DIRECTION; i++, count = Vector( ) ) {
-		if ( !map->isInMap( goal ) ) {
-			if ( goal.x < 0								  && ( DIRECTION )i != RIGHT ) continue;
-			if ( goal.x > CHIP_SIZE * MAP_WIDTH_CHIP_NUM  && ( DIRECTION )i != LEFT  ) continue;
-			if ( goal.y < 0								  && ( DIRECTION )i != DOWN  ) continue;
-			if ( goal.y > CHIP_SIZE * MAP_HEIGHT_CHIP_NUM && ( DIRECTION )i != UP    ) continue;
-		}
+		//if ( !map->isInMap( goal ) ) {
+			if ( goal.x < CHIP_SIZE							  && ( DIRECTION )i != RIGHT ) continue;
+			if ( goal.x > CHIP_SIZE * MAP_WIDTH_CHIP_NUM - 1  && ( DIRECTION )i != LEFT  ) continue;
+			if ( goal.y < CHIP_SIZE							  && ( DIRECTION )i != DOWN  ) continue;
+			if ( goal.y > CHIP_SIZE * MAP_HEIGHT_CHIP_NUM - 1 && ( DIRECTION )i != UP    ) continue;
+		//}
 
-		while ( map->getObject( goal + count ) == OBJECT_WALL ) {
+		while ( map->getObject( goal + count ) == OBJECT_WALL && map->isInMap( goal + count ) ) {
 			chip[ i ]++;
 			count += DIRECT[ i ];
 		}
