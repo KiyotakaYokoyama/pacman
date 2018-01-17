@@ -11,9 +11,9 @@
 
 const int MOVE_SPEED = 3;
 const int MAX_SPEED = 3;
-const int WAIT_ANIM_TIME = 5;
+const int WAIT_ANIM_TIME = 3;
 const int TURNAROUND_TIME = 300;
-const int ANIM[ ] = { 0, 1, 2, 1 };
+const int ANIM[ ] = { 0, 1, 2, 3, 4, 3, 2, 1 };
 const int ANIM_NUM = sizeof( ANIM ) / sizeof( ANIM[ 0 ] );
 const int DAMAGE_TIME = 60;
 
@@ -25,10 +25,10 @@ _auto_move( false ),
 _turnaround( false ),
 _auto_vec( Vector( ) ) {
 	if ( id == 0 ) {
-		_sprite = Drawer::getTask( )->createImage( "player1.png" );
+		_sprite = Drawer::getTask( )->createImage( "pacman.png" );
 	}
 	if ( id == 1 ) {
-		_sprite = Drawer::getTask( )->createImage( "player2.png" );
+		_sprite = Drawer::getTask( )->createImage( "pacwoman.png" );
 	}
 	assert( id == 0 || id == 1 );
 }
@@ -177,22 +177,19 @@ void Pacman::draw( ) const {
 	Vector pos = getPos( );
 	int tx = ANIM[ ( getActTime( ) / WAIT_ANIM_TIME ) % ANIM_NUM ] * SPRITE_SIZE;
 	int ty = 0;
-	if ( getDir( ) == DIR_UP ) {
+	if ( getDir( ) == DIR_RIGHT ) {
 		ty = SPRITE_SIZE * 1;
 	}
-	if ( getDir( ) == DIR_DOWN ) {
+	if ( getDir( ) == DIR_UP ) {
 		ty = SPRITE_SIZE * 2;
+	}
+	if ( getDir( ) == DIR_DOWN ) {
+		ty = SPRITE_SIZE * 3;
 	}
 	_sprite->setRect( tx, ty, SPRITE_SIZE, SPRITE_SIZE );
 	int sx = ( int )( pos.x - DRAW_SIZE / 2 );
 	int sy = ( int )( pos.y - DRAW_SIZE );
-	int sx2 = sx + DRAW_SIZE;
-	if ( getDir( ) == DIR_LEFT ) {
-		int tmp = sx;
-		sx = sx2;
-		sx2 = tmp;
-	}
-	_sprite->setPos( sx, sy, sx2, sy + DRAW_SIZE );
+	_sprite->setPos( sx, sy, sx + DRAW_SIZE, sy + DRAW_SIZE );
 	_sprite->draw( );
 }
 

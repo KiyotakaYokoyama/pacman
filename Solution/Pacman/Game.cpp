@@ -27,7 +27,7 @@ Game::~Game( ) {
 
 void Game::initialize( ) {
 	DrawerPtr drawer = Drawer::getTask( );
-	_number = drawer->createImage( "num.png" );
+	_number = drawer->createImage( "number.png" );
 	_player_name = drawer->createImage( "playerName.png" );
 	_fade = drawer->createImage( "fade.png" );
 

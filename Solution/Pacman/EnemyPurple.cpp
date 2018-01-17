@@ -68,27 +68,24 @@ IMGAE_DATA EnemyPurple::getImageData( ) const {
 	result.sx1 = ( int )( pos.x - CHARA_SIZE / 2 );
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );
 	
-	result.tx  = ( ( getActTime( ) / WAIT_ANIM_TIME ) % 2 ) * 64;
-	result.ty  = 64 * 6;
+	result.tx  = ( ( getActTime( ) / WAIT_ANIM_TIME ) % 2 ) * SPRITE_SIZE;
+	result.ty  = SPRITE_SIZE * 6;
 	
+	if ( getDir( ) == DIR_LEFT ) {
+		result.tx += SPRITE_SIZE * 4;
+	}
 	if ( getDir( ) == DIR_UP ) {
-		result.tx += 64 * 4;
+		result.tx += SPRITE_SIZE * 6;
 	}
 	if ( getDir( ) == DIR_DOWN ) {
-		result.tx += 64 * 2;
+		result.tx += SPRITE_SIZE * 2;
 	}
 
-	result.tw  = 64;
-	result.th  = 64;
+	result.tw  = SPRITE_SIZE;
+	result.th  = SPRITE_SIZE;
 	result.sx2 = ( int )( pos.x + CHARA_SIZE / 2 );
 	result.sy2 = ( int )pos.y;
 	
-	if ( getDir( ) == DIR_LEFT ) {
-		int tmp = result.sx1;
-		result.sx1 = result.sx2;
-		result.sx2 = tmp;
-	}
-
 	return result;
 }
 

@@ -8,7 +8,7 @@
 #include "Game.h"
 
 Military::Military( ) {
-	_image = Drawer::getTask( )->createImage( "enemies.png" );
+	_image = Drawer::getTask( )->createImage( "enemy.png" );
 }
 
 

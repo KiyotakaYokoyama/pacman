@@ -28,7 +28,7 @@ Map::Map( ) :
 _count( 0 ),
 _eaten_feeds( 0 ) {
 	DrawerPtr drawer = Drawer::getTask( );
-	_feeds = drawer->createImage( "feeds.png" );
+	_feeds = drawer->createImage( "feed.png" );
 	_revival_area = drawer->createImage( "revival_area.png" );
 	_revival_area->setRect( 0, 0, 64, 64 );
 	
@@ -183,12 +183,12 @@ void Map::drawFeed( ) const {
 		int sx = ( i % MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
 		int sy = ( i / MAP_WIDTH_CHIP_NUM ) * CHIP_SIZE;
 		if ( _objects[ i ] == OBJECT_FEED ) {
-			_feeds->setRect( 64, 0, 64, 64 );
+			_feeds->setRect( 0, 0, 64, 64 );
 			_feeds->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
 			_feeds->draw( );
 		}
 		if ( _objects[ i ] == OBJECT_ENHANCE_FEED ) {
-			_feeds->setRect( 0, 0, 64, 64 );
+			_feeds->setRect( 64, 0, 64, 64 );
 			_feeds->setPos( sx, sy, sx + CHIP_SIZE, sy + CHIP_SIZE );
 			_feeds->draw( );
 		}

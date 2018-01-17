@@ -39,8 +39,11 @@ IMGAE_DATA EnemyShadow::getImageData( ) const {
 	result.tx  = ( ( getActTime( ) / WAIT_ANIM_TIME ) % 2 ) * SPRITE_SIZE;
 	result.ty  = SPRITE_SIZE * 0;
 
-	if ( getDir( ) == DIR_UP ) {
+	if ( getDir( ) == DIR_LEFT ) {
 		result.tx += SPRITE_SIZE * 4;
+	}
+	if ( getDir( ) == DIR_UP ) {
+		result.tx += SPRITE_SIZE * 6;
 	}
 	if ( getDir( ) == DIR_DOWN ) {
 		result.tx += SPRITE_SIZE * 2;
@@ -50,13 +53,7 @@ IMGAE_DATA EnemyShadow::getImageData( ) const {
 	result.th  = SPRITE_SIZE;
 	result.sx2 = ( int )( pos.x + CHARA_SIZE / 2 );
 	result.sy2 = ( int )pos.y;
-
-	if ( getDir( ) == DIR_LEFT ) {
-		int tmp = result.sx1;
-		result.sx1 = result.sx2;
-		result.sx2 = tmp;
-	}
-
+	
 	return result;
 }
 
