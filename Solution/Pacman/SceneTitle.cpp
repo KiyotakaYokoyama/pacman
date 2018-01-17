@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Drawer.h"
 #include "Keyboard.h"
+#include "Sound.h"
 #include "Image.h"
 #include "Game.h"
 #include "define.h"
@@ -9,6 +10,7 @@
 const int NEXT_SCENE_TIME = 10 * 30;
 
 SceneTitle::SceneTitle( ) {
+	Sound::getTask( )->playBGM( "pac_music_coffeebreak.wav" );
 	_title = Drawer::getTask( )->createImage( "title.png" );
 	int w;
 	int h;

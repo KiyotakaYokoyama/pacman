@@ -1,5 +1,5 @@
 #include "SceneStage.h"
-#include "Application.h"
+#include "Sound.h"
 #include <assert.h>
 
 #include "Map.h"
@@ -10,10 +10,11 @@
 #include "Game.h"
 
 const int FPS = 30;
-const int MAX_STAGEING_TIME = 1 * FPS;
+const int MAX_STAGEING_TIME = 4 * FPS;
 
 SceneStage::SceneStage( ImagePtr number, ImagePtr player_name ) :
 _staging_time( 0 ) {
+	Sound::getTask( )->playBGM( "pac_music_gamestart.wav", false );
 	_score = ScorePtr( new Score( number, player_name ) );
 	_map = MapPtr( new Map );
 	for ( int i = 0; i < MAX_PLAYER; i++ ) {
@@ -24,9 +25,15 @@ _staging_time( 0 ) {
 }
 
 SceneStage::~SceneStage( ) {
+	SoundPtr sound = Sound::getTask( );
+	if ( sound ) sound->stopAllSE( );
 }
 
 Scene::SCENE SceneStage::update( ) {
+	SoundPtr sound = Sound::getTask( );
+	if ( !sound->isPlayingBGM( ) ) {
+		sound->playBGM( "pac_se_ghost_movesound.wav" );
+	}
 	if ( isStaging( ) ) {
 		_staging_time++;
 	} else {

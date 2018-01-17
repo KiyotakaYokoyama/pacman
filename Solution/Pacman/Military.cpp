@@ -3,9 +3,10 @@
 #include "Enemy.h"
 #include "Pacman.h"
 #include "define.h"
+#include "Game.h"
 #include "Drawer.h"
 #include "Image.h"
-#include "Game.h"
+#include "Sound.h"
 
 Military::Military( ) {
 	_image = Drawer::getTask( )->createImage( "enemy.png" );
@@ -16,6 +17,7 @@ Military::~Military( ) {
 }
 
 void Military::update( ) {
+	SoundPtr sound = Sound::getTask( );
 	GamePtr game = Game::getTask( );
 	int chara_size = game->getCharaSize( );
 	SceneStagePtr scene_stage = game->getStage( );
@@ -34,10 +36,12 @@ void Military::update( ) {
 				if ( escape1 ) {
 					game->getStage( )->addScore( PLAYER_1, enemy->getScore( ) );
 					enemy->setHide( );
+					sound->playSE( "pac_se_eating_ghost.wav" );
 				} else {
 					if ( !player1->isDamaging( ) ) {
 						game->getStage( )->addScore( PLAYER_1, SCORE_DAMAGE );
 						player1->damage( );
+						sound->playSE( "pac_se_miss.wav" );
 					}
 				}
 			}
@@ -47,10 +51,12 @@ void Military::update( ) {
 				if ( escape2 ) {
 					game->getStage( )->addScore( PLAYER_2, enemy->getScore( ) );
 					enemy->setHide( );
+					sound->playSE( "pac_se_eating_ghost.wav" );
 				} else {
 					if ( !player2->isDamaging( ) ) {
 						game->getStage( )->addScore( PLAYER_2, SCORE_DAMAGE );
 						player2->damage( );
+						sound->playSE( "pac_se_miss.wav" );
 					}
 				}
 			}

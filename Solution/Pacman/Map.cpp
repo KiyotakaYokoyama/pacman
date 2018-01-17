@@ -51,7 +51,7 @@ Map::~Map( ) {
 bool Map::loadStage( int idx ) {
 	bool result = false;
 	assert( idx < STAGE_NUM );
-	if ( idx < _stages.size( ) ) {
+	if ( idx < ( int )_stages.size( ) ) {
 		loadStage( _stages[ idx ] );
 		result = true;
 	}
@@ -132,7 +132,7 @@ void Map::drawRevivalArea( ) const {
 		if ( ratio > 1.0 ) {
 			ratio = 2.0 - ratio;
 		}
-		size_t size = _revival_feed_pos.size( );
+		int size = ( int )_revival_feed_pos.size( );
 		for ( int i = 0; i < size; i++ ) {
 			_revival_area->setBlend( Image::BLEND_ALPHA, ratio );
 			Vector pos = _revival_feed_pos[ i ] * CHIP_SIZE;

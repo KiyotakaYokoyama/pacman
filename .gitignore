@@ -13,3 +13,7 @@ Solution/Editor/x64/
 Solution/Pacman/x64/
 Solution/x64/
 *.opendb
+Solution/Release/
+Solution/Pacman/Release/
+Solution/Editor/Release/
+Solution/Common/Release/

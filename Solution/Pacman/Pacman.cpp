@@ -6,7 +6,7 @@
 #include "Drawer.h"
 #include "Image.h"
 #include "Keyboard.h"
-#include "Application.h"
+#include "Sound.h"
 #include <assert.h>
 
 const int MOVE_SPEED = 3;
@@ -107,6 +107,7 @@ void Pacman::actOnEat( ) {
 	unsigned char obj = map->getObject( check );
 	if ( obj == OBJECT_ENHANCE_FEED || obj == OBJECT_FEED ) {
 		map->eatFeed( check );
+		Sound::getTask( )->playSE( "pac_se_eatingcokkie.wav", false );
 	}
 	if ( obj == OBJECT_ENHANCE_FEED ) {
 		_turnaround = true;
