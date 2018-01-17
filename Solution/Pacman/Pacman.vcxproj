@@ -162,6 +162,7 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBashful.cpp" />
+    <ClCompile Include="EnemyBlunder.cpp" />
     <ClCompile Include="EnemyGreen.cpp" />
     <ClCompile Include="EnemyPokey.cpp" />
     <ClCompile Include="EnemyPurple.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBashful.h" />
+    <ClInclude Include="EnemyBlunder.h" />
     <ClInclude Include="EnemyGreen.h" />
     <ClInclude Include="EnemyPokey.h" />
     <ClInclude Include="EnemyPurple.h" />

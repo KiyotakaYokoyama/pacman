@@ -8,11 +8,11 @@ class EnemyBashful : public Enemy {
 public:
 	EnemyBashful( const Vector& pos, EnemyShadowPtr shadow );
 	virtual ~EnemyBashful( );
-public:
-	IMGAE_DATA getImageData( ) const;
 private:
 	void moving( );
 	SCORE getScore( ) const;
+	IMGAE_DATA getImageData( ) const;
+private:
 	EnemyShadowPtr _shadow;
 };
 

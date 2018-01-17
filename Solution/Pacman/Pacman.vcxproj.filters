@@ -45,6 +45,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="EnemyBlunder.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -90,6 +93,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Score.h" />
+    <ClInclude Include="EnemyBlunder.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Enemy">

@@ -6,9 +6,9 @@ public:
 	EnemyYellow( const Vector& pos );
 	virtual ~EnemyYellow( );
 public:
-	IMGAE_DATA getImageData( ) const;
 private:
 	void moving( );
 	SCORE getScore( ) const;
+	IMGAE_DATA getImageData( ) const;
 };
 

@@ -8,6 +8,7 @@ static const int MAX_SPEED = 1;
 static const int MAX_CEARCH_LENGTH = 15;
 static const int INIT_HIDE_TIME = 150;
 static const int POP_TIME = 30;
+static const int MAX_CEARCH_CHIP_NUM = 200;
 
 Enemy::Enemy( const Vector& pos ) :
 Character( pos ),
@@ -408,6 +409,11 @@ Vector Enemy::AStar( const Vector& goal ) {
 			if ( finish ) {
 				break;
 			}
+		}
+
+		// ŒŸõ‚µ‚½PROCEED”‚ªMAP_CHIP”‚æ‚è‘å‚«‚¢‚Æ‚«I—¹
+		if ( ( int )proceeds.size( ) > MAX_CEARCH_CHIP_NUM ) {
+			break;
 		}
 
 		open_tmp.clear( );

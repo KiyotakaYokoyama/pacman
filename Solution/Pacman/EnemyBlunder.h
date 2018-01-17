@@ -1,10 +1,10 @@
 #pragma once
 #include "Enemy.h"
 
-class EnemyShadow : public Enemy {
+class EnemyBlunder : public Enemy {
 public:
-	EnemyShadow( const Vector& pos );
-	virtual ~EnemyShadow( );
+	EnemyBlunder( const Vector& pos );
+	virtual ~EnemyBlunder( );
 private:
 	void moving( );
 	SCORE getScore( ) const;
