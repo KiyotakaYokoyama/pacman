@@ -22,22 +22,13 @@ void EnemyBashful::moving( ) {
 	const int CHARA_SIZE = game->getCharaSize( );
 	const int CHIP_SIZE = game->getChipSize( );
 	Vector self_pos = getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
-	PacmanConstPtr pacman = game->getStage( )->getPacman( self_pos );
-	Vector pacman_pos = getPos( ) + ( Vector( WIDTH / 2, MAP_HEIGHT_CHIP_NUM * CHIP_SIZE / 2 ) - getPos( ) ).normalize( ) * 5;
-	if ( pacman ) {
-		pacman_pos = pacman->getPos( ) + Vector( 0, -CHARA_SIZE / 2 );
-	}
-	Vector shadow_pos = _shadow ? _shadow->getPos( ) : pacman_pos;
+	SceneStagePtr stage = game->getStage( );
+	Vector symmetry_pos = ( stage->getPacman( PLAYER_1 )->getPos( ) + stage->getPacman( PLAYER_2 )->getPos( ) ) * 0.5;
+	Vector shadow_pos = _shadow ? _shadow->getPos( ) : Vector( MAP_WIDTH_CHIP_NUM * CHIP_SIZE / 2, MAP_HEIGHT_CHIP_NUM * CHIP_SIZE / 2 );
 
-	Vector distance = shadow_pos - pacman_pos;
-	distance *= -1;
-	Vector goal_pos = pacman_pos + distance;
-	Vector to_goal = goal_pos - self_pos;
-	Vector vec = to_goal.normalize( ) * MOVE_SPEED;
-	if ( to_goal.getLength( ) < MOVE_SPEED ) {
-		vec = to_goal;
-	}
-	setVec( vec );
+	Vector distance = ( shadow_pos - symmetry_pos ) * -1;
+	Vector goal_pos = symmetry_pos + distance;
+	moveGoal( goal_pos );
 }
 
 IMGAE_DATA EnemyBashful::getImageData( ) const {
