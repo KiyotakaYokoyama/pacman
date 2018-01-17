@@ -20,6 +20,12 @@ enum SCORE {
 	SCORE_YELLOW  = 30,
 };
 
+enum RESULT {
+	RESULT_DRAW,
+	RESULT_PLAYER1,
+	RESULT_PLAYER2
+};
+
 struct IMGAE_DATA {
 	int sx1;
 	int sy1;
@@ -61,3 +67,7 @@ const unsigned char OBJECT_BASHFUL       = 0x08;
 const unsigned char OBJECT_POKEY         = 0x09;
 const unsigned char OBJECT_STAGE_WARP    = 0x0A;
 const unsigned char OBJECT_REVIVAL_FEED  = 0x0B;
+const unsigned char OBJECT_BLUNDER       = 0x0C;
+const unsigned char OBJECT_GREEN         = 0x0D;
+const unsigned char OBJECT_PURPLE        = 0x0E;
+const unsigned char OBJECT_YELLOW        = 0x0F;

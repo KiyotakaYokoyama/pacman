@@ -73,7 +73,7 @@ void Score::draw( ) const {
 	for ( int i = 0; i < MAX_PLAYER; i++ ) {
 		const int DIGIT = ( int )log10( _score[ i ] ) + 1;
 		for ( int j = 0; j < DIGIT; j++ ) {
-			int divided = pow( 10, DIGIT - 1 - j );
+			int divided = ( int )pow( 10, DIGIT - 1 - j );
 			if ( divided < 1 ) divided = 1;
 			int tx = NUM[ ( _score[ i ] / divided ) % NUM_SIZE ] * SPRITE_SIZE;
 			int ty = 0;
@@ -150,4 +150,8 @@ void Score::initialize( ) {
 	_battle_time = GAME_TIME;
 	_score = INIT_SCORE;
 	_performer.clear( );
+}
+
+int Score::getScore( PLAYER idx ) const {
+	return _score[ idx ];
 }

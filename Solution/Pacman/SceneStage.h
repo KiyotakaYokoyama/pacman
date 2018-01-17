@@ -19,6 +19,7 @@ public:
 	MapPtr getMap( );
 	PacmanPtr getPacman( PLAYER idx ) const;
 	PacmanPtr getPacman( Vector pos ) const;
+	RESULT getWinner( ) const;
 	void addScore( PLAYER idx, SCORE score );
 private:
 	SCENE update( );

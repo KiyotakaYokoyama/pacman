@@ -15,6 +15,7 @@ public:
 	void update( );
 	void draw( ) const;
 	void addScore( PLAYER idx, SCORE score );
+	int getScore( PLAYER idx ) const;
 private:
 	struct PERFORMER {
 		int time;

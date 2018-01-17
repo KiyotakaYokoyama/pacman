@@ -119,3 +119,16 @@ bool SceneStage::isStaging( ) const {
 void SceneStage::addScore( PLAYER idx, SCORE score ) {
 	_score->addScore( idx, score );
 }
+
+RESULT SceneStage::getWinner( ) const {
+	RESULT result = RESULT_DRAW;
+	int player1 = _score->getScore( PLAYER_1 );
+	int player2 = _score->getScore( PLAYER_2 );
+	if ( player1 > player2 ) {
+		result = RESULT_PLAYER1;
+	}
+	if ( player2 > player1 ) {
+		result = RESULT_PLAYER2;
+	}
+	return result;
+}

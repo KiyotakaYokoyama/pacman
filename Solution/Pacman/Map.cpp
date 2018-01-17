@@ -11,6 +11,7 @@
 #include "EnemyPurple.h"
 #include "EnemyYellow.h"
 #include "EnemyGreen.h"
+#include "EnemyBlunder.h"
 #include "Drawer.h"
 #include "Image.h"
 #include "Application.h"
@@ -260,24 +261,27 @@ void Map::generateEnemy( MilitaryPtr military ) const {
 				military->addEnemy( EnemyPtr( new EnemyShadow( enemy.pos ) ) );
 			}
 			continue;
-		//case OBJECT_SPEEDY:
-		//	military->addEnemy( EnemyPtr( new EnemySpeedy( enemy.pos ) ) );
-		//	continue;
-		//case OBJECT_BASHFUL:
-		//	military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos, shadow ) ) );
-		//	shadow = EnemyShadowPtr( );
-		//	continue;
-		//case OBJECT_POKEY:
-		//	military->addEnemy( EnemyPtr( new EnemyPokey( enemy.pos ) ) );
-		//	continue;
 		case OBJECT_SPEEDY:
-			military->addEnemy( EnemyPtr( new EnemyPurple( enemy.pos ) ) );
+			military->addEnemy( EnemyPtr( new EnemySpeedy( enemy.pos ) ) );
 			continue;
 		case OBJECT_BASHFUL:
-			military->addEnemy( EnemyPtr( new EnemyYellow( enemy.pos ) ) );
+			military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos, shadow ) ) );
+			shadow = EnemyShadowPtr( );
 			continue;
 		case OBJECT_POKEY:
+			military->addEnemy( EnemyPtr( new EnemyPokey( enemy.pos ) ) );
+			continue;
+		case OBJECT_BLUNDER:
+			military->addEnemy( EnemyPtr( new EnemyBlunder( enemy.pos ) ) );
+			continue;
+		case OBJECT_GREEN:
 			military->addEnemy( EnemyPtr( new EnemyGreen( enemy.pos ) ) );
+			continue;
+		case OBJECT_PURPLE:
+			military->addEnemy( EnemyPtr( new EnemyPurple( enemy.pos ) ) );
+			continue;
+		case OBJECT_YELLOW:
+			military->addEnemy( EnemyPtr( new EnemyYellow( enemy.pos ) ) );
 			continue;
 		default:
 			continue;

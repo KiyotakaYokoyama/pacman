@@ -9,14 +9,14 @@
 #include "Debug.h"
 
 const int MAX_FADE_COUNT = 90;
-const int FADE_WAIT_TIME = 3;
+const int FADE_WAIT_TIME = 2;
 
 GamePtr Game::getTask( ) {
 	return std::dynamic_pointer_cast< Game >( Application::getInstance( )->getTask( getTag( ) ) );
 }
 
 Game::Game( ) :
-_next( Scene::SCENE_STAGE ),
+_next( Scene::SCENE_RESULT ),
 _fade_count( MAX_FADE_COUNT ) {
 	ApplicationPtr app = Application::getInstance( );
 	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
@@ -46,6 +46,11 @@ void Game::chengeScene( ) {
 		_fade_count = 0;
 	}
 
+	RESULT winner = RESULT_DRAW;
+	if ( getStage( ) ) {
+		winner = getStage( )->getWinner( );
+	}
+
 	_scene.reset( );
 
 	switch ( _next ) {
@@ -56,7 +61,7 @@ void Game::chengeScene( ) {
 			_scene = ScenePtr( new SceneStage( _number, _player_name ) );
 			break;
 		case Scene::SCENE_RESULT:
-			_scene = ScenePtr( new SceneResult );
+			_scene = ScenePtr( new SceneResult( winner ) );
 			break;
 		default:
 			break;
@@ -84,18 +89,18 @@ void Game::update( ) {
 void Game::drawFade( ) const {
 	const double ratio = ( double )HEIGHT / SPRITE_SIZE;
 	//•
-	_fade->setRect( SPRITE_SIZE * 3, 0, SPRITE_SIZE, SPRITE_SIZE );
-	_fade->setPos( -( SPRITE_SIZE / 2 ) * ratio, 0, WIDTH * ( ( double )_fade_count / MAX_FADE_COUNT ), HEIGHT );
+	_fade->setRect( SPRITE_SIZE * 5, 0, SPRITE_SIZE, SPRITE_SIZE );
+	_fade->setPos( ( int )( -( SPRITE_SIZE / 2 ) * ratio ), 0, ( int )( WIDTH * ( ( double )_fade_count / MAX_FADE_COUNT ) - ( SPRITE_SIZE / 2 * ratio ) ), HEIGHT );
 	_fade->draw( );
 	//pacman
-	const int ANIM[ ] = { 0, 1, 2, 1 };
+	const int ANIM[ ] = { 0, 1, 2, 3, 4, 3, 2, 1 };
 	const int ANIM_NUM = sizeof( ANIM ) / sizeof( ANIM[ 0 ] );
 	int tx = SPRITE_SIZE * ANIM[ ( _fade_count / FADE_WAIT_TIME ) % ANIM_NUM ];
 	int ty = 0;
 	_fade->setRect( tx, ty, SPRITE_SIZE, SPRITE_SIZE );
-	int sx = -( SPRITE_SIZE / 2 ) * ratio + WIDTH * ( ( double )_fade_count / MAX_FADE_COUNT );
+	int sx = ( int )( -( SPRITE_SIZE / 2 ) * ratio + WIDTH * ( ( double )_fade_count / MAX_FADE_COUNT ) );
 	int sy = 0;
-	_fade->setPos( sx, sy, sx + SPRITE_SIZE * ratio, SPRITE_SIZE * ratio );
+	_fade->setPos( sx, sy, ( int )( sx + SPRITE_SIZE * ratio ), ( int )( SPRITE_SIZE * ratio ) );
 	_fade->draw( );
 }
 
