@@ -5,7 +5,7 @@
 
 static const int MOVE_SPEED = 2;
 static const int MAX_SPEED = 1;
-static const int MAX_CEARCH_LENGTH = 15;
+static const int MAX_CEARCH_LENGTH = 10;
 static const int INIT_HIDE_TIME = 150;
 static const int POP_TIME = 30;
 static const int MAX_CEARCH_CHIP_NUM = 200;

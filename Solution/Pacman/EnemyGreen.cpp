@@ -29,8 +29,9 @@ void EnemyGreen::moving( ) {
 	}
 
 	Vector distance = pacman_pos - self_pos;
+		//MAX_CEARCH_LENGTH = 10;
 	int root_num = ( int )( ( distance.x + 0.5 ) / CHIP_SIZE + ( distance.y + 0.5 ) / CHIP_SIZE );
-	if ( abs( root_num ) > 10 && abs( root_num ) < 15 ) {
+	if ( abs( root_num ) > 7 && abs( root_num ) < 10 ) {
 		setVec( pacman_vec );
 	} else {
 		moveGoal( pacman_pos );

@@ -29,8 +29,8 @@ void EnemyYellow::moving( ) {
 		}
 
 		//ˆÚ“®ƒ|ƒWƒVƒ‡ƒ“‚ðA*‚Ì”ÍˆÍ“à‚É‚·‚é
-		//MAX_CEARCH_LENGTH = 15;
-		if ( fabs( distance.x ) + fabs( distance.y ) > 15 ) {
+		//MAX_CEARCH_LENGTH = 10;
+		if ( fabs( distance.x ) + fabs( distance.y ) > 10 ) {
 			distance = distance.normalize( ) * 14;
 			distance.x = ( int )distance.x;
 			distance.y = ( int )distance.y;
