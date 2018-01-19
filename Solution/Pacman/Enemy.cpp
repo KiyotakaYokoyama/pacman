@@ -425,9 +425,13 @@ Vector Enemy::AStar( const Vector& goal ) {
 		int size = ( int )proceeds.size( ) - 1;
 		PROCEED check = proceeds[ size ];
 		if ( check.pos != goal_pos ) {
-			for ( int i = size; i > 0; i-- ) {
-				check = proceeds[ i ];
-				if ( check.pos == goal_pos ) break;
+			for ( int i = 0; i < size; i++ ) {
+				if ( proceeds[ size - i - 1 ].state == STATE_COLSE ) {
+					check = proceeds[ size - i - 1 ];
+					if ( check.pos == goal_pos ) {
+						break;
+					}
+				}
 			}
 		}
 		std::vector< PROCEED >::iterator ite = proceeds.begin( );

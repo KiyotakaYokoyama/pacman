@@ -25,8 +25,6 @@ _staging_time( 0 ) {
 }
 
 SceneStage::~SceneStage( ) {
-	SoundPtr sound = Sound::getTask( );
-	if ( sound ) sound->stopAllSE( );
 }
 
 Scene::SCENE SceneStage::update( ) {

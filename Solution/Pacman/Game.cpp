@@ -7,6 +7,7 @@
 #include "SceneStage.h"
 #include "SceneResult.h"
 #include "Debug.h"
+#include "Sound.h"
 
 const int MAX_FADE_COUNT = 90;
 const int FADE_WAIT_TIME = 2;
@@ -48,6 +49,7 @@ void Game::chengeScene( ) {
 
 	RESULT winner = RESULT_DRAW;
 	if ( getStage( ) ) {
+		Sound::getTask( )->stopAllSE( );
 		winner = getStage( )->getWinner( );
 	}
 
