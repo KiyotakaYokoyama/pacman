@@ -1,7 +1,7 @@
 #pragma once
 
-const int WIDTH = 1280;
-const int HEIGHT = 720;
+const int WIDTH = 1920;
+const int HEIGHT = 1080;
 const int SPRITE_SIZE = 64;
 enum PLAYER {
 	PLAYER_1,
@@ -9,7 +9,7 @@ enum PLAYER {
 	MAX_PLAYER,
 };
 enum SCORE {
-	SCORE_DAMAGE  = -20,
+	SCORE_DAMAGE  = 0,
 	SCORE_SHADOW  = 10,
 	SCORE_BASHFUL = 30,
 	SCORE_SPEEDY  = 20,
