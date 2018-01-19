@@ -26,6 +26,7 @@ public:
 	Vector getPlayerPos( int id );
 	void generateEnemy( MilitaryPtr military ) const;
 	bool isInMap( const Vector& pos ) const;
+	std::vector< Vector > getEnhanceFeedChipPos( ) const;
 private:
 	struct ENEMY {
 		unsigned char index;

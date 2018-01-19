@@ -265,8 +265,9 @@ void Map::generateEnemy( MilitaryPtr military ) const {
 			military->addEnemy( EnemyPtr( new EnemySpeedy( enemy.pos ) ) );
 			continue;
 		case OBJECT_BASHFUL:
-			military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos, shadow ) ) );
-			shadow = EnemyShadowPtr( );
+			//military->addEnemy( EnemyPtr( new EnemyBashful( enemy.pos, shadow ) ) );
+			//shadow = EnemyShadowPtr( );
+			military->addEnemy( EnemyPtr( new EnemyYellow( enemy.pos ) ) );
 			continue;
 		case OBJECT_POKEY:
 			military->addEnemy( EnemyPtr( new EnemyPokey( enemy.pos ) ) );
@@ -293,4 +294,15 @@ bool Map::isInMap( const Vector& pos ) const {
 	const int CHIP_SIZE = Game::getTask( )->getChipSize( );
 	return pos.x >= 0 && pos.x < CHIP_SIZE * MAP_WIDTH_CHIP_NUM &&
 		   pos.y >= 0 && pos.y < CHIP_SIZE * MAP_HEIGHT_CHIP_NUM;
+}
+
+std::vector< Vector > Map::getEnhanceFeedChipPos( ) const {
+	std::vector< Vector > result;
+	int size = ( int )_feed_pos.size( );
+	for ( int i = 0; i < size; i++ ) {
+		if ( getObject( ( int )_feed_pos[ i ].x, ( int )_feed_pos[ i ].y ) == OBJECT_ENHANCE_FEED ) {
+			result.push_back( _feed_pos[ i ] );
+		}
+	}
+	return result;
 }
