@@ -63,7 +63,7 @@ IMGAE_DATA EnemyPokey::getImageData( ) const {
 	result.sy1 = ( int )( pos.y - CHARA_SIZE );
 	
 	result.tx  = ( ( getActTime( ) / WAIT_ANIM_TIME ) % 2 ) * SPRITE_SIZE;
-	result.ty  = SPRITE_SIZE * 1;
+	result.ty  = SPRITE_SIZE * 3;
 	
 	if ( getDir( ) == DIR_LEFT ) {
 		result.tx += SPRITE_SIZE * 4;
