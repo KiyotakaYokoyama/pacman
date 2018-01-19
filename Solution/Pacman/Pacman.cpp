@@ -13,6 +13,7 @@ const int MOVE_SPEED = 3;
 const int MAX_SPEED = 3; //最適値2
 const int WAIT_ANIM_TIME = 3;
 const int TURNAROUND_TIME = 300;
+const int TURNAROUND_FLASHING_TIME = TURNAROUND_TIME - 60;
 const int ANIM[ ] = { 0, 1, 2, 3, 4, 3, 2, 1 };
 const int ANIM_NUM = sizeof( ANIM ) / sizeof( ANIM[ 0 ] );
 const int DAMAGE_TIME = 60;
@@ -171,6 +172,12 @@ void Pacman::actOnAutoMove( ) {
 
 void Pacman::draw( ) const {
 	if ( _damage % 6 < 3 && _damage > 0 ) {
+		//ダメージ中の点滅
+		return;
+	}
+	int act_count = getActTime( );
+	if ( isTurnaround( ) && act_count > TURNAROUND_FLASHING_TIME && act_count % 6 < 3 ) {
+		//パワーアップ終了目前の点滅
 		return;
 	}
 
@@ -186,6 +193,10 @@ void Pacman::draw( ) const {
 	}
 	if ( getDir( ) == DIR_DOWN ) {
 		ty = SPRITE_SIZE * 3;
+	}
+	//パワーアップ中
+	if ( isTurnaround( ) ){
+		ty += SPRITE_SIZE * 4;
 	}
 	_sprite->setRect( tx, ty, SPRITE_SIZE, SPRITE_SIZE );
 	int sx = ( int )( pos.x - DRAW_SIZE / 2 );
@@ -204,7 +215,7 @@ void Pacman::drawStageing( const int time, const int max_time ) const {
 	Vector distance = getPos( ) - START_POS;
 	Vector pos = distance * ( 1.0 - RATIO ) + START_POS;
 
-	_sprite->setRect( 0, 0, SPRITE_SIZE, SPRITE_SIZE );
+	_sprite->setRect( SPRITE_SIZE * 1, SPRITE_SIZE * 1, SPRITE_SIZE, SPRITE_SIZE );
 	const int MAGNIFICAT = 30;
 	int sx = ( int )( pos.x - ( DRAW_SIZE * 0.5 ) * ( RATIO * MAGNIFICAT ) );
 	int sy = ( int )( pos.y - DRAW_SIZE * ( ( RATIO * MAGNIFICAT ) + 1 ) );

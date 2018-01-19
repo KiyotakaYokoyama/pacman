@@ -108,8 +108,10 @@ void Map::loadStage( std::string stage_name ) {
 			Vector pos( i % MAP_WIDTH_CHIP_NUM, i / MAP_WIDTH_CHIP_NUM );
 			_revival_feed_pos.push_back( pos );
 		}
-		if ( object == OBJECT_SHADOW || object == OBJECT_BASHFUL ||
-			 object == OBJECT_POKEY  || object == OBJECT_SPEEDY ) {
+		if ( object == OBJECT_SHADOW  || object == OBJECT_BASHFUL ||
+			 object == OBJECT_POKEY   || object == OBJECT_SPEEDY  ||
+			 object == OBJECT_BLUNDER || object == OBJECT_GREEN   ||
+			 object == OBJECT_PURPLE  || object == OBJECT_YELLOW  ) {
 			ENEMY enemy;
 			enemy.index = object;
 			enemy.pos = Vector( X, Y );
@@ -127,7 +129,7 @@ void Map::update( ) {
 void Map::drawRevivalArea( ) const {
 	GamePtr game = Game::getTask( );
 	const int CHIP_SIZE = game->getChipSize( );
-	if ( _eaten_feeds == _feed_pos.size( ) ) {
+	if ( _eaten_feeds >= _feed_pos.size( ) ) {
 		double ratio = FADE_SPEED * ( _count % MAX_FADE_COUNT );
 		if ( ratio > 1.0 ) {
 			ratio = 2.0 - ratio;
