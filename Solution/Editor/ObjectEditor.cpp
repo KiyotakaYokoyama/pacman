@@ -63,6 +63,15 @@ void ObjectEditor::updateMode( ) {
 	if ( key->isPushKey( "Y" ) ) {
 		_mode = MODE_POKEY;
 	}
+	if ( key->isPushKey( "U" ) ) {
+		_mode = MODE_BLUNDER;
+	}
+	if ( key->isPushKey( "I" ) ) {
+		_mode = MODE_GREEN;
+	}
+	if ( key->isPushKey( "O" ) ) {
+		_mode = MODE_PURPLE;
+	}
 }
 
 void ObjectEditor::updateCursor( ) {
@@ -94,6 +103,9 @@ void ObjectEditor::edit( ) {
 		case MODE_SPEEDY:       chip = OBJECT_SPEEDY; break;
 		case MODE_BASHFUL:      chip = OBJECT_BASHFUL; break;
 		case MODE_POKEY:        chip = OBJECT_POKEY; break;
+		case MODE_BLUNDER:      chip = OBJECT_BLUNDER; break;
+		case MODE_GREEN:        chip = OBJECT_GREEN; break;
+		case MODE_PURPLE:       chip = OBJECT_PURPLE; break;
 		case MODE_STAGE_WARP:   chip = OBJECT_STAGE_WARP; break;
 		case MODE_REVIVAL_FEED: chip = OBJECT_REVIVAL_FEED; break;
 		}

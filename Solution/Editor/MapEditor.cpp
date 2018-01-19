@@ -69,6 +69,9 @@ void MapEditor::drawInfo( ) const {
 			case ObjectEditor::MODE_SPEEDY:       str += "ピンキー\n"; break;
 			case ObjectEditor::MODE_BASHFUL:	  str += "アオスケ\n"; break;
 			case ObjectEditor::MODE_POKEY:        str += "グズタ\n"; break;
+			case ObjectEditor::MODE_BLUNDER:      str += "イジケ\n"; break;
+			case ObjectEditor::MODE_GREEN:        str += "グリーン\n"; break;
+			case ObjectEditor::MODE_PURPLE:       str += "パープル\n"; break;
 			case ObjectEditor::MODE_STAGE_WARP:	  str += "ワープブロック\n"; break;
 			case ObjectEditor::MODE_REVIVAL_FEED: str += "エサ復活ポジション\n"; break;
 			}
@@ -78,13 +81,20 @@ void MapEditor::drawInfo( ) const {
 			str += "4:パワーエサ\n";
 			str += "5:ワープブロック\n";
 			str += "6:エサ復活ポジション\n";
+			drawer->drawString( 0, 10, str.c_str( ) );
+		}
+		{
+			std::string str;
 			str += "Q:プレイヤー１\n";
 			str += "W:プレイヤー２\n";
 			str += "E:アカベエ\n";
 			str += "R:ピンキー\n";
 			str += "T:アオスケ\n";
 			str += "Y:グズタ\n";
-			drawer->drawString( 0, 10, str.c_str( ) );
+			str += "U:イジケ\n";
+			str += "I:グリーン\n";
+			str += "O:パープル\n";
+			drawer->drawString( 180, 30, str.c_str( ) );
 		}
 		break;
 	case MODE_SAVE:

@@ -70,6 +70,15 @@ void ObjectViewer::drawObjects( ) const {
 			case OBJECT_REVIVAL_FEED:
 				_image->setRect( 3 * SPRITE_SIZE, 0 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
 				break;
+			case OBJECT_BLUNDER:
+				_image->setRect( 0 * SPRITE_SIZE, 3 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
+			case OBJECT_GREEN:
+				_image->setRect( 1 * SPRITE_SIZE, 3 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
+			case OBJECT_PURPLE:
+				_image->setRect( 2 * SPRITE_SIZE, 3 * SPRITE_SIZE, SPRITE_SIZE, SPRITE_SIZE );
+				break;
 			default:
 				continue;
 			}
