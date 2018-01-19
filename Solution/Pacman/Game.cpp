@@ -17,7 +17,7 @@ GamePtr Game::getTask( ) {
 }
 
 Game::Game( ) :
-_next( Scene::SCENE_STAGE ),
+_next( Scene::SCENE_TITLE ),
 _fade_count( MAX_FADE_COUNT ) {
 	ApplicationPtr app = Application::getInstance( );
 	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
