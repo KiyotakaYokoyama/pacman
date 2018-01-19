@@ -14,7 +14,6 @@ const int MAX_STAGEING_TIME = 4 * FPS;
 
 SceneStage::SceneStage( ImagePtr number, ImagePtr player_name ) :
 _staging_time( 0 ) {
-	Sound::getTask( )->playBGM( "pac_music_gamestart.wav", false );
 	_score = ScorePtr( new Score( number, player_name ) );
 	_map = MapPtr( new Map );
 	for ( int i = 0; i < MAX_PLAYER; i++ ) {
@@ -22,6 +21,12 @@ _staging_time( 0 ) {
 	}
 	_military = MilitaryPtr( new Military );
 	_map->generateEnemy( _military );
+
+	SoundPtr sound = Sound::getTask( );
+	sound->loadSE( "pac_se_eating_ghost.wav" );
+	sound->loadSE( "pac_se_miss.wav" );
+	sound->loadSE( "pac_se_eatingcokkie.wav" );
+	sound->playBGM( "pac_music_gamestart.wav", false );
 }
 
 SceneStage::~SceneStage( ) {
