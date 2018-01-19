@@ -155,3 +155,7 @@ void Score::initialize( ) {
 int Score::getScore( PLAYER idx ) const {
 	return _score[ idx ];
 }
+
+bool Score::isFinished( ) const {
+	return _battle_time < 0;
+}

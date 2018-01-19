@@ -44,6 +44,9 @@ Scene::SCENE SceneStage::update( ) {
 		_score->update( );
 	}
 
+	if ( _score->isFinished( ) ) {
+		return SCENE_RESULT;
+	}
 	return SCENE_CONTINUE;
 }
 
