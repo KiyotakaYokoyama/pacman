@@ -48,6 +48,9 @@
     <ClCompile Include="EnemyBlunder.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="SceneSelect.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
@@ -95,6 +98,9 @@
     <ClInclude Include="Score.h" />
     <ClInclude Include="EnemyBlunder.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSelect.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

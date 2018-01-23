@@ -25,7 +25,7 @@ const int MAX_COUNT = 0xfffffff;
 const int MAX_FADE_COUNT = 150;
 const double FADE_SPEED = 1.0 / ( MAX_FADE_COUNT / 2 );
 
-Map::Map( ) :
+Map::Map( int stage_num ) :
 _count( 0 ),
 _eaten_feeds( 0 ) {
 	DrawerPtr drawer = Drawer::getTask( );
@@ -41,8 +41,15 @@ _eaten_feeds( 0 ) {
 		std::string str = csv.getData( i );
 		_stages.push_back( str );
 	}
+#ifdef _DEBUG
+	assert( stage_num > _stages.size( ) );
+#endif // _DEBUG
 
-	loadStage( _stages[ 0 ] );
+	if ( stage_num > _stages.size( ) ) {
+		stage_num = ( int )_stages.size( ) - 1;
+	}
+
+	loadStage( _stages[ stage_num ] );
 }
 
 Map::~Map( ) {

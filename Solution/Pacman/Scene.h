@@ -8,6 +8,7 @@ public:
 	enum SCENE {
 		SCENE_CONTINUE,
 		SCENE_TITLE,
+		SCENE_SELECT,
 		SCENE_STAGE,
 		SCENE_RESULT,
 	};

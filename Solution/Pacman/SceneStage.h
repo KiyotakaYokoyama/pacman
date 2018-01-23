@@ -13,7 +13,7 @@ PTR( Image );
 
 class SceneStage : public Scene {
 public:
-	SceneStage( ImagePtr number, ImagePtr player_name );
+	SceneStage( int stage_num, ImagePtr number, ImagePtr player_name );
 	virtual ~SceneStage( );
 public:
 	MapPtr getMap( );

@@ -11,7 +11,7 @@ PTR( Military );
 
 class Map {
 public:
-	Map( );
+	Map( int stage_num );
 	virtual ~Map( );
 public:
 	void update( );

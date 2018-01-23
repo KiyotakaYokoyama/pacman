@@ -95,7 +95,7 @@ Scene::SCENE SceneTitle::update( ) {
 		initTitleEffect( );
 	}
 	if ( checkKey( ) ) {
-		return SCENE_STAGE;
+		return SCENE_SELECT;
 	}
 	return SCENE_CONTINUE;
 }

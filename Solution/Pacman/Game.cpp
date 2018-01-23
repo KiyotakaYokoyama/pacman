@@ -4,6 +4,7 @@
 #include "Image.h"
 #include "Scene.h"
 #include "SceneTitle.h"
+#include "SceneSelect.h"
 #include "SceneStage.h"
 #include "SceneResult.h"
 #include "Debug.h"
@@ -17,7 +18,7 @@ GamePtr Game::getTask( ) {
 }
 
 Game::Game( ) :
-_next( Scene::SCENE_STAGE ),
+_next( Scene::SCENE_SELECT ),
 _fade_count( MAX_FADE_COUNT ) {
 	ApplicationPtr app = Application::getInstance( );
 	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
@@ -46,28 +47,32 @@ void Game::chengeScene( ) {
 	} else {
 		_fade_count = 0;
 	}
-
-	RESULT winner = RESULT_DRAW;
-	if ( getStage( ) ) {
-		Sound::getTask( )->stopAllSE( );
-		winner = getStage( )->getWinner( );
-	}
-
-	_scene.reset( );
+	
+	ScenePtr scene = ScenePtr( );
 
 	switch ( _next ) {
 		case Scene::SCENE_TITLE:
-			_scene = ScenePtr( new SceneTitle );
+			scene = ScenePtr( new SceneTitle );
+			break;
+		case Scene::SCENE_SELECT:
+			scene = ScenePtr( new SceneSelect( _number ) );
 			break;
 		case Scene::SCENE_STAGE:
-			_scene = ScenePtr( new SceneStage( _number, _player_name ) );
+		{
+			int stage = std::dynamic_pointer_cast< SceneSelect >( _scene )->getSelectStage( );
+			scene = ScenePtr( new SceneStage( stage, _number, _player_name ) );
+		}
 			break;
 		case Scene::SCENE_RESULT:
-			_scene = ScenePtr( new SceneResult( winner ) );
+			Sound::getTask( )->stopAllSE( );
+			scene = ScenePtr( new SceneResult( getStage( )->getWinner( ) ) );
 			break;
 		default:
 			break;
 	}
+
+	_scene.reset( );
+	_scene = scene;
 }
 
 void Game::update( ) {
