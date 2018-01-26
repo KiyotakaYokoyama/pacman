@@ -26,9 +26,12 @@ void Debug::initialize( ) {
 }
 
 void Debug::update( ) {
+#ifdef _DEBUG
 	if ( Keyboard::getTask( )->isPushKey( "F1" ) ) {
 		_active = !_active;
 	}
+#endif // _DEBUG
+
 	if ( _new_stage ) {
 		_new_stage = false;
 	}

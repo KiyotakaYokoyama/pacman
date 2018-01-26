@@ -18,7 +18,7 @@ GamePtr Game::getTask( ) {
 }
 
 Game::Game( ) :
-_next( Scene::SCENE_SELECT ),
+_next( Scene::SCENE_TITLE ),
 _fade_count( MAX_FADE_COUNT ) {
 	ApplicationPtr app = Application::getInstance( );
 	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
@@ -60,7 +60,7 @@ void Game::chengeScene( ) {
 		case Scene::SCENE_STAGE:
 		{
 			int stage = std::dynamic_pointer_cast< SceneSelect >( _scene )->getSelectStage( );
-			scene = ScenePtr( new SceneStage( stage, _number, _player_name ) );
+			scene = ScenePtr( new SceneStage( _number, _player_name, stage ) );
 		}
 			break;
 		case Scene::SCENE_RESULT:

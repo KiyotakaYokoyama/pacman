@@ -42,7 +42,7 @@ _eaten_feeds( 0 ) {
 		_stages.push_back( str );
 	}
 #ifdef _DEBUG
-	assert( stage_num > _stages.size( ) );
+	assert( stage_num < _stages.size( ) );
 #endif // _DEBUG
 
 	if ( stage_num > _stages.size( ) ) {

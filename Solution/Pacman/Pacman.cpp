@@ -9,8 +9,12 @@
 #include "Sound.h"
 #include <assert.h>
 
-const int MOVE_SPEED = 3;
+#ifdef _DEBUG
 const int MAX_SPEED = 3; //Å“K’l2
+#else
+const int MAX_SPEED = 2;
+#endif // _DEBUG
+const int MOVE_SPEED = 3;
 const int WAIT_ANIM_TIME = 3;
 const int TURNAROUND_TIME = 300;
 const int TURNAROUND_FLASHING_TIME = TURNAROUND_TIME - 60;
@@ -66,7 +70,7 @@ void Pacman::act( ) {
 }
 
 void Pacman::actOnMove( ) {
-	Vector vec = getVec( );
+	Vector vec;
 	KeyboardPtr key = Keyboard::getTask( );
 	bool brake = true;
 	if ( key->isHoldKey( _id == 0 ? "A" : "ARROW_LEFT" ) ) {
@@ -87,11 +91,41 @@ void Pacman::actOnMove( ) {
 	}
 
 	if ( brake ) {
-		double brake_ratio = vec.getLength( ) - MOVE_SPEED;
-		if ( brake_ratio < 0 ) {
-			brake_ratio = 0;
+		vec = Vector( );
+	}
+
+	if ( vec.x != 0 && vec.y != 0 ) {
+		vec = Vector( vec.x, 0 ).normalize( ) * MAX_SPEED;
+	}
+	
+	GamePtr game = Game::getTask( );
+	const int CHIP_SIZE = game->getChipSize( );
+	const int CHARA_SIZE = game->getCharaSize( );
+	bool center_x = ( int )getPos( ).x % CHIP_SIZE == CHIP_SIZE / 2;
+	bool center_y = ( int )getPos( ).y % CHIP_SIZE == CHARA_SIZE;
+
+	Vector pos = getPos( );
+	pos = Vector( fabs( pos.x ), fabs( pos.y ) );
+	Vector before_vec = getVec( );
+	if ( !center_x && vec.x == 0 ) {
+		double diff = abs( ( CHIP_SIZE / 2 ) - ( ( int )pos.x % CHIP_SIZE ) );
+		diff += pos.x - ( int )pos.x;
+		if ( before_vec.x < 0 ) {
+			vec.x = -diff;
 		}
-		vec = vec.normalize( ) * brake_ratio;
+		if ( before_vec.x > 0 ) {
+			vec.x = diff;
+		}
+	}
+	if ( !center_y && vec.y == 0 ) {
+		double diff = abs( ( CHIP_SIZE / 2 ) - ( ( int )pos.y % CHIP_SIZE ) );
+		diff += pos.y - ( int )pos.y;
+		if ( before_vec.y < 0 ) {
+			vec.y = -diff;
+		}
+		if ( before_vec.y > 0 ) {
+			vec.y = diff;
+		}
 	}
 
 	if ( vec.getLength2( ) > MAX_SPEED * MAX_SPEED ) {
@@ -108,7 +142,7 @@ void Pacman::actOnEat( ) {
 	unsigned char obj = map->getObject( check );
 	if ( obj == OBJECT_ENHANCE_FEED || obj == OBJECT_FEED ) {
 		map->eatFeed( check );
-		Sound::getTask( )->playSE( "pac_se_eatingcokkie.wav", false );
+		Sound::getTask( )->playSE( "pac_se_eatingcokkie.mp3" );
 	}
 	if ( obj == OBJECT_ENHANCE_FEED ) {
 		_turnaround = true;

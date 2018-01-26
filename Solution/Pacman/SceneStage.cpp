@@ -12,7 +12,7 @@
 const int FPS = 30;
 const int MAX_STAGEING_TIME = 4 * FPS;
 
-SceneStage::SceneStage( int stage_num, ImagePtr number, ImagePtr player_name ) :
+SceneStage::SceneStage( ImagePtr number, ImagePtr player_name, int stage_num ) :
 _staging_time( 0 ) {
 	_score = ScorePtr( new Score( number, player_name ) );
 	_map = MapPtr( new Map( stage_num ) );
