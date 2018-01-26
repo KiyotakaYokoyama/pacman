@@ -8,6 +8,10 @@
 #include "Game.h"
 #include "define.h"
 
+#if DEVICE
+#include "Device.h"
+#endif
+
 const int FPS = 30;
 const int NEXT_SCENE_TIME = 10 * FPS;
 const int MAX_EFFECT_COUNT = 30 * FPS;
@@ -223,9 +227,17 @@ void SceneTitle::setEnhance( ) {
 }
 
 bool SceneTitle::checkKey( ) {
+#if DEVICE
+	DevicePtr device = Device::getTask( );
+	if ( device->getButton( PLAYER_1 ) ||
+		 device->getButton( PLAYER_2 ) ) {
+		return true;
+	}
+#else
 	KeyboardPtr key = Keyboard::getTask( );
 	if ( key->isPushKey( "SPACE" ) ) {
 		return true;
 	}
+#endif
 	return false;
 }

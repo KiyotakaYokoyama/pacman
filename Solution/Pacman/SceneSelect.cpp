@@ -5,6 +5,10 @@
 #include "Image.h"
 #include "Sound.h"
 
+#if DEVICE
+#include "Device.h"
+#endif
+
 const int MAX_STAGE = 10;
 const int TEXTURE_WIDTH = 160;
 const int WAIT_ANIM_TIME = 3;
@@ -36,10 +40,33 @@ Scene::SCENE SceneSelect::update( ) {
 }
 
 void SceneSelect::updateSelect( ) {
-	KeyboardPtr key = Keyboard::getTask( );
 	const int CHECK = MAX_STAGE / 2;
 	int select_x = _select / CHECK;
 	int select_y = _select % CHECK;
+#if DEVICE
+	DevicePtr device = Device::getTask( );
+	if ( device->getDirY( PLAYER_1 ) > 0 ||
+		 device->getDirY( PLAYER_2 ) > 0 ) {
+		select_y = select_y + 1;
+		if ( select_y > CHECK - 1 ) select_y = CHECK - 1;
+	}
+	if ( device->getDirY( PLAYER_1 ) < 0 ||
+		 device->getDirY( PLAYER_2 ) < 0 ) {
+		select_y = select_y - 1;
+		if ( select_y < 0 ) select_y = 0;
+	}
+	if ( device->getDirX( PLAYER_1 ) > 0 ||
+		 device->getDirX( PLAYER_2 ) > 0 ) {
+		select_x = select_x + 1;
+		if ( select_x > 1 ) select_x = 1;
+	}
+	if ( device->getDirX( PLAYER_1 ) < 0 ||
+		 device->getDirX( PLAYER_2 ) < 0 ) {
+		select_x = select_x - 1;
+		if ( select_x < 0 ) select_x = 0;
+	}
+#else
+	KeyboardPtr key = Keyboard::getTask( );
 	if ( key->isPushKey( "S" ) || key->isPushKey( "ARROW_DOWN" ) ) {
 		select_y = select_y + 1;
 		if ( select_y > CHECK - 1 ) select_y = CHECK - 1;
@@ -56,6 +83,7 @@ void SceneSelect::updateSelect( ) {
 		select_x = select_x - 1;
 		if ( select_x < 0 ) select_x = 0;
 	}
+#endif
 	_select = select_y + select_x * CHECK;
 }
 
@@ -95,7 +123,19 @@ void SceneSelect::draw( ) const {
 }
 
 bool SceneSelect::isDecision( ) const {
-	return Keyboard::getTask( )->isPushKey( "SPACE" );
+#if DEVICE
+	DevicePtr device = Device::getTask( );
+	if ( device->getButton( PLAYER_1 ) ||
+		 device->getButton( PLAYER_2 ) ) {
+		return true;
+	}
+#else
+	KeyboardPtr key = Keyboard::getTask( );
+	if ( key->isPushKey( "SPACE" ) ) {
+		return true;
+	}
+#endif
+	return false;
 }
 
 int SceneSelect::getSelectStage( ) const {

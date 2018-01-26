@@ -17,6 +17,7 @@ private:
 private:
 	int _count;
 	int _loop_num;
+	RESULT _winner;
 	ImagePtr _result;
 	ImagePtr _win_player;
 	std::array< ImagePtr, 45 > _cracker;

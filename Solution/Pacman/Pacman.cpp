@@ -8,6 +8,10 @@
 #include "Sound.h"
 #include <assert.h>
 
+#if DEVICE
+#include "Device.h"
+#endif
+
 #ifdef _DEBUG
 const int MAX_SPEED = 3; //Å“K’l2
 #else
@@ -70,8 +74,27 @@ void Pacman::act( ) {
 
 void Pacman::actOnMove( ) {
 	Vector vec;
-	KeyboardPtr key = Keyboard::getTask( );
 	bool brake = true;
+#if DEVICE
+	DevicePtr device = Device::getTask( );
+	if ( device->getDirX( _id ) < 0 ) {
+		vec.x -= MOVE_SPEED;
+		brake = false;
+	}
+	if ( device->getDirX( _id ) > 0 ) {
+		vec.x += MOVE_SPEED;
+		brake = false;
+	}
+	if ( device->getDirY( _id ) < 0 ) {
+		vec.y -= MOVE_SPEED;
+		brake = false;
+	}
+	if ( device->getDirY( _id ) > 0 ) {
+		vec.y += MOVE_SPEED;
+		brake = false;
+	}
+#else
+	KeyboardPtr key = Keyboard::getTask( );
 	if ( key->isHoldKey( _id == 0 ? "A" : "ARROW_LEFT" ) ) {
 		vec.x -= MOVE_SPEED;
 		brake = false;
@@ -88,6 +111,7 @@ void Pacman::actOnMove( ) {
 		vec.y += MOVE_SPEED;
 		brake = false;
 	}
+#endif
 
 	if ( brake ) {
 		vec = Vector( );

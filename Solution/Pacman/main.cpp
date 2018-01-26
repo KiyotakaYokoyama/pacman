@@ -7,6 +7,10 @@
 #include "Debug.h"
 #include "define.h"
 
+#if DEVICE
+#include "Device.h"
+#endif
+
 void main( ) {
 	ApplicationPtr app = Application::getInstance( );
 
@@ -24,4 +28,9 @@ void main( ) {
 	app->addTask( Sound::getTag( )      , sound    );
 	app->addTask( Game::getTag( )       , game     );
 	app->addTask( Debug::getTag( )      , debug    );
+
+#if DEVICE
+	TaskPtr device   = DevicePtr( new Device );
+	app->addTask( Device::getTag( )     , device   );
+#endif
 }

@@ -7,6 +7,10 @@
 #include "define.h"
 #include "Sound.h"
 
+#if DEVICE
+#include "Device.h"
+#endif
+
 const int ANIM_WAIT_TIME = 3;
 const int CRACKER_NUM = 45;
 const int MAX_COUNT = ANIM_WAIT_TIME * CRACKER_NUM;
@@ -14,7 +18,8 @@ const int MAX_LOOP_NUM = 5;
 
 SceneResult::SceneResult( RESULT result ) :
 _count( 0 ),
-_loop_num( 0 ) {
+_loop_num( 0 ),
+_winner( result ) {
 	ApplicationPtr app = Application::getInstance( );
 	const int SCREEN_WIDTH = app->getWindowWidth( );
 	const int SCREEN_HEIGHT = app->getWindowHeight( );
@@ -28,11 +33,11 @@ _loop_num( 0 ) {
 	}
 	
 	const double RATIO = ( SCREEN_WIDTH * 0.5 ) / SPRITE_SIZE;
-	//_result = drawer->createImage( "result.png" );
+	_result = drawer->createImage( "string.png" );
 	switch ( result ) {
 	case RESULT_DRAW:
-		//_result->setRect( );
-		//_result->setPos( 0, 0 );
+		_result->setRect( 0, 128, 256, 64 );
+		_result->setPos( WIDTH / 2 - 128, 64 );
 		break;
 	case RESULT_PLAYER1:
 	{
@@ -41,8 +46,8 @@ _loop_num( 0 ) {
 		int sx = ( int )( SCREEN_WIDTH * 0.25 );
 		int sy = ( int )( SCREEN_HEIGHT * 0.1 );
 		_win_player->setPos( sx, sy, sx + ( int )( SPRITE_SIZE * RATIO ), sy + ( int )( SPRITE_SIZE * RATIO ) );
-		//_result->setRect( );
-		//_result->setPos( 0, 0 );
+		_result->setRect( 0, 64, 320, 64 );
+		_result->setPos( WIDTH / 2 - 160, 64 );
 	}
 		break;
 	case RESULT_PLAYER2:
@@ -52,8 +57,8 @@ _loop_num( 0 ) {
 		int sx = ( int )( SCREEN_WIDTH * 0.25 );
 		int sy = ( int )( SCREEN_HEIGHT * 0.1 );
 		_win_player->setPos( sx, sy, sx + ( int )( SPRITE_SIZE * RATIO ), sy + ( int )( SPRITE_SIZE * RATIO ) );
-		//_result->setRect( );
-		//_result->setPos( 0, 0 );
+		_result->setRect( 0, 64, 320, 64 );
+		_result->setPos( WIDTH / 2 - 160, 64 );
 	}
 		break;
 	}
@@ -78,17 +83,29 @@ Scene::SCENE SceneResult::update( ) {
 }
 
 void SceneResult::draw( ) const {
-	_cracker[ _count / ANIM_WAIT_TIME ]->draw( );
-	//_result->draw( );
+	if ( _winner == RESULT_DRAW ) {
+		_cracker[ 0 ]->draw( );
+	} else {
+		_cracker[ _count / ANIM_WAIT_TIME ]->draw( );
+	}
+	_result->draw( );
 	if ( _win_player ) {
 		_win_player->draw( );
 	}
 }
 
 bool SceneResult::checkKey( ) {
+#if DEVICE
+	DevicePtr device = Device::getTask( );
+	if ( device->getButton( PLAYER_1 ) ||
+		 device->getButton( PLAYER_2 ) ) {
+		return true;
+	}
+#else
 	KeyboardPtr key = Keyboard::getTask( );
 	if ( key->isPushKey( "SPACE" ) ) {
 		return true;
 	}
+#endif
 	return false;
 }
