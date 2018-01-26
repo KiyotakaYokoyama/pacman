@@ -18,7 +18,7 @@ GamePtr Game::getTask( ) {
 }
 
 Game::Game( ) :
-_next( Scene::SCENE_RESULT ),
+_next( Scene::SCENE_TITLE ),
 _fade_count( MAX_FADE_COUNT ) {
 	ApplicationPtr app = Application::getInstance( );
 	_chip_size = app->getWindowWidth( ) / MAP_WIDTH_CHIP_NUM;
@@ -68,7 +68,7 @@ void Game::chengeScene( ) {
 		}
 			break;
 		case Scene::SCENE_RESULT:
-			scene = ScenePtr( new SceneResult( /*getStage( )->getWinner( )*/RESULT_PLAYER2 ) );
+			scene = ScenePtr( new SceneResult( getStage( )->getWinner( ) ) );
 			break;
 		default:
 			break;

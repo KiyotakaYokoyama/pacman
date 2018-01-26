@@ -44,26 +44,28 @@ void SceneSelect::updateSelect( ) {
 	int select_x = _select / CHECK;
 	int select_y = _select % CHECK;
 #if DEVICE
-	DevicePtr device = Device::getTask( );
-	if ( device->getDirY( PLAYER_1 ) > 0 ||
-		 device->getDirY( PLAYER_2 ) > 0 ) {
-		select_y = select_y + 1;
-		if ( select_y > CHECK - 1 ) select_y = CHECK - 1;
-	}
-	if ( device->getDirY( PLAYER_1 ) < 0 ||
-		 device->getDirY( PLAYER_2 ) < 0 ) {
-		select_y = select_y - 1;
-		if ( select_y < 0 ) select_y = 0;
-	}
-	if ( device->getDirX( PLAYER_1 ) > 0 ||
-		 device->getDirX( PLAYER_2 ) > 0 ) {
-		select_x = select_x + 1;
-		if ( select_x > 1 ) select_x = 1;
-	}
-	if ( device->getDirX( PLAYER_1 ) < 0 ||
-		 device->getDirX( PLAYER_2 ) < 0 ) {
-		select_x = select_x - 1;
-		if ( select_x < 0 ) select_x = 0;
+	if ( _count % 3 == 0 ) {
+		DevicePtr device = Device::getTask( );
+		if ( device->getDirY( PLAYER_1 ) > 0 ||
+			 device->getDirY( PLAYER_2 ) > 0 ) {
+			select_y = select_y + 1;
+			if ( select_y > CHECK - 1 ) select_y = CHECK - 1;
+		}
+		if ( device->getDirY( PLAYER_1 ) < 0 ||
+			 device->getDirY( PLAYER_2 ) < 0 ) {
+			select_y = select_y - 1;
+			if ( select_y < 0 ) select_y = 0;
+		}
+		if ( device->getDirX( PLAYER_1 ) > 0 ||
+			 device->getDirX( PLAYER_2 ) > 0 ) {
+			select_x = select_x + 1;
+			if ( select_x > 1 ) select_x = 1;
+		}
+		if ( device->getDirX( PLAYER_1 ) < 0 ||
+			 device->getDirX( PLAYER_2 ) < 0 ) {
+			select_x = select_x - 1;
+			if ( select_x < 0 ) select_x = 0;
+		}
 	}
 #else
 	KeyboardPtr key = Keyboard::getTask( );
