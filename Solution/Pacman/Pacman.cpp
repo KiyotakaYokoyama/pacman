@@ -1,5 +1,4 @@
 #include "Pacman.h"
-#include "define.h"
 #include "Game.h"
 #include "SceneStage.h"
 #include "Map.h"
@@ -24,7 +23,7 @@ const int DAMAGE_TIME = 60;
 
 Pacman::Pacman( int id, const Vector& pos ) :
 Character( pos ),
-_id( id ),
+_id( ( PLAYER )id ),
 _damage( 0 ),
 _auto_move( false ),
 _turnaround( false ),
@@ -147,6 +146,9 @@ void Pacman::actOnEat( ) {
 	if ( obj == OBJECT_ENHANCE_FEED ) {
 		_turnaround = true;
 		setActCount( 0 );
+	}
+	if ( obj == OBJECT_FEED ) {
+		Game::getTask( )->getStage( )->addScore( _id, SCORE_FEED );
 	}
 }
 

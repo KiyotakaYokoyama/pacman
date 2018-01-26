@@ -8,7 +8,7 @@ const int DRAW_SCORE2_X = WIDTH - SPRITE_SIZE * 5;
 const int DRAW_TIME_X = WIDTH / 2 - SPRITE_SIZE / 2;
 const int DRAW_NUM_Y = HEIGHT - SPRITE_SIZE * 2;
 const int INIT_SCORE_EFFECT_TIME = 25;
-const int GAME_TIME = 120 * FPS;
+const int GAME_TIME = 90 * FPS;
 const int NUM_SIZE = 10;
 const int NUM[ NUM_SIZE ] = { 9, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
 #include "smart_ptr.h"
+#include "define.h"
 
 PTR( Image );
 
@@ -22,7 +23,7 @@ private:
 	void actOnWarp( );
 	void actOnAutoMove( );
 private:
-	int _id;
+	PLAYER _id;
 	int _damage;
 	bool _turnaround;
 	bool _auto_move;

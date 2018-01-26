@@ -5,6 +5,7 @@
 #include "Keyboard.h"
 #include "Game.h"
 #include "define.h"
+#include "Sound.h"
 
 const int ANIM_WAIT_TIME = 3;
 const int CRACKER_NUM = 45;
@@ -56,6 +57,7 @@ _loop_num( 0 ) {
 	}
 		break;
 	}
+	Sound::getTask( )->playBGM( "pac_music_coffeebreak.mp3" );
 }
 
 SceneResult::~SceneResult( ) {

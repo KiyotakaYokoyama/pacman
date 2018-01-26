@@ -10,6 +10,7 @@ enum PLAYER {
 };
 enum SCORE {
 	SCORE_DAMAGE  = 0,
+	SCORE_FEED    = 1,
 	SCORE_SHADOW  = 10,
 	SCORE_BASHFUL = 30,
 	SCORE_SPEEDY  = 20,
