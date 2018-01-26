@@ -36,12 +36,12 @@ void Military::update( ) {
 				if ( escape1 ) {
 					game->getStage( )->addScore( PLAYER_1, enemy->getScore( ) );
 					enemy->setHide( );
-					sound->playSE( "pac_se_eating_ghost.wav" );
+					sound->playSE( "pac_se_eating_ghost.mp3" );
 				} else {
 					if ( !player1->isDamaging( ) ) {
 						game->getStage( )->addScore( PLAYER_1, SCORE_DAMAGE );
 						player1->damage( );
-						sound->playSE( "pac_se_miss.wav" );
+						sound->playSE( "pac_se_miss.mp3" );
 					}
 				}
 			}
@@ -51,12 +51,12 @@ void Military::update( ) {
 				if ( escape2 ) {
 					game->getStage( )->addScore( PLAYER_2, enemy->getScore( ) );
 					enemy->setHide( );
-					sound->playSE( "pac_se_eating_ghost.wav" );
+					sound->playSE( "pac_se_eating_ghost.mp3" );
 				} else {
 					if ( !player2->isDamaging( ) ) {
 						game->getStage( )->addScore( PLAYER_2, SCORE_DAMAGE );
 						player2->damage( );
-						sound->playSE( "pac_se_miss.wav" );
+						sound->playSE( "pac_se_miss.mp3" );
 					}
 				}
 			}

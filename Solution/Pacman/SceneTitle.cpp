@@ -32,7 +32,7 @@ const Vector FEED_POS[ FEED_NUM ] = {
 
 SceneTitle::SceneTitle( ) :
 _enhance_count( 0 ) {
-	Sound::getTask( )->playBGM( "pac_music_coffeebreak.wav" );
+	Sound::getTask( )->playBGM( "pac_music_coffeebreak.mp3" );
 	DrawerPtr drawer = Drawer::getTask( );
 	ApplicationPtr app = Application::getInstance( );
 	int width = app->getWindowWidth( );
@@ -55,7 +55,7 @@ _enhance_count( 0 ) {
 		drawer->setImageTarget( _title_effect );
 		_title->draw( );
 		for ( int i = 0; i < FEED_NUM; i++ ) {
-			_feed->setPos( FEED_POS[ i ].x, FEED_POS[ i ].y );
+			_feed->setPos( ( int )FEED_POS[ i ].x, ( int )FEED_POS[ i ].y );
 			_feed->draw( );
 		}
 		drawer->setImageTarget( );
@@ -73,7 +73,7 @@ void SceneTitle::initTitleEffect( ) {
 	drawer->setImageTarget( _title_effect );
 	_title->draw( );
 	for ( int i = 0; i < FEED_NUM; i++ ) {
-		_feed->setPos( FEED_POS[ i ].x, FEED_POS[ i ].y );
+		_feed->setPos( ( int )FEED_POS[ i ].x, ( int )FEED_POS[ i ].y );
 		_feed->draw( );
 	}
 	drawer->setImageTarget( );

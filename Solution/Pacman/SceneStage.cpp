@@ -23,10 +23,10 @@ _staging_time( 0 ) {
 	_map->generateEnemy( _military );
 
 	SoundPtr sound = Sound::getTask( );
-	sound->loadSE( "pac_se_eating_ghost.wav" );
-	sound->loadSE( "pac_se_miss.wav" );
-	sound->loadSE( "pac_se_eatingcokkie.wav" );
-	sound->playBGM( "pac_music_gamestart.wav", false );
+	sound->loadSE( "pac_se_eating_ghost.mp3" );
+	sound->loadSE( "pac_se_miss.mp3" );
+	sound->loadSE( "pac_se_eatingcokkie.mp3" );
+	sound->playBGM( "pac_music_gamestart.mp3", false );
 }
 
 SceneStage::~SceneStage( ) {
@@ -35,7 +35,7 @@ SceneStage::~SceneStage( ) {
 Scene::SCENE SceneStage::update( ) {
 	SoundPtr sound = Sound::getTask( );
 	if ( !sound->isPlayingBGM( ) ) {
-		sound->playBGM( "pac_se_ghost_movesound.wav" );
+		sound->playBGM( "pac_se_ghost_movesound.mp3" );
 	}
 	if ( isStaging( ) ) {
 		_staging_time++;
