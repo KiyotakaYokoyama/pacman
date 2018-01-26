@@ -42,6 +42,10 @@ void Game::chengeScene( ) {
 	}
 
 	if ( _fade_count < MAX_FADE_COUNT ) {
+		if ( _fade_count == 0 ) {
+			Sound::getTask( )->stopAllSE( );
+			Sound::getTask( )->playBGM( "pac_se_eatingcokkie.mp3", true );
+		}
 		_fade_count++;
 		return;
 	} else {
@@ -64,7 +68,6 @@ void Game::chengeScene( ) {
 		}
 			break;
 		case Scene::SCENE_RESULT:
-			Sound::getTask( )->stopAllSE( );
 			scene = ScenePtr( new SceneResult( getStage( )->getWinner( ) ) );
 			break;
 		default:

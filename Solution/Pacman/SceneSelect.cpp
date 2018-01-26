@@ -3,6 +3,7 @@
 #include "Keyboard.h"
 #include "Drawer.h"
 #include "Image.h"
+#include "Sound.h"
 
 const int MAX_STAGE = 10;
 const int TEXTURE_WIDTH = 160;
@@ -19,6 +20,7 @@ _number( number ) {
 	_stage->setRect( 0, 0, TEXTURE_WIDTH, SPRITE_SIZE );
 	_pacman[ 0 ] = drawer->createImage( "pacman2.png" );
 	_pacman[ 1 ] = drawer->createImage( "pacwoman2.png" );
+	Sound::getTask( )->playBGM( "pac_music_coffeebreak.mp3" );
 }
 
 SceneSelect::~SceneSelect( ) {
