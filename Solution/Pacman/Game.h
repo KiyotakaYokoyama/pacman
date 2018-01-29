@@ -33,5 +33,6 @@ private:
 	ImagePtr _number;
 	ImagePtr _player_name;
 	ImagePtr _fade;
+	ImagePtr _push_key;
 };
 

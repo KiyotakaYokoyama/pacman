@@ -15,15 +15,20 @@ const int WAIT_ANIM_TIME = 3;
 const int ANIM[ ] = { 0, 1, 2, 3, 4, 3, 2, 1 };
 const int ANIM_NUM = sizeof( ANIM ) / sizeof( ANIM[ 0 ] );
 
-SceneSelect::SceneSelect( ImagePtr number ) :
+SceneSelect::SceneSelect( ImagePtr number, ImagePtr push_key ) :
 _count( 0 ),
 _select( 0 ),
-_number( number ) {
+_number( number ),
+_push_key( push_key ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_stage = drawer->createImage( "string.png" );
 	_stage->setRect( 0, 0, TEXTURE_WIDTH, SPRITE_SIZE );
 	_pacman[ 0 ] = drawer->createImage( "pacman2.png" );
 	_pacman[ 1 ] = drawer->createImage( "pacwoman2.png" );
+	
+	_push_key->setRect( 200, 0, 960, 64 );
+	_push_key->setPos( WIDTH / 2 - 380, HEIGHT - 128 );
+
 	Sound::getTask( )->playBGM( "pac_music_coffeebreak.mp3" );
 }
 
@@ -122,6 +127,8 @@ void SceneSelect::draw( ) const {
 		_pacman[ i ]->setPos( sx, sy );
 		_pacman[ i ]->draw( );
 	}
+	
+	_push_key->draw( );
 }
 
 bool SceneSelect::isDecision( ) const {

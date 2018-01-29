@@ -34,8 +34,9 @@ const Vector FEED_POS[ FEED_NUM ] = {
 	Vector( WIDTH - 245, 200 )
 };
 
-SceneTitle::SceneTitle( ) :
-_enhance_count( 0 ) {
+SceneTitle::SceneTitle( ImagePtr push_key ) :
+_enhance_count( 0 ),
+_push_key( push_key ) {
 	Sound::getTask( )->playBGM( "pac_music_coffeebreak.mp3" );
 	DrawerPtr drawer = Drawer::getTask( );
 	ApplicationPtr app = Application::getInstance( );
@@ -133,6 +134,19 @@ void SceneTitle::createTitle( ) {
 
 void SceneTitle::draw( ) const {
 	_title_effect->draw( );
+	const int CHAR_NUM = 19;
+	const int TX[ CHAR_NUM ] = { 0, 32, 48, 82, 114, 152, /*please*/ 216, 246, 280, 316, /*push*/ 378, 410, 444, /*any*/ 504, 536, 574, 600, 622, 654 /*button*/};
+	for ( int i = 0; i < CHAR_NUM; i++ ) {
+		_push_key->setRect( TX[ i ], 0, 32, 64 );
+		if ( i == 1 ) {
+			_push_key->setRect( TX[ i ], 0, 16, 64 );
+		}
+		if ( i == 15 || i == 16 ) {
+			_push_key->setRect( TX[ i ], 0, 20, 64 );
+		}
+		_push_key->setPos( WIDTH / 2 - 350 + TX[ i ], HEIGHT - 128 + ( sin( ( _count - i * 2 ) / 4 ) * -30 ) );
+		_push_key->draw( );
+	}
 	if ( _enhance_count > 0 && _enhance_count < 1 * 30 && _enhance_count % 6 < 3 ) {
 		return;
 	}

@@ -1,8 +1,8 @@
 #pragma once
 
-#define DEVICE 1
+#define DEVICE 0
 
-#if 0
+#if 1
 const int WIDTH = 1920;
 const int HEIGHT = 1080;
 #else

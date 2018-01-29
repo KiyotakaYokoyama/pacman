@@ -6,9 +6,9 @@ const int FPS = 30;
 const int DRAW_SCORE1_X = SPRITE_SIZE;
 const int DRAW_SCORE2_X = WIDTH - SPRITE_SIZE * 5;
 const int DRAW_TIME_X = WIDTH / 2 - SPRITE_SIZE / 2;
-const int DRAW_NUM_Y = HEIGHT - SPRITE_SIZE * 2;
+const int DRAW_NUM_Y = HEIGHT - SPRITE_SIZE * 4;
 const int INIT_SCORE_EFFECT_TIME = 25;
-const int GAME_TIME = 10 * FPS;
+const int GAME_TIME = 90 * FPS;
 const int NUM_SIZE = 10;
 const int NUM[ NUM_SIZE ] = { 9, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
@@ -93,7 +93,7 @@ void Score::draw( ) const {
 	drawScoreEffet( );
 
 	{ //player name
-		const int TW = 224;
+		const int TW = 256;
 		const int TH = 64;
 		// player1
 		_player_name->setRect( 0, 0, TW, TH );

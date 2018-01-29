@@ -8,7 +8,7 @@ PTR( ImageTarget );
 
 class SceneTitle : public Scene {
 public:
-	SceneTitle( );
+	SceneTitle( ImagePtr push_key );
 	virtual ~SceneTitle( );
 private:
 	enum DIR {
@@ -32,6 +32,7 @@ private:
 	Vector _pacman_pos;
 	Vector _pacman_vec;
 	ImagePtr _title;
+	ImagePtr _push_key;
 	ImagePtr _pacman;
 	ImagePtr _pacman_shadow;
 	ImagePtr _feed;

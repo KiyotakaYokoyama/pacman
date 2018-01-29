@@ -36,8 +36,8 @@ _winner( result ) {
 	_result = drawer->createImage( "string.png" );
 	switch ( result ) {
 	case RESULT_DRAW:
-		_result->setRect( 0, 128, 256, 64 );
-		_result->setPos( WIDTH / 2 - 128, 64 );
+		_result->setRect( 0, 128, 150, 64 );
+		_result->setPos( WIDTH / 2 - 300, HEIGHT / 2 - 256, WIDTH / 2 + 300, HEIGHT / 2 );
 		break;
 	case RESULT_PLAYER1:
 	{
@@ -47,7 +47,7 @@ _winner( result ) {
 		int sy = ( int )( SCREEN_HEIGHT * 0.1 );
 		_win_player->setPos( sx, sy, sx + ( int )( SPRITE_SIZE * RATIO ), sy + ( int )( SPRITE_SIZE * RATIO ) );
 		_result->setRect( 0, 64, 320, 64 );
-		_result->setPos( WIDTH / 2 - 160, 64 );
+		_result->setPos( WIDTH / 2 - 128, 64 );
 	}
 		break;
 	case RESULT_PLAYER2:
@@ -58,7 +58,7 @@ _winner( result ) {
 		int sy = ( int )( SCREEN_HEIGHT * 0.1 );
 		_win_player->setPos( sx, sy, sx + ( int )( SPRITE_SIZE * RATIO ), sy + ( int )( SPRITE_SIZE * RATIO ) );
 		_result->setRect( 0, 64, 320, 64 );
-		_result->setPos( WIDTH / 2 - 160, 64 );
+		_result->setPos( WIDTH / 2 - 128, 64 );
 	}
 		break;
 	}

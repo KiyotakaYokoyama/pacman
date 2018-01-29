@@ -32,6 +32,7 @@ void Game::initialize( ) {
 	_number = drawer->createImage( "number.png" );
 	_player_name = drawer->createImage( "pacman_pacwoman.png" );
 	_fade = drawer->createImage( "fade.png" );
+	_push_key = drawer->createImage( "PleasePushAnyButtonToStart.png" );
 
 	chengeScene( );
 }
@@ -56,10 +57,10 @@ void Game::chengeScene( ) {
 
 	switch ( _next ) {
 		case Scene::SCENE_TITLE:
-			scene = ScenePtr( new SceneTitle );
+			scene = ScenePtr( new SceneTitle( _push_key ) );
 			break;
 		case Scene::SCENE_SELECT:
-			scene = ScenePtr( new SceneSelect( _number ) );
+			scene = ScenePtr( new SceneSelect( _number, _push_key ) );
 			break;
 		case Scene::SCENE_STAGE:
 		{
