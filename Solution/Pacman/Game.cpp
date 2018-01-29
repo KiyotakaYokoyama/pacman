@@ -30,7 +30,7 @@ Game::~Game( ) {
 void Game::initialize( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_number = drawer->createImage( "number.png" );
-	_player_name = drawer->createImage( "playerName.png" );
+	_player_name = drawer->createImage( "pacman_pacwoman.png" );
 	_fade = drawer->createImage( "fade.png" );
 
 	chengeScene( );

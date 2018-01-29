@@ -2,8 +2,13 @@
 
 #define DEVICE 1
 
+#if 0
 const int WIDTH = 1920;
 const int HEIGHT = 1080;
+#else
+const int WIDTH = 1280;
+const int HEIGHT = 720;
+#endif
 const int SPRITE_SIZE = 64;
 enum PLAYER {
 	PLAYER_1,
