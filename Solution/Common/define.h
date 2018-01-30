@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEVICE 0
+#define DEVICE 1
 
 #if 1
 const int WIDTH = 1920;

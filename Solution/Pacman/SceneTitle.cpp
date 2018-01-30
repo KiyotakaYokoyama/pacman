@@ -144,7 +144,7 @@ void SceneTitle::draw( ) const {
 		if ( i == 15 || i == 16 ) {
 			_push_key->setRect( TX[ i ], 0, 20, 64 );
 		}
-		_push_key->setPos( WIDTH / 2 - 350 + TX[ i ], HEIGHT - 128 + ( sin( ( _count - i * 2 ) / 4 ) * -30 ) );
+		_push_key->setPos( WIDTH / 2 - 350 + TX[ i ], HEIGHT - 128 + ( int )( sin( ( _count - i * 2 ) / 4 ) * -30 ) );
 		_push_key->draw( );
 	}
 	if ( _enhance_count > 0 && _enhance_count < 1 * 30 && _enhance_count % 6 < 3 ) {
